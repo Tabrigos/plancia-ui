@@ -9,6 +9,7 @@
   let {
     title,
     subtitle,
+    subtitleTitle,
     chips,
     actions,
     onclose,
@@ -16,6 +17,8 @@
   }: {
     title: string
     subtitle?: string
+    /** Tooltip nativo sul sottotitolo (cos'è quel dato) */
+    subtitleTitle?: string
     chips?: Snippet
     actions?: Snippet
     onclose?: () => void
@@ -25,7 +28,7 @@
 
 <div class="p-ph">
   <div class="text">
-    <div class="line"><span class="title">{title}</span>{#if subtitle}<span class="sub">{subtitle}</span>{/if}</div>
+    <div class="line"><span class="title">{title}</span>{#if subtitle}<span class="sub" class:help={Boolean(subtitleTitle)} title={subtitleTitle}>{subtitle}</span>{/if}</div>
     {#if chips}<div class="chips">{@render chips()}</div>{/if}
   </div>
   <div class="sp"></div>
@@ -42,7 +45,8 @@
   .text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
   .line { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
   .title { font-size: var(--p-t14); font-weight: 600; color: var(--p-text-hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sub { font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text-dim); white-space: nowrap; }
+  .sub { font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub.help { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
   .chips { display: flex; gap: 6px; flex-wrap: wrap; }
   .sp { flex: 1; }
   .actions { display: flex; align-items: center; gap: 6px; }
