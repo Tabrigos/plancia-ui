@@ -12,7 +12,8 @@
     value = $bindable(),
     onchange,
     label,
-  }: { items: SegmentedItem[]; value?: string; onchange?: (id: string) => void; label?: string } = $props()
+    size = 'md',
+  }: { items: SegmentedItem[]; value?: string; onchange?: (id: string) => void; label?: string; /** `sm`: pillola in linea (teste, righe meta) */ size?: 'md' | 'sm' } = $props()
 
   function pick(id: string): void {
     if (id === value) return
@@ -21,7 +22,7 @@
   }
 </script>
 
-<div class="p-seg" role="group" aria-label={label}>
+<div class="p-seg" class:sm={size === 'sm'} role="group" aria-label={label}>
   {#each items as it (it.id)}
     <button type="button" class:on={it.id === value} aria-pressed={it.id === value} title={it.title} onclick={() => pick(it.id)}>{it.label}</button>
   {/each}
@@ -36,4 +37,7 @@
   }
   .p-seg button:hover { color: var(--p-text); }
   .p-seg button.on { background: var(--p-s3); color: var(--p-text-hi); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4); }
+  .p-seg.sm { display: inline-flex; flex: none; padding: 2px; border-radius: var(--p-r-pill); }
+  .p-seg.sm button { flex: none; padding: 1px 8px; border-radius: var(--p-r-pill); font-size: var(--p-t11); white-space: nowrap; }
+  .p-seg.sm button.on { background: var(--p-accent-soft); color: var(--p-accent); box-shadow: none; }
 </style>

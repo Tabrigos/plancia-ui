@@ -13,6 +13,7 @@ export { default as Skeleton } from './components/Skeleton.svelte'
 export { default as Notice } from './components/Notice.svelte'
 export { default as Legend } from './components/Legend.svelte'
 export { default as Segmented } from './components/Segmented.svelte'
+export { default as MetaRow } from './components/MetaRow.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'
