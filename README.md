@@ -118,4 +118,9 @@ stessa forma serve in più posti e non sa niente del dominio.
 
 0.1.0 — token, base, undici componenti. OrbitView è il primo consumatore:
 la migrazione dell'app è completata il 2026-09-10 (diario in
-`docs/plancia-ui-migrazione.md`). Prossimi: pubblicazione npm, tema chiaro.
+`docs/plancia-ui-migrazione.md`).
+
+Non ancora pronto per npm: il pacchetto espone i sorgenti invece di un
+`dist` costruito con `@sveltejs/package`, e i componenti non hanno test
+propri (la garanzia oggi è indiretta, dallo smoke test di OrbitView). Il
+lavoro che manca è elencato in `docs/plancia-ui-pubblicazione.md`.
