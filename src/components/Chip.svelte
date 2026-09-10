@@ -5,19 +5,22 @@
 
   /**
    * Un chip solo per stati, scale e bande: 22 px, monospazio, tono
-   * semantico. `count` è la variante bassa (18 px) dei contatori.
+   * semantico. `count` è la variante bassa (18 px) dei contatori;
+   * `small` la stessa altezza ma col tono (le scale nelle tabelle).
    * `color` sovrascrive il tono con un colore proprio (es. il colore di un
    * gruppo di satelliti): sfondo e bordo derivano da quello.
    */
   let {
     tone = 'neutral',
     count = false,
+    small = false,
     color,
     children,
     ...rest
   }: HTMLAttributes<HTMLSpanElement> & {
     tone?: Tone
     count?: boolean
+    small?: boolean
     color?: string
     children?: Snippet
   } = $props()
@@ -27,7 +30,7 @@
     : '')
 </script>
 
-<span class="p-chip {tone}" class:count class:custom={Boolean(color)} style={custom} {...rest}>
+<span class="p-chip {tone}" class:count class:small class:custom={Boolean(color)} style={custom} {...rest}>
   {@render children?.()}
 </span>
 
@@ -40,6 +43,7 @@
     border: 1px solid var(--p-border); background: var(--p-neutral-soft); color: var(--p-text);
   }
   .p-chip.count { height: 18px; padding: 0 6px; font-weight: 500; color: var(--p-text-dim); }
+  .p-chip.small { height: 18px; padding: 0 6px; }
   .p-chip.accent { background: var(--p-accent-soft); border-color: color-mix(in srgb, var(--p-accent) 35%, transparent); color: var(--p-accent); }
   .p-chip.ok { background: var(--p-ok-soft); border-color: color-mix(in srgb, var(--p-ok) 35%, transparent); color: var(--p-ok); }
   .p-chip.warn { background: var(--p-warn-soft); border-color: color-mix(in srgb, var(--p-warn) 35%, transparent); color: var(--p-warn); }
