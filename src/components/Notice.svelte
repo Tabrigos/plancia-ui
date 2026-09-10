@@ -13,11 +13,12 @@
     kind = 'info',
     title,
     text,
+    compact = false,
     children,
-  }: { kind?: NoticeKind; title?: string; text?: string; children?: Snippet } = $props()
+  }: { kind?: NoticeKind; title?: string; text?: string; compact?: boolean; children?: Snippet } = $props()
 </script>
 
-<div class="p-notice {kind}" role={kind === 'error' ? 'alert' : 'status'}>
+<div class="p-notice {kind}" class:compact role={kind === 'error' ? 'alert' : 'status'}>
   {#if kind === 'warn' || kind === 'error'}
     <svg class="ic" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5l6 11H2z"/><path d="M8 7v3M8 11.5v.5"/></svg>
   {:else if kind === 'info'}
@@ -33,6 +34,8 @@
 <style>
   .p-notice { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--p-r2); border: 1px solid var(--p-border); background: var(--p-inset); }
   .p-notice.empty { padding: 14px; }
+  .p-notice.compact { padding: 6px 10px; }
+  .p-notice.compact .title { font-size: var(--p-t12); font-weight: 400; color: var(--p-text); }
   .p-notice.info { background: var(--p-info-soft); border-color: color-mix(in srgb, var(--p-info) 30%, transparent); color: var(--p-info); }
   .p-notice.warn { background: var(--p-warn-soft); border-color: color-mix(in srgb, var(--p-warn) 30%, transparent); color: var(--p-warn); }
   .p-notice.error { background: var(--p-danger-soft); border-color: color-mix(in srgb, var(--p-danger) 30%, transparent); color: var(--p-danger); }
