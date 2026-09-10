@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   plancia-ui — stili base: reset minimo, tipografia, superfici, focus.
+   Solo token (--p-*), nessun colore fisso. Le classi sono prefissate p-.
+   ═══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--p-bg);
+  color: var(--p-text);
+  font-family: var(--p-font-ui);
+  font-size: var(--p-t13);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--p-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Tipografia ─────────────────────────────────────────────────────────── */
+.p-mono { font-family: var(--p-font-mono); }
+.p-hi { color: var(--p-text-hi); }
+.p-dim { color: var(--p-text-dim); }
+.p-t11 { font-size: var(--p-t11); }
+.p-t12 { font-size: var(--p-t12); }
+.p-t13 { font-size: var(--p-t13); }
+.p-t14 { font-size: var(--p-t14); }
+.p-t16 { font-size: var(--p-t16); }
+.p-t20 { font-size: var(--p-t20); }
+.p-t28 { font-size: var(--p-t28); }
+.p-w500 { font-weight: 500; }
+.p-w600 { font-weight: 600; }
+.p-nowrap { white-space: nowrap; }
+.p-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Titolo di sezione: l'UNICO uso del maiuscolo spaziato nel sistema */
+.p-sec-title {
+  font-size: var(--p-t11);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--p-text-dim);
+  white-space: nowrap;
+}
+
+/* ── Superfici ──────────────────────────────────────────────────────────── */
+.p-panel {
+  background: var(--p-s3a);
+  border: 1px solid var(--p-border);
+  border-radius: var(--p-r3);
+  box-shadow: var(--p-sh2);
+}
+.p-card {
+  background: var(--p-s2);
+  border: 1px solid var(--p-border);
+  border-radius: var(--p-r2);
+}
+.p-inset {
+  background: var(--p-inset);
+  border: 1px solid var(--p-border);
+  border-radius: var(--p-r2);
+}
+.p-divider { border-top: 1px solid var(--p-border); }
+
+/* ── Dot di stato (con alone semantico) ─────────────────────────────────── */
+.p-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--p-neutral); }
+.p-dot.ok { background: var(--p-ok); box-shadow: var(--p-ok-glow); }
+.p-dot.warn { background: var(--p-warn); box-shadow: var(--p-warn-glow); }
+.p-dot.danger { background: var(--p-danger); box-shadow: var(--p-danger-glow); }
+.p-dot.accent { background: var(--p-accent); box-shadow: var(--p-accent-glow); }
+
+/* ── Focus e movimento ──────────────────────────────────────────────────── */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--p-focus);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ── Scrollbar discreta (WebKit e Firefox) ──────────────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: var(--p-border-strong) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--p-border-strong); border-radius: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }

@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   plancia-ui — token (GENERATO da tokens.json con `npm run tokens`: non
+   modificare a mano). Tema scuro "plancia"; il tema chiaro ridefinisce le
+   stesse variabili sotto [data-theme="light"] (per ora vuoto, per scelta).
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --p-bg: #070a12;
+  --p-s1: #0d1220;
+  --p-s2: #131a2b;
+  --p-s3: #161e31;
+  --p-inset: #0a0e18;
+  --p-s1a: rgba(13, 18, 32, 0.92);
+  --p-s3a: rgba(22, 30, 49, 0.94);
+  --p-hover: rgba(148, 163, 184, 0.08);
+  --p-border: #1f2a3d;
+  --p-border-soft: rgba(148, 163, 184, 0.08);
+  --p-border-strong: #2b3950;
+  --p-text-hi: #eef2f9;
+  --p-text: #c3cbdb;
+  --p-text-dim: #8b95a8;
+  --p-accent: #00c8ff;
+  --p-accent-soft: rgba(0, 200, 255, 0.12);
+  --p-accent-ink: #06202c;
+  --p-ok: #34d399;
+  --p-ok-soft: rgba(52, 211, 153, 0.14);
+  --p-warn: #fbbf24;
+  --p-warn-soft: rgba(251, 191, 36, 0.14);
+  --p-orange: #f97316;
+  --p-orange-soft: rgba(249, 115, 22, 0.14);
+  --p-danger: #f87171;
+  --p-danger-soft: rgba(248, 113, 113, 0.14);
+  --p-info: #38bdf8;
+  --p-info-soft: rgba(56, 189, 248, 0.14);
+  --p-neutral: #94a3b8;
+  --p-neutral-soft: rgba(148, 163, 184, 0.12);
+  --p-accent-glow: 0 0 0 3px rgba(0, 200, 255, 0.18);
+  --p-ok-glow: 0 0 8px rgba(52, 211, 153, 0.55);
+  --p-warn-glow: 0 0 8px rgba(251, 191, 36, 0.5);
+  --p-danger-glow: 0 0 8px rgba(248, 113, 113, 0.55);
+  --p-font-ui: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --p-font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  --p-t11: 11px;
+  --p-t12: 12px;
+  --p-t13: 13px;
+  --p-t14: 14px;
+  --p-t16: 16px;
+  --p-t20: 20px;
+  --p-t28: 28px;
+  --p-space-1: 4px;
+  --p-space-2: 8px;
+  --p-space-3: 12px;
+  --p-space-4: 16px;
+  --p-space-6: 24px;
+  --p-space-8: 32px;
+  --p-r1: 4px;
+  --p-r2: 8px;
+  --p-r3: 12px;
+  --p-r-pill: 999px;
+  --p-sh1: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --p-sh2: 0 18px 48px rgba(0, 0, 0, 0.5);
+  --p-z-base: 0;
+  --p-z-overlay: 10;
+  --p-z-panel: 100;
+  --p-z-popover: 200;
+  --p-z-tooltip: 300;
+  --p-z-modal: 400;
+  --p-motion-fast: 120ms;
+  --p-motion-base: 200ms;
+  --p-motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --p-row: 8px;
+  --p-row-h: 32px;
+  --p-focus: 0 0 0 2px var(--p-bg), 0 0 0 4px var(--p-accent);
+  color-scheme: dark;
+}
+
+/* Densità: la riga standard è 32 px con padding 8; "comfortable" respira */
+[data-density="comfortable"] {
+  --p-row: 12px;
+  --p-row-h: 40px;
+}
+
+/* Tema chiaro: stesso contratto di variabili, da riempire quando servirà */
+[data-theme="light"] {
+  color-scheme: light;
+}
