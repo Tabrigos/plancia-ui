@@ -8,11 +8,12 @@
     sub,
     tone,
     title,
+    id,
     children,
-  }: { label: string; sub?: string; tone?: Tone; title?: string; children?: Snippet } = $props()
+  }: { label: string; sub?: string; tone?: Tone; title?: string; id?: string; children?: Snippet } = $props()
 </script>
 
-<div class="p-stat" {title}>
+<div class="p-stat" {title} {id}>
   <span class="k">{label}</span>
   <span class="v" class:ok={tone === 'ok'} class:warn={tone === 'warn'} class:danger={tone === 'danger'} class:accent={tone === 'accent'}>{@render children?.()}</span>
   {#if sub}<span class="sub">{sub}</span>{/if}
