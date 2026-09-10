@@ -8,17 +8,20 @@
     checked = $bindable(false),
     disabled = false,
     label,
+    title,
     onchange,
   }: {
     checked?: boolean
     disabled?: boolean
     /** Etichetta accessibile (il testo visibile sta di solito nella riga accanto) */
     label?: string
+    /** Tooltip nativo */
+    title?: string
     onchange?: (checked: boolean) => void
   } = $props()
 </script>
 
-<label class="p-toggle" class:disabled>
+<label class="p-toggle" class:disabled {title}>
   <input type="checkbox" bind:checked {disabled} aria-label={label}
          onchange={() => onchange?.(checked)} />
   <span class="track" aria-hidden="true"></span>
