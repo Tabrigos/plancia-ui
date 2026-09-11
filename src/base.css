@@ -63,6 +63,26 @@ a:hover { text-decoration: underline; }
 }
 .p-divider { border-top: 1px solid var(--p-border); }
 
+/* Visibile solo agli screen reader: regioni live, etichette fuori schermo */
+.p-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Visibile solo agli screen reader: regioni live, etichette fuori schermo */
+.p-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* ── Dot di stato (con alone semantico) ─────────────────────────────────── */
 .p-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--p-neutral); }
 .p-dot.ok { background: var(--p-ok); box-shadow: var(--p-ok-glow); }

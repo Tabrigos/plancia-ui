@@ -17,7 +17,8 @@ di OrbitView; pensato per essere riusato in altri progetti.
    classi delle superfici (`p-panel`, `p-card`, `p-inset`), titolo di
    sezione (`p-sec-title`: l'unico uso del maiuscolo spaziato), utilità di
    testo (`p-mono`, `p-dim`, `p-hi`, `p-t11`…`p-t28`, `p-nowrap`,
-   `p-ellipsis`), anello di focus, `prefers-reduced-motion`.
+   `p-ellipsis`), `p-sr-only` (visibile solo agli screen reader), anello di
+   focus, `prefers-reduced-motion`.
 3. **Componenti Svelte 5** (ognuno con il suo CSS scoped, solo token):
 
    | Componente | A cosa serve | Prop principali |
