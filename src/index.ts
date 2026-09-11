@@ -14,11 +14,15 @@ export { default as Notice } from './components/Notice.svelte'
 export { default as Legend } from './components/Legend.svelte'
 export { default as Segmented } from './components/Segmented.svelte'
 export { default as MetaRow } from './components/MetaRow.svelte'
+export { default as ControlRow } from './components/ControlRow.svelte'
+export { default as LegendDots } from './components/LegendDots.svelte'
+export { default as SettingRow } from './components/SettingRow.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'
 export type { NoticeKind } from './components/Notice.svelte'
 export type { SegmentedItem } from './components/Segmented.svelte'
+export type { LegendDot } from './components/LegendDots.svelte'
 
 /** Tono semantico dei livelli delle scale NOAA (R/S/G 0–5). */
 export function scaleTone(level: number): Tone {

@@ -63,6 +63,9 @@ a:hover { text-decoration: underline; }
 }
 .p-divider { border-top: 1px solid var(--p-border); }
 
+/* Il titolo spiega il dato: cursore da spiegazione (va con un `title`) */
+.p-help { cursor: help; }
+
 /* Visibile solo agli screen reader: regioni live, etichette fuori schermo */
 .p-sr-only {
   position: absolute;
