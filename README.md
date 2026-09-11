@@ -17,8 +17,9 @@ di OrbitView; pensato per essere riusato in altri progetti.
    classi delle superfici (`p-panel`, `p-card`, `p-inset`), titolo di
    sezione (`p-sec-title`: l'unico uso del maiuscolo spaziato), utilità di
    testo (`p-mono`, `p-dim`, `p-hi`, `p-t11`…`p-t28`, `p-nowrap`,
-   `p-ellipsis`), `p-sr-only` (visibile solo agli screen reader), anello di
-   focus, `prefers-reduced-motion`.
+   `p-ellipsis`), `p-help` (cursore da spiegazione, va con un `title`),
+   `p-sr-only` (visibile solo agli screen reader), anello di focus,
+   `prefers-reduced-motion`.
 3. **Componenti Svelte 5** (ognuno con il suo CSS scoped, solo token):
 
    | Componente | A cosa serve | Prop principali |
@@ -34,6 +35,9 @@ di OrbitView; pensato per essere riusato in altri progetti.
    | `Legend` | legenda di un layer a gradiente | `gradient` (CSS), `min`, `max`, `unit`, `note` |
    | `MetaRow` | riga di metadati sotto una card (età del dato, soglie, note, piccole azioni) | `align` between · start; le voci sono il contenuto, ognuna con il suo `title`; un `<b>` è il valore in evidenza |
    | `Segmented` | scelta esclusiva fra poche voci | `items` `{ id, label, title? }`, `value` bindabile, `onchange(id)`, `label`, `size` md · sm (pillola in linea) |
+   | `ControlRow` | testa di una scheda: etichetta a sinistra, comandi a destra | `label`, `title`, `help` (cursore da spiegazione), `tone` hi · dim; i comandi sono il contenuto |
+   | `SettingRow` | riga di elenco di una console: icona, nome, comando | `label`, `title`, `help`, snippet `icon`, più gli attributi propri (`data-*`, `id`); il comando è il contenuto |
+   | `LegendDots` | legenda a pallini di ciò che è disegnato altrove (globo, canvas) | `items` `{ color, label, opacity?, title? }`, `label` del gruppo |
 
    Più `scaleTone(level)`: il tono semantico dei livelli delle scale NOAA
    (R/S/G 0–5), da passare a `Chip`.
@@ -96,7 +100,9 @@ di OrbitView; pensato per essere riusato in altri progetti.
 - corpo minimo 11 px; maiuscolo spaziato solo nei titoli di sezione;
 - etichetta a sinistra mai a capo, valore in monospazio a destra su una
   riga, eventuale seconda riga secondaria (`sub`); se un valore non entra
-  accanto all'etichetta scende su una riga sua, intero (mai spezzato);
+  accanto all'etichetta scende su una riga sua, intero: **mai spezzato,
+  mai troncato, mai sovrapposto all'etichetta** (`KeyValue` lo fa da sé;
+  chi scrive righe proprie usi la stessa regola);
 - un chip solo (22 px) per stati, scale e bande; il contatore è la variante
   bassa; un primario per pannello;
 - una testa di pannello sola: titolo 14/600, sottotitolo mono facoltativo,
@@ -117,9 +123,15 @@ stessa forma serve in più posti e non sa niente del dominio.
 
 ## Stato
 
-0.1.0 — token, base, undici componenti. OrbitView è il primo consumatore:
-la migrazione dell'app è completata il 2026-09-10 (diario in
-`docs/plancia-ui-migrazione.md`).
+0.2.0 (2026-09-11) — token, base, **quattordici componenti**. OrbitView è il
+primo consumatore: la migrazione dell'app è finita il 2026-09-10 e la
+rifinitura l'11 (diario in `docs/plancia-ui-migrazione.md`).
+
+Dalla 0.1.0: `MetaRow`, `ControlRow`, `SettingRow`, `LegendDots`; `Segmented`
+ha la variante `size="sm"` in linea; utilità `p-help` e `p-sr-only`;
+`KeyValue` manda a capo il valore che non entra invece di sovrapporlo
+all'etichetta; tutta la tipografia dei consumatori passa dalla scala
+(`--p-t*`), nessun corpo sotto gli 11 px.
 
 Non ancora pronto per npm: il pacchetto espone i sorgenti invece di un
 `dist` costruito con `@sveltejs/package`, e i componenti non hanno test
