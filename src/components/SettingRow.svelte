@@ -27,7 +27,9 @@
   } = $props()
 </script>
 
-<div class="p-setting-row" {title} {...rest}>
+<!-- lo spread PRIMA: la classe del componente non si perde se chi lo usa
+     passa un `class` proprio -->
+<div {...rest} class="p-setting-row" {title}>
   {#if icon}<span class="ic" aria-hidden="true">{@render icon()}</span>{/if}
   <span class="name" class:help>{label}</span>
   {#if children}<span class="ctl">{@render children()}</span>{/if}
