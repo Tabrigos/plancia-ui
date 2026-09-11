@@ -7,6 +7,10 @@
    * capo; il valore a destra in monospazio sta su una riga; se c'è
    * un'informazione in più (`sub`) va su una seconda riga secondaria,
    * mai spezzando il valore. `tone` colora il valore (es. ok/danger).
+   *
+   * Quando i due non stanno in riga (un valore lungo come "fuori dal
+   * modello (100–1000 km)") il valore scende su una riga sua, intero e
+   * allineato a destra: non si accavalla mai all'etichetta.
    */
   let {
     label,
@@ -38,12 +42,12 @@
 </div>
 
 <style>
-  .p-kv { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 6px 0; }
+  .p-kv { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; padding: 6px 0; }
   :global(.p-kv + .p-kv) { border-top: 1px solid var(--p-border); }
-  .k { font-size: var(--p-t12); color: var(--p-text-dim); white-space: nowrap; }
-  .v { display: flex; flex-direction: column; align-items: flex-end; min-width: 0; font-family: var(--p-font-mono); font-size: var(--p-t12); color: var(--p-text-hi); text-align: right; }
-  .main { white-space: nowrap; }
-  .sub { font-family: var(--p-font-ui); font-size: var(--p-t11); font-weight: 400; color: var(--p-text-dim); max-width: 200px; }
+  .k { flex: 0 1 auto; min-width: 0; font-size: var(--p-t12); color: var(--p-text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v { display: flex; flex-direction: column; align-items: flex-end; margin-left: auto; max-width: 100%; min-width: 0; font-family: var(--p-font-mono); font-size: var(--p-t12); color: var(--p-text-hi); text-align: right; }
+  .main { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub { max-width: 100%; font-family: var(--p-font-ui); font-size: var(--p-t11); font-weight: 400; color: var(--p-text-dim); }
   .v.ok { color: var(--p-ok); } .v.warn { color: var(--p-warn); } .v.danger { color: var(--p-danger); }
   .v.accent { color: var(--p-accent); } .v.info { color: var(--p-info); }
   .sub.s-ok { color: var(--p-ok); } .sub.s-warn { color: var(--p-warn); } .sub.s-danger { color: var(--p-danger); } .sub.s-info { color: var(--p-info); }
