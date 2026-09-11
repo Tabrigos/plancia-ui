@@ -2,7 +2,7 @@
 
 Tema "plancia" — la sala di comando di una nave — per console dense e scure:
 token, stili base e componenti Svelte 5. Nato dal cockpit "mission control"
-di OrbitView; pensato per essere riusato in altri progetti.
+di Sidereus; pensato per essere riusato in altri progetti.
 
 ## Tre strati
 
@@ -83,14 +83,14 @@ di OrbitView; pensato per essere riusato in altri progetti.
    `var(--p-text-dim)`, `var(--p-accent)`, superfici `var(--p-s3a)`,
    bordi `var(--p-border)`, raggi `var(--p-r2)`, ombre `var(--p-sh2)`,
    corpi `var(--p-t12)`. Chi ha già dei token propri può dichiararli come
-   alias dei `--p-*` (è quello che fa OrbitView in `styles/tokens.css`) e
+   alias dei `--p-*` (è quello che fa Sidereus in `styles/tokens.css`) e
    migrare con calma.
 5. **Cambiare il tema**: si modifica `src/tokens.json` e si rigenera
    `tokens.css` con `npm run tokens` (nel pacchetto). Densità:
    `<html data-density="comfortable">`. Tema chiaro: il blocco
    `[data-theme="light"]` esiste ed è vuoto, da riempire con gli stessi
    nomi di variabile.
-6. **Verificare**: la vetrina `/plancia` di OrbitView
+6. **Verificare**: la vetrina `/plancia` di Sidereus
    (`frontend/app/src/pages/PlanciaPage.svelte`) mostra ogni componente
    in ogni stato ed è il posto dove si prova una modifica prima di
    toccare l'app.
@@ -123,7 +123,7 @@ stessa forma serve in più posti e non sa niente del dominio.
 
 ## Stato
 
-0.2.0 (2026-09-11) — token, base, **quattordici componenti**. OrbitView è il
+0.2.0 (2026-09-11) — token, base, **quattordici componenti**. Sidereus è il
 primo consumatore: la migrazione dell'app è finita il 2026-09-10 e la
 rifinitura l'11 (diario in `docs/plancia-ui-migrazione.md`).
 
@@ -135,5 +135,5 @@ all'etichetta; tutta la tipografia dei consumatori passa dalla scala
 
 Non ancora pronto per npm: il pacchetto espone i sorgenti invece di un
 `dist` costruito con `@sveltejs/package`, e i componenti non hanno test
-propri (la garanzia oggi è indiretta, dallo smoke test di OrbitView). Il
+propri (la garanzia oggi è indiretta, dallo smoke test di Sidereus). Il
 lavoro che manca è elencato in `docs/plancia-ui-pubblicazione.md`.
