@@ -125,7 +125,7 @@ stessa forma serve in più posti e non sa niente del dominio.
 
 0.2.0 (2026-09-11) — token, base, **quattordici componenti**. Sidereus è il
 primo consumatore: la migrazione dell'app è finita il 2026-09-10 e la
-rifinitura l'11 (diario in `docs/plancia-ui-migrazione.md`).
+rifinitura l'11 (diario in `docs/archivio/plancia-ui-migrazione.md`).
 
 Dalla 0.1.0: `MetaRow`, `ControlRow`, `SettingRow`, `LegendDots`; `Segmented`
 ha la variante `size="sm"` in linea; utilità `p-help` e `p-sr-only`;
