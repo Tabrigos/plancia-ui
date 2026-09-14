@@ -1,0 +1,2 @@
+# generato da svelte-package (svelte2tsx) durante il build; dist/ e node_modules/ sono nel .gitignore di radice
+.svelte-kit/

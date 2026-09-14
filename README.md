@@ -1,8 +1,9 @@
 # plancia-ui
 
-Tema "plancia" — la sala di comando di una nave — per console dense e scure:
-token, stili base e componenti Svelte 5. Nato dal cockpit "mission control"
-di Sidereus; pensato per essere riusato in altri progetti.
+Tema "plancia" — la sala di comando di una nave — per console dense, scure
+per nascita e chiare a scelta: token, stili base e componenti Svelte 5. Nato
+dal cockpit "mission control" di Sidereus; pensato per essere riusato in
+altri progetti.
 
 ## Tre strati
 
@@ -11,8 +12,11 @@ di Sidereus; pensato per essere riusato in altri progetti.
    colori semantici con varianti `-soft` e `-glow`, tipografia (scala a 7
    corpi, minimo 11 px), spaziatura a 4 px, raggi, ombre, z-index nominati,
    movimento. Usabili in qualunque progetto, anche senza Svelte. Due
-   densità (`data-density="comfortable"` sull'elemento radice) e il posto
-   per il tema chiaro (`data-theme="light"`, ancora vuoto per scelta).
+   densità (`data-density="comfortable"` sull'elemento radice) e due temi:
+   scuro su `:root`, chiaro sotto `[data-theme="light"]` (dal 2026-09-14),
+   con le STESSE variabili di colore ridefinite — lo script dei token
+   rifiuta una chiave presente da un lato solo. La rampa `--p-scale-0..5`
+   (livelli 0–5 delle scale NOAA) fa parte dei token e segue il tema.
 2. **Stili base** (`plancia-ui/base.css`): reset minimo, tipografia,
    classi delle superfici (`p-panel`, `p-card`, `p-inset`), titolo di
    sezione (`p-sec-title`: l'unico uso del maiuscolo spaziato), utilità di
@@ -44,15 +48,17 @@ di Sidereus; pensato per essere riusato in altri progetti.
 
 ## Uso in un progetto
 
-1. **Installare**. Finché il pacchetto non è su npm, dipendenza locale
-   (`"plancia-ui": "file:../packages/plancia-ui"` in `package.json`, poi
-   `npm install`: npm crea un link). Il pacchetto espone i sorgenti Svelte
-   (`svelte` in `exports`), quindi il progetto deve avere `svelte` ≥ 5 e
-   `@sveltejs/vite-plugin-svelte`; con `svelte-check` va aggiunto in
-   `tsconfig` `"paths": { "svelte/*": ["./node_modules/svelte/*"] }` e i
-   sorgenti del pacchetto in `include`, e in Vite `server.fs.allow: ['..']`
-   se il pacchetto sta fuori dalla radice del progetto. In un'immagine
-   Docker copiare la cartella del pacchetto prima di `npm ci`.
+1. **Installare**: `npm install plancia-ui` (peer dependency `svelte` ≥ 5;
+   il progetto deve avere `@sveltejs/vite-plugin-svelte`, o l'equivalente
+   del suo bundler, perché il pacchetto pubblica i `.svelte` così come
+   sono, con i `.ts` compilati e i `.d.ts` accanto: `dist/`, generato da
+   `@sveltejs/package`). Sidereus, che vive nello stesso repo, NON passa da
+   `dist`: tiene la dipendenza `file:../packages/plancia-ui` e in
+   `vite.config.ts` / `vitest.config.ts` un alias verso `src/` (più `paths`
+   in `tsconfig.app.json`), così il dev server, il build dell'immagine e i
+   test leggono i sorgenti e le modifiche arrivano in HMR senza ricostruire
+   il pacchetto. In un'immagine Docker copiare la cartella del pacchetto
+   prima di `npm ci`.
 2. **Caricare i fogli di stile una volta**, nell'entry point, in
    quest'ordine:
 
@@ -86,10 +92,21 @@ di Sidereus; pensato per essere riusato in altri progetti.
    alias dei `--p-*` (è quello che fa Sidereus in `styles/tokens.css`) e
    migrare con calma.
 5. **Cambiare il tema**: si modifica `src/tokens.json` e si rigenera
-   `tokens.css` con `npm run tokens` (nel pacchetto). Densità:
-   `<html data-density="comfortable">`. Tema chiaro: il blocco
-   `[data-theme="light"]` esiste ed è vuoto, da riempire con gli stessi
-   nomi di variabile.
+   `tokens.css` con `npm run tokens` (nel pacchetto; `npm run build` lo fa
+   da sé prima di `svelte-package`, e `prepublishOnly` prima di ogni
+   pubblicazione). Densità:
+   `<html data-density="comfortable">`. Tema chiaro: il blocco `light` di
+   `tokens.json` ridefinisce `color`, `scale`, `glow` e `shadow` con le
+   stesse chiavi dello scuro (un token nuovo va aggiunto in entrambi, o lo
+   script si ferma) e diventa `[data-theme="light"] { ... color-scheme:
+   light }`. Il pacchetto NON decide quando applicarlo: è il progetto a
+   mettere `data-theme="light"` sull'elemento radice (Sidereus lo fa da una
+   preferenza in localStorage, prima del mount, in ogni entry). Nel chiaro i
+   colori semantici sono più scuri (ambra, giallo, verde leggibili su
+   bianco): chi disegna con questi colori in un `<canvas>` o in un motore
+   3D, che non legge le custom property, decide da sé se seguire il tema —
+   in Sidereus il globo, il disco del Sole e l'eliosfera restano scuri perché
+   sono spazio.
 6. **Verificare**: la vetrina `/plancia` di Sidereus
    (`frontend/app/src/pages/PlanciaPage.svelte`) mostra ogni componente
    in ogni stato ed è il posto dove si prova una modifica prima di
@@ -98,6 +115,10 @@ di Sidereus; pensato per essere riusato in altri progetti.
 ## Regole del sistema (dalla revisione del 2026-09-10)
 
 - corpo minimo 11 px; maiuscolo spaziato solo nei titoli di sezione;
+- nessun colore scritto a mano nel CSS di un componente o del progetto:
+  solo token, così i due temi restano corretti da soli; per una variante
+  con trasparenza si usa `color-mix(in srgb, var(--p-ok) 35%, transparent)`,
+  non un `rgba()` copiato dal valore scuro;
 - etichetta a sinistra mai a capo, valore in monospazio a destra su una
   riga, eventuale seconda riga secondaria (`sub`); se un valore non entra
   accanto all'etichetta scende su una riga sua, intero: **mai spezzato,
@@ -122,6 +143,15 @@ fonti, layout del cockpit. Un componente entra nel pacchetto quando la
 stessa forma serve in più posti e non sa niente del dominio.
 
 ## Stato
+
+0.3.0 (2026-09-14) — **prima versione su npm** (`npm install plancia-ui`) e
+**tema chiaro**: il blocco `light` di `tokens.json`
+ridefinisce ogni token di colore (più la rampa `--p-scale-0..5` delle scale
+NOAA, nuova in entrambi i temi, e `--p-yellow`), lo script di generazione
+rifiuta una chiave presente da un lato solo, `Segmented` non ha più un nero
+fisso nell'ombra della voce attiva. La vetrina `/plancia` mostra le due
+tavolozze affiancate con il selettore del tema. Chi applica l'attributo
+`data-theme` è il progetto, non il pacchetto.
 
 0.2.0 (2026-09-11) — token, base, **quattordici componenti**. Sidereus è il
 primo consumatore: la migrazione dell'app è finita il 2026-09-10 e la
