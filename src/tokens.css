@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    plancia-ui — token (GENERATO da tokens.json con `npm run tokens`: non
-   modificare a mano). Tema scuro "plancia"; il tema chiaro ridefinisce le
-   stesse variabili sotto [data-theme="light"] (per ora vuoto, per scelta).
+   modificare a mano). Tema scuro "plancia" su :root; il tema chiaro
+   ridefinisce le stesse variabili di colore sotto [data-theme="light"]
+   (l'applicazione decide quando mettere l'attributo sull'elemento radice).
    ═══════════════════════════════════════════════════════════════════════════ */
 :root {
   --p-bg: #070a12;
@@ -25,6 +26,8 @@
   --p-ok-soft: rgba(52, 211, 153, 0.14);
   --p-warn: #fbbf24;
   --p-warn-soft: rgba(251, 191, 36, 0.14);
+  --p-yellow: #fde047;
+  --p-yellow-soft: rgba(253, 224, 71, 0.14);
   --p-orange: #f97316;
   --p-orange-soft: rgba(249, 115, 22, 0.14);
   --p-danger: #f87171;
@@ -33,10 +36,18 @@
   --p-info-soft: rgba(56, 189, 248, 0.14);
   --p-neutral: #94a3b8;
   --p-neutral-soft: rgba(148, 163, 184, 0.12);
+  --p-scale-0: #34d399;
+  --p-scale-1: #fde047;
+  --p-scale-2: #fbbf24;
+  --p-scale-3: #f97316;
+  --p-scale-4: #dc2626;
+  --p-scale-5: #9f1239;
   --p-accent-glow: 0 0 0 3px rgba(0, 200, 255, 0.18);
   --p-ok-glow: 0 0 8px rgba(52, 211, 153, 0.55);
   --p-warn-glow: 0 0 8px rgba(251, 191, 36, 0.5);
   --p-danger-glow: 0 0 8px rgba(248, 113, 113, 0.55);
+  --p-sh1: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --p-sh2: 0 18px 48px rgba(0, 0, 0, 0.5);
   --p-font-ui: 'Inter', 'Segoe UI', system-ui, sans-serif;
   --p-font-mono: 'JetBrains Mono', 'Consolas', monospace;
   --p-t11: 11px;
@@ -56,8 +67,6 @@
   --p-r2: 8px;
   --p-r3: 12px;
   --p-r-pill: 999px;
-  --p-sh1: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --p-sh2: 0 18px 48px rgba(0, 0, 0, 0.5);
   --p-z-base: 0;
   --p-z-overlay: 10;
   --p-z-panel: 100;
@@ -79,7 +88,50 @@
   --p-row-h: 40px;
 }
 
-/* Tema chiaro: stesso contratto di variabili, da riempire quando servirà */
+/* Tema chiaro: stesso contratto di variabili, valori di colore diversi */
 [data-theme="light"] {
+  --p-bg: #e9edf3;
+  --p-s1: #f4f6fa;
+  --p-s2: #fbfcfe;
+  --p-s3: #ffffff;
+  --p-inset: #edf0f5;
+  --p-s1a: rgba(244, 246, 250, 0.92);
+  --p-s3a: rgba(255, 255, 255, 0.94);
+  --p-hover: rgba(15, 23, 42, 0.06);
+  --p-border: #d3d9e3;
+  --p-border-soft: rgba(15, 23, 42, 0.08);
+  --p-border-strong: #b6c0cf;
+  --p-text-hi: #0b1220;
+  --p-text: #2c3648;
+  --p-text-dim: #5c6879;
+  --p-accent: #0077b6;
+  --p-accent-soft: rgba(0, 119, 182, 0.12);
+  --p-accent-ink: #ffffff;
+  --p-ok: #047857;
+  --p-ok-soft: rgba(4, 120, 87, 0.12);
+  --p-warn: #b45309;
+  --p-warn-soft: rgba(180, 83, 9, 0.12);
+  --p-yellow: #a16207;
+  --p-yellow-soft: rgba(161, 98, 7, 0.12);
+  --p-orange: #c2410c;
+  --p-orange-soft: rgba(194, 65, 12, 0.12);
+  --p-danger: #b91c1c;
+  --p-danger-soft: rgba(185, 28, 28, 0.12);
+  --p-info: #0369a1;
+  --p-info-soft: rgba(3, 105, 161, 0.12);
+  --p-neutral: #556274;
+  --p-neutral-soft: rgba(85, 98, 116, 0.12);
+  --p-scale-0: #047857;
+  --p-scale-1: #a16207;
+  --p-scale-2: #b45309;
+  --p-scale-3: #c2410c;
+  --p-scale-4: #b91c1c;
+  --p-scale-5: #881337;
+  --p-accent-glow: 0 0 0 3px rgba(0, 119, 182, 0.18);
+  --p-ok-glow: 0 0 6px rgba(4, 120, 87, 0.35);
+  --p-warn-glow: 0 0 6px rgba(180, 83, 9, 0.35);
+  --p-danger-glow: 0 0 6px rgba(185, 28, 28, 0.35);
+  --p-sh1: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --p-sh2: 0 18px 48px rgba(15, 23, 42, 0.18);
   color-scheme: light;
 }
