@@ -6,5 +6,7 @@ showcase/dist/
 .DS_Store
 Thumbs.db
 
-# istruzioni private di chi lavora con Claude Code (importa AGENTS.md)
+# private files of whoever works with Claude Code: CLAUDE.md imports AGENTS.md,
+# .claude/ holds the project copy of the skill (npm run skill:install)
 CLAUDE.md
+.claude/
