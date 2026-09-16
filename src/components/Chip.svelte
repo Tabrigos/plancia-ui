@@ -4,11 +4,11 @@
   import type { Tone } from '../index'
 
   /**
-   * Un chip solo per stati, scale e bande: 22 px, monospazio, tono
-   * semantico. `count` è la variante bassa (18 px) dei contatori;
-   * `small` la stessa altezza ma col tono (le scale nelle tabelle).
-   * `color` sovrascrive il tono con un colore proprio (es. il colore di un
-   * gruppo di satelliti): sfondo e bordo derivano da quello.
+   * One chip for statuses, scale levels and bands: 22 px, monospace,
+   * semantic tone. `count` is the low (18 px) counter variant; `small`
+   * the same low height but with the tone (scale levels in tables).
+   * `color` overrides the tone with a free color (e.g. the color of a
+   * satellite group): background and border derive from it.
    */
   let {
     tone = 'neutral',

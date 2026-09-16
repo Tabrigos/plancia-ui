@@ -2,9 +2,9 @@
   import type { Snippet } from 'svelte'
 
   /**
-   * Riga di un elenco di console: icona, nome, comando a destra. È la riga
-   * dei layer e delle impostazioni — tocca i bordi della colonna (il padding
-   * orizzontale è suo) e si accende al passaggio del mouse.
+   * Row of a console list: icon, name, control on the right. It is the row
+   * of layers and settings — it touches the column edges (the horizontal
+   * padding is its own) and highlights on hover.
    */
   let {
     label,
@@ -16,19 +16,19 @@
   }: {
     label: string
     title?: string
-    /** Il titolo spiega il dato: cursore da aiuto sul nome */
+    /** The title explains the datum: help cursor on the name */
     help?: boolean
-    /** Glifo a sinistra, 18 px */
+    /** Glyph on the left, 18 px */
     icon?: Snippet
-    /** Comandi a destra (interruttore, chip, contatore, pulsanti) */
+    /** Controls on the right (toggle, chip, counter, buttons) */
     children?: Snippet
-    /** Attributi propri del consumatore (`data-*`, `id`, …) */
+    /** The consumer's own attributes (`data-*`, `id`, …) */
     [key: string]: unknown
   } = $props()
 </script>
 
-<!-- lo spread PRIMA: la classe del componente non si perde se chi lo usa
-     passa un `class` proprio -->
+<!-- the spread FIRST: the component's class is not lost when the consumer
+     passes a `class` of its own -->
 <div {...rest} class="p-setting-row" {title}>
   {#if icon}<span class="ic" aria-hidden="true">{@render icon()}</span>{/if}
   <span class="name" class:help>{label}</span>

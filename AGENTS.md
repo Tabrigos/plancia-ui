@@ -18,6 +18,7 @@ src/tokens.json           SINGLE SOURCE of the tokens: dark theme + `light` bloc
 src/tokens.css            GENERATED from tokens.json (npm run tokens); committed
 src/base.css              reset, typography, surfaces, p-* utilities, focus, reduced motion
 src/components/*.svelte   one component per file, scoped CSS, tokens only
+tests/                    vitest in jsdom: one file per component, tokens, scaleTone
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 showcase/                 Vite showcase (every component in every state); reads ../src, not dist
 skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
@@ -41,6 +42,7 @@ American spelling.
 npm ci                      # root: svelte-package, svelte, typescript
 npm run tokens              # tokens.json → src/tokens.css
 npm run build               # tokens + svelte-package → dist/
+npm test                    # vitest: one file per component in tests/, plus tokens and scaleTone
 cd showcase && npm install  # once
 cd showcase && npm run dev  # http://localhost:5174, HMR on the package sources
 cd showcase && npm run check && npm run build   # svelte-check (covers ../src too) and build
@@ -48,9 +50,11 @@ npm pack --dry-run          # what would go to npm (about 40 files, under 100 kB
 ```
 
 The showcase is the test bench: **every change is looked at there, in both
-themes and both densities, before it counts as done.** There are no component
-tests yet (the plan is in `docs/publishing.md`): until then the check is
-svelte-check + showcase + the reference consumer.
+themes and both densities, before it counts as done.** The tests in `tests/`
+cover what the README promises for each component (roles, accessible names,
+props, classes) and that the committed `tokens.css` is what `tokens.json`
+generates; they run in jsdom, so layout is checked by eye in the showcase,
+not by a test.
 
 ## 3. How the code is written
 
@@ -84,13 +88,14 @@ time, without tools. In practice:
 
 1. the file in `src/components/`, exported from `src/index.ts` (with its types);
 2. a section in the showcase that shows it in every state;
-3. the row in the `README.md` table (main props, what it is for);
-4. the row in `skills/plancia-ui/SKILL.md`, the guide an AI agent reads
+3. its test file in `tests/components/`, on what the README promises;
+4. the row in the `README.md` table (main props, what it is for);
+5. the row in `skills/plancia-ui/SKILL.md`, the guide an AI agent reads
    instead of the code: same props, same rules, kept as complete as the code;
-5. the line in `CHANGELOG.md` under `[Unreleased]`;
-6. if it adds a token: in `tokens.json` in BOTH themes, then `npm run tokens`
+6. the line in `CHANGELOG.md` under `[Unreleased]`;
+7. if it adds a token: in `tokens.json` in BOTH themes, then `npm run tokens`
    and commit the regenerated CSS;
-7. `cd showcase && npm run check` clean, showcase looked at in dark and light.
+8. `cd showcase && npm run check` clean, showcase looked at in dark and light.
 
 ## 4. Versioning (SemVer, with the rules of a design system)
 
@@ -153,7 +158,7 @@ Rules:
   chronicle of the reasoning: the repository is public and git history is the
   part that never gets cleaned up;
 - CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
-  regenerated identical to the committed ones, `npm run build`, svelte-check
+  regenerated identical to the committed ones, `npm test`, `npm run build`, svelte-check
   and build of the showcase, `npm pack --dry-run`. A red PR is not merged;
 - no personal files in the repo: `CLAUDE.md` is in `.gitignore` on purpose
   (whoever works with Claude Code keeps their own, importing this file). The

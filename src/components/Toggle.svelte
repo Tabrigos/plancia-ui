@@ -1,8 +1,8 @@
 <script lang="ts">
   /**
-   * Interruttore accessibile: un vero <input type="checkbox"> con l'aspetto
-   * del sistema (34×20, pomello che scorre), focus visibile, stato
-   * disabilitato. `checked` è bindabile; `onchange` riceve il nuovo valore.
+   * Accessible switch: a real <input type="checkbox"> with the look of the
+   * system (34×20, sliding knob), visible focus, disabled state.
+   * `checked` is bindable; `onchange` receives the new value.
    */
   let {
     checked = $bindable(false),
@@ -13,9 +13,9 @@
   }: {
     checked?: boolean
     disabled?: boolean
-    /** Etichetta accessibile (il testo visibile sta di solito nella riga accanto) */
+    /** Accessible label (the visible text usually sits in the row next to it) */
     label?: string
-    /** Tooltip nativo */
+    /** Native tooltip */
     title?: string
     onchange?: (checked: boolean) => void
   } = $props()

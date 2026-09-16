@@ -4,8 +4,8 @@
 
 <script lang="ts">
   /**
-   * Controllo segmentato (le modalità del cockpit): un gruppo di bottoni
-   * con `aria-pressed`, uno solo attivo. `value` è bindabile.
+   * Segmented control (the modes of a cockpit): a group of buttons with
+   * `aria-pressed`, only one active. `value` is bindable.
    */
   let {
     items,
@@ -13,7 +13,7 @@
     onchange,
     label,
     size = 'md',
-  }: { items: SegmentedItem[]; value?: string; onchange?: (id: string) => void; label?: string; /** `sm`: pillola in linea (teste, righe meta) */ size?: 'md' | 'sm' } = $props()
+  }: { items: SegmentedItem[]; value?: string; onchange?: (id: string) => void; label?: string; /** `sm`: inline pill (heads, meta rows) */ size?: 'md' | 'sm' } = $props()
 
   function pick(id: string): void {
     if (id === value) return

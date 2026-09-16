@@ -1,8 +1,8 @@
 <script lang="ts">
   /**
-   * Legenda di un layer raster: barra del gradiente con minimo e massimo in
-   * monospazio e la nota (soglia di trasparenza, unità). `gradient` è un
-   * valore CSS (`linear-gradient(...)`) già orientato da sinistra a destra.
+   * Legend of a raster layer: gradient bar with minimum and maximum in
+   * monospace and the note (transparency threshold, unit). `gradient` is a
+   * CSS value (`linear-gradient(...)`) already oriented left to right.
    */
   let {
     gradient,

@@ -6,8 +6,8 @@
   import type { Snippet } from 'svelte'
 
   /**
-   * Stati con un solo vocabolario: `empty` (inset neutro), `info`, `warn`
-   * (warn-soft), `error` (danger-soft, con azione a destra se c'è).
+   * States with one vocabulary: `empty` (neutral inset), `info`, `warn`
+   * (warn-soft), `error` (danger-soft, with the action on the right if any).
    */
   let {
     kind = 'info',

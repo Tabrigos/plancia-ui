@@ -2,7 +2,7 @@
   export interface LegendDot {
     color: string
     label: string
-    /** Trasparenza del pallino (contorni, elementi tenui) */
+    /** Opacity of the dot (contours, faint elements) */
     opacity?: number
     title?: string
   }
@@ -10,8 +10,8 @@
 
 <script lang="ts">
   /**
-   * Legenda a pallini: che cosa significano i colori disegnati altrove (sul
-   * globo, su un canvas). Va a capo da sé quando le voci non stanno in riga.
+   * Dot legend: what the colors drawn elsewhere mean (on the globe, on a
+   * canvas). Wraps by itself when the items do not fit on one line.
    */
   let { items, label }: { items: LegendDot[]; label?: string } = $props()
 </script>

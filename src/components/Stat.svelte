@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte'
   import type { Tone } from '../index'
 
-  /** Statistica in card: etichetta piccola in maiuscolo, valore mono 16 px, nota. */
+  /** Stat in a card: small uppercase label, 16 px monospace value, note. */
   let {
     label,
     sub,

@@ -27,6 +27,9 @@ jobs:
           npm run tokens
           git diff --exit-code -- src/tokens.css
 
+      - name: Component and token tests (vitest, jsdom)
+        run: npm test
+
       - name: Build (svelte-package)
         run: npm run build
 
