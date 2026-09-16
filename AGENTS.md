@@ -1,176 +1,185 @@
-# AGENTS.md — entrare nel progetto e svilupparlo
+# AGENTS.md — working on plancia-ui
 
-Guida per chi lavora su plancia-ui, agente o persona. Il `README.md` dice
-cos'è il pacchetto e come si usa in un progetto; questo file dice come si
-modifica, si versiona e si pubblica. Se i due differiscono, vince il codice e
-va corretto il documento.
+A guide for whoever works on plancia-ui, human or agent. `README.md` says
+what the package is and how to use it in a project; this file says how to
+change it, version it and publish it. If the two disagree, the code wins and
+the document gets fixed.
 
-## 1. Che cosa stai toccando
+## 1. What you are touching
 
-plancia-ui è un design system per console dense, scure per nascita e chiare a
-scelta: **token** CSS (`--p-*`), **stili base** (classi `p-*`) e
-**quattordici componenti Svelte 5**. Ha un solo peer dependency (`svelte`
-≥ 5) e **nessuna dipendenza a runtime**: è una regola, non un caso.
+plancia-ui is a design system for dense consoles, dark by birth and light by
+choice: CSS **tokens** (`--p-*`), **base styles** (`p-*` classes) and
+**fourteen Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
+and **no runtime dependency**: that is a rule, not an accident.
 
 ```
-src/index.ts              esporta i componenti, i tipi e scaleTone()
-src/tokens.json           SORGENTE UNICA dei token, tema scuro + blocco `light`
-src/tokens.css            GENERATO da tokens.json (npm run tokens); committato
-src/base.css              reset, tipografia, superfici, utilità p-*, focus, reduced-motion
-src/components/*.svelte   un componente per file, CSS scoped, solo token
-scripts/build-tokens.mjs  il generatore; si ferma se un token manca in un tema
-showcase/                 vetrina Vite (ogni componente in ogni stato); legge ../src, non dist
-skill/                    la skill per Claude Code (come USARE il pacchetto in un altro progetto)
-docs/                     pubblicazione.md + archivio/ (storico, non si aggiorna)
-dist/                     output di `npm run build`, ignorato da git: è ciò che va su npm
+src/index.ts              exports the components, the types and scaleTone()
+src/tokens.json           SINGLE SOURCE of the tokens: dark theme + `light` block
+src/tokens.css            GENERATED from tokens.json (npm run tokens); committed
+src/base.css              reset, typography, surfaces, p-* utilities, focus, reduced motion
+src/components/*.svelte   one component per file, scoped CSS, tokens only
+scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
+showcase/                 Vite showcase (every component in every state); reads ../src, not dist
+skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
+docs/                     tokens, design rules, publishing + archivio/ (history, never updated)
+dist/                     output of `npm run build`, git-ignored: it is what goes to npm
 ```
 
-Il codice parla inglese (identificatori, prop, classi CSS) e i commenti, i
-documenti e i commit parlano italiano. Non cambiare questa convenzione da
-soli: è una decisione di progetto.
+### Language
 
-## 2. Mettersi al lavoro
+Everything public is in English: identifiers, props, CSS classes, comments,
+documents, commit messages, pull requests, issues and releases. The project
+started in Italian and is moving over file by file: **when you touch a file
+that is still in Italian, translate the whole file**, never a paragraph. Two
+exceptions: `docs/archivio/` is history and stays as it is, and a component's
+public prop names never change for language reasons (`sub` stays `sub`).
+American spelling.
+
+## 2. Getting started
 
 ```bash
-npm ci                      # radice: svelte-package, svelte, typescript
+npm ci                      # root: svelte-package, svelte, typescript
 npm run tokens              # tokens.json → src/tokens.css
 npm run build               # tokens + svelte-package → dist/
-cd showcase && npm install  # una volta
-cd showcase && npm run dev  # http://localhost:5174, HMR sui sorgenti del pacchetto
-cd showcase && npm run check && npm run build   # svelte-check (copre anche ../src) e build
-npm pack --dry-run          # cosa partirebbe su npm (37 file attesi, ~60 kB)
+cd showcase && npm install  # once
+cd showcase && npm run dev  # http://localhost:5174, HMR on the package sources
+cd showcase && npm run check && npm run build   # svelte-check (covers ../src too) and build
+npm pack --dry-run          # what would go to npm (about 40 files, under 100 kB)
 ```
 
-La vetrina è il banco di prova: **ogni modifica si guarda lì, nei due temi e
-nelle due densità, prima di considerarla fatta.** Non ci sono ancora test dei
-componenti (il lavoro è descritto in `docs/pubblicazione.md` §2): fino ad
-allora la verifica è svelte-check + vetrina + il consumatore di riferimento.
+The showcase is the test bench: **every change is looked at there, in both
+themes and both densities, before it counts as done.** There are no component
+tests yet (the plan is in `docs/publishing.md`): until then the check is
+svelte-check + showcase + the reference consumer.
 
-## 3. Come si scrive il codice
+## 3. How the code is written
 
-Il pacchetto deve restare leggibile da uno sviluppatore umano che lo apre per
-la prima volta, senza strumenti. In pratica:
+The package must stay readable by a developer who opens it for the first
+time, without tools. In practice:
 
-- **un componente, un file, sotto le ~120 righe** stile compreso. Se cresce,
-  è due componenti;
-- **nomi per esteso**: `subtitle`, non `sub` (dove oggi c'è `sub` è perché
-  significa "riga secondaria" e il README lo spiega: non aggiungerne altri);
-  niente abbreviazioni nuove, niente sigle;
-- **prop tipizzate inline** in `$props()`, con una riga di JSDoc su ogni prop
-  che non si spiega da sola (guarda `SettingRow.svelte`);
-- **il commento dice perché**, mai cosa: il cosa si legge dal codice. Un
-  commento in testa al componente dice a cosa serve e qual è la regola di
-  design che incarna;
-- **CSS**: solo token (`var(--p-*)`), una dichiarazione per stato, raggruppate
-  per selettore; niente `!important`, niente colori o corpi scritti a mano,
-  niente `px` sotto gli 11 per il testo. Una trasparenza è
-  `color-mix(in srgb, var(--p-x) N%, transparent)`;
-- **niente JavaScript dove basta il CSS** e niente dipendenze: se serve una
-  libreria, prima si discute in una issue;
-- **accessibilità di serie**: ogni elemento interattivo è un elemento nativo
-  (`button`, `input`), ha il focus visibile ereditato da `base.css` e un nome
-  accessibile; `aria-pressed` per gli stati commutabili; `role="alert"` solo
-  per gli errori;
-- **il pacchetto non conosce il dominio**: niente testi di prodotto, niente
-  fonti dati, niente layout di un'applicazione. Un componente entra quando la
-  stessa forma serve in più posti.
+- **one component, one file, under ~120 lines** including styles. If it
+  grows, it is two components;
+- **full names**: `subtitle`, not `sub` (where `sub` exists today it means
+  "secondary line" and the README explains it: do not add more); no new
+  abbreviations, no acronyms;
+- **props typed inline** in `$props()`, with one line of JSDoc on every prop
+  that does not explain itself (see `SettingRow.svelte`);
+- **a comment says why**, never what: the what is read from the code. A
+  comment at the top of the component says what it is for and which design
+  rule it embodies;
+- **CSS**: tokens only (`var(--p-*)`), one declaration per state, grouped by
+  selector; no `!important`, no hand-written colors or sizes, no text under
+  11 px. A transparency is `color-mix(in srgb, var(--p-x) N%, transparent)`;
+- **no JavaScript where CSS is enough** and no dependencies: if a library
+  seems necessary, open an issue first;
+- **accessibility by default**: every interactive element is a native element
+  (`button`, `input`), has the visible focus ring inherited from `base.css`
+  and an accessible name; `aria-pressed` for toggling states; `role="alert"`
+  only for errors;
+- **the package knows nothing about the domain**: no product copy, no data
+  sources, no application layout. A component comes in when the same shape is
+  needed in more than one place.
 
-### Checklist per un componente nuovo o cambiato
+### Checklist for a new or changed component
 
-1. il file in `src/components/`, esportato da `src/index.ts` (con i tipi);
-2. una sezione nella vetrina che lo mostra in ogni stato;
-3. la riga nella tabella del `README.md` (prop principali, a cosa serve);
-4. la riga in `CHANGELOG.md` sotto `[Unreleased]`;
-5. se aggiunge un token: in `tokens.json` in ENTRAMBI i temi, poi
-   `npm run tokens` e commit del CSS rigenerato;
-6. `cd showcase && npm run check` pulito, vetrina guardata in scuro e chiaro.
+1. the file in `src/components/`, exported from `src/index.ts` (with its types);
+2. a section in the showcase that shows it in every state;
+3. the row in the `README.md` table (main props, what it is for);
+4. the row in `skills/plancia-ui/SKILL.md`, the guide an AI agent reads
+   instead of the code: same props, same rules, kept as complete as the code;
+5. the line in `CHANGELOG.md` under `[Unreleased]`;
+6. if it adds a token: in `tokens.json` in BOTH themes, then `npm run tokens`
+   and commit the regenerated CSS;
+7. `cd showcase && npm run check` clean, showcase looked at in dark and light.
 
-## 4. Versionamento (SemVer, con le regole di un design system)
+## 4. Versioning (SemVer, with the rules of a design system)
 
-Il **contratto pubblico** del pacchetto è: i componenti esportati e le loro
-prop; i NOMI dei token `--p-*`; le classi `p-*` di `base.css`; le voci di
-`exports` (`.`, `./tokens.css`, `./base.css`, `./tokens.json`); gli attributi
-`data-theme` e `data-density`; la peer dependency. Tutto il resto è
-implementazione.
+The **public contract** of the package is: the exported components and their
+props; the NAMES of the `--p-*` tokens; the `p-*` classes of `base.css`; the
+`exports` entries (`.`, `./tokens.css`, `./base.css`, `./tokens.json`); the
+`data-theme` and `data-density` attributes; the peer dependency. Everything
+else is implementation.
 
-| Versione | Quando | Esempi |
+| Version | When | Examples |
 |---|---|---|
-| **patch** `0.3.x` | correzione che non cambia il contratto | un bug, un valore sbagliato, una regressione di accessibilità, un token che nel tema chiaro stonava, documenti, build |
-| **minor** `0.x.0` | aggiunta compatibile | componente nuovo, prop facoltativa nuova, token nuovo (nei due temi), classe di utilità nuova, deprecazione (funziona ancora, avvisa) |
-| **major** `x.0.0` | rottura | componente, prop, token o classe rimossi o rinominati; un predefinito cambiato su cui i consumatori contano; peer dependency alzata; l'ordine o il nome dei CSS da importare |
+| **patch** `0.3.x` | a fix that does not change the contract | a bug, a wrong value, an accessibility regression, a token that clashed in the light theme, documents, build |
+| **minor** `0.x.0` | a compatible addition | new component, new optional prop, new token (in both themes), new utility class, deprecation (still works, warns) |
+| **major** `x.0.0` | a break | component, prop, token or class removed or renamed; a default that consumers rely on changed; peer dependency raised; the order or the name of the CSS files to import |
 
-Regole in più:
+Extra rules:
 
-- **cambiare il VALORE di un token** (un colore, un corpo) è *patch* se è una
-  correzione e *minor* se è un ridisegno voluto: in entrambi i casi il
-  changelog lo dice, perché il consumatore lo vede a schermo;
-- **finché siamo in 0.x** SemVer permette rotture nelle minor; noi le
-  facciamo solo con una voce **Rompe** nel changelog e la riga "come
-  migrare". Dalla 1.0.0 in poi si applica la tabella senza eccezioni;
-- **una versione pubblicata non si tocca mai**: un errore è una patch nuova;
-- la versione si alza in `package.json` e in `CHANGELOG.md` **nello stesso
-  commit**, intitolato `Versione X.Y.Z`, con il tag `vX.Y.Z` su quel commit.
+- **changing the VALUE of a token** (a color, a size) is *patch* if it is a
+  fix and *minor* if it is a deliberate redesign: in both cases the changelog
+  says so, because the consumer sees it on screen;
+- **while we are in 0.x** SemVer allows breaks in minor versions; we make
+  them only with a **Breaking** entry in the changelog and a "how to migrate"
+  line. From 1.0.0 on the table applies without exceptions;
+- **a published version is never touched**: a mistake is a new patch;
+- the version is raised in `package.json` and in `CHANGELOG.md` **in the same
+  commit**, titled `Version X.Y.Z`, with the tag `vX.Y.Z` on that commit.
 
 ## 5. Changelog
 
-`CHANGELOG.md` segue [Keep a Changelog](https://keepachangelog.com/it/1.1.0/)
-in italiano. Regole:
+`CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Rules:
 
-- in testa c'è sempre `## [Unreleased]`; **ogni commit che cambia `src/`
-  aggiunge la sua riga lì**, nello stesso commit. Un commit senza riga di
-  changelog o è documentazione o è un errore;
-- sezioni, in quest'ordine e solo quelle che servono: **Rompe** (con la riga
-  "come migrare"), **Aggiunto**, **Cambiato**, **Deprecato**, **Rimosso**,
-  **Corretto**, **Sicurezza**;
-- una riga descrive **ciò che vede chi usa il pacchetto**, non
-  l'implementazione: parte dal nome del componente, del token o della classe
-  in backtick, dice cosa cambia e, se non è ovvio, perché.
-  Bene: "`KeyValue`: il valore che non entra accanto all'etichetta scende a
-  capo intero invece di sovrapporsi". Male: "refactor di KeyValue";
-- al rilascio `[Unreleased]` diventa `## [X.Y.Z] — AAAA-MM-GG` e si apre un
-  nuovo `[Unreleased]` vuoto; il testo del rilascio su GitHub è quella
-  sezione, copiata così com'è.
+- there is always `## [Unreleased]` at the top; **every commit that changes
+  `src/` adds its line there**, in the same commit. A commit without a
+  changelog line is either documentation or a mistake;
+- sections, in this order and only the ones needed: **Breaking** (with the
+  "how to migrate" line), **Added**, **Changed**, **Deprecated**, **Removed**,
+  **Fixed**, **Security**;
+- a line describes **what the user of the package sees**, not the
+  implementation: it starts with the name of the component, token or class
+  in backticks, says what changes and, if not obvious, why.
+  Good: "`KeyValue`: a value that does not fit next to the label drops to a
+  full line instead of overlapping it". Bad: "KeyValue refactor";
+- on release `[Unreleased]` becomes `## [X.Y.Z] — YYYY-MM-DD` and a new empty
+  `[Unreleased]` opens; the GitHub release text is that section, copied as is.
 
-## 6. Git e GitHub
+## 6. Git and GitHub
 
-- ramo `main` sempre pubblicabile; il lavoro va su un ramo e arriva con una
-  pull request, anche se sei solo: la PR è dove si rilegge il diff;
-- commit piccoli, con un messaggio in italiano che dice cosa cambia per chi
-  usa il pacchetto e perché; il titolo è una frase, non una sigla;
-- nel messaggio niente **dati personali** (nomi, cognomi, indirizzi e-mail),
-  nessun riferimento ad **assistenti AI** — trailer `Co-Authored-By`
-  compreso — e niente cronaca del ragionamento: il repository è pubblico e
-  la storia di git è la parte che poi non si ripulisce più;
-- la CI (`.github/workflows/ci.yml`) su ogni push e PR: `npm ci`, token
-  rigenerati identici a quelli committati, `npm run build`, svelte-check e
-  build della vetrina, `npm pack --dry-run`. Una PR rossa non si fonde;
-- niente file personali nel repo: `CLAUDE.md` è in `.gitignore` di
-  proposito (chi lavora con Claude Code se ne tiene uno suo, che importa
-  questo file). Le istruzioni condivise stanno QUI.
+- `main` is always publishable; work goes on a branch and lands with a pull
+  request, even when you are alone: the PR is where the diff gets re-read;
+- small commits, with a message in English that says what changes for the
+  user of the package and why; the title is a sentence, not a code;
+- no **personal data** in the message (names, surnames, e-mail addresses), no
+  reference to **AI assistants** — `Co-Authored-By` trailers included — and no
+  chronicle of the reasoning: the repository is public and git history is the
+  part that never gets cleaned up;
+- CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
+  regenerated identical to the committed ones, `npm run build`, svelte-check
+  and build of the showcase, `npm pack --dry-run`. A red PR is not merged;
+- no personal files in the repo: `CLAUDE.md` is in `.gitignore` on purpose
+  (whoever works with Claude Code keeps their own, importing this file). The
+  shared instructions live HERE.
 
-## 7. Pubblicare su npm
+## 7. Publishing to npm
 
-1. `[Unreleased]` → `[X.Y.Z] — data` nel changelog, versione in
-   `package.json`, commit `Versione X.Y.Z`, tag `vX.Y.Z`;
-2. `npm run build` e `npm pack --dry-run`: nel tarball ci sono solo `dist/`,
-   `README.md`, `AGENTS.md`, `CHANGELOG.md`, `LICENSE` (`files` in
-   `package.json`); niente di un consumatore, niente sorgenti;
-3. pubblicazione **in staging** (npm dall'agosto 2026): `npm stage publish`
-   con un token "stage only", poi approvazione della versione sul sito con
-   il secondo fattore. Un token stage-only non può creare un pacchetto nuovo
-   (`E_STAGE_REQUIRED`), ma il pacchetto esiste già. Il token vive in
-   `~/.npmrc` di chi pubblica, mai nel repo;
-4. push di commit e tag, rilascio su GitHub con il testo del changelog;
-5. nel consumatore di riferimento (Sidereus) alzare la versione e verificare.
+1. `[Unreleased]` → `[X.Y.Z] — date` in the changelog, version in
+   `package.json`, commit `Version X.Y.Z`, tag `vX.Y.Z`;
+2. check that `README.md`, `skills/plancia-ui/SKILL.md` and the changelog tell
+   the same story: the agent guide ships in the package and must not lag
+   behind the code;
+3. `npm run build` and `npm pack --dry-run`: the tarball contains only
+   `dist/`, `skills/`, `README.md`, `AGENTS.md`, `CHANGELOG.md`, `LICENSE`
+   (`files` in `package.json`); nothing from a consumer, no sources;
+4. **staged** publishing (npm since August 2026): `npm stage publish` with a
+   "stage only" token, then approval of the version on the website with the
+   second factor. A stage-only token cannot create a new package
+   (`E_STAGE_REQUIRED`), but the package already exists. The token lives in
+   the publisher's `~/.npmrc`, never in the repo;
+5. push commit and tag, GitHub release with the changelog text;
+6. in the reference consumer (Sidereus) raise the version and verify.
 
-Dettagli e storia in `docs/pubblicazione.md`.
+Details and history in `docs/publishing.md`.
 
-## 8. Cosa non fare
+## 8. What not to do
 
-- non importare i sorgenti del pacchetto con un alias da un consumatore
-  esterno: il contratto è `dist`, la vetrina è l'unica eccezione;
-- non aggiungere una dipendenza a runtime;
-- non scrivere un colore, un corpo o uno z-index a mano;
-- non rinominare un token o una prop "per pulizia": è una major, e va
-  discussa;
-- non aggiornare i documenti in `docs/archivio/`: sono storia.
+- do not import the package sources through an alias from an external
+  consumer: the contract is `dist`, the showcase is the only exception;
+- do not add a runtime dependency;
+- do not write a color, a size or a z-index by hand;
+- do not rename a token or a prop "for cleanliness": it is a major, and it
+  gets discussed;
+- do not update the documents in `docs/archivio/`: they are history.
