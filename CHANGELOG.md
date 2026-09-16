@@ -6,6 +6,13 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Breaking
+- `PanelHead` and `Skeleton`: the default accessible labels are now in
+  English (`closeLabel` "Close", `label` "Loading") instead of Italian. How
+  to migrate: an app in another language passes its own text, for example
+  `<PanelHead closeLabel="Chiudi" …>` and `<Skeleton label="Caricamento" />`;
+  an app that already passes them sees no change.
+
 ### Added
 - Own repository for the package (`github.com/Tabrigos/plancia-ui`): the
   showcase in `showcase/`, the documents in `docs/`, CI (tokens regenerated

@@ -2,9 +2,9 @@
   import type { Snippet } from 'svelte'
 
   /**
-   * La testa di pannello unica: titolo 14/600, sottotitolo mono facoltativo,
-   * chip sotto il titolo facoltativi (`chips`), azioni a destra (`actions`),
-   * chiusura sempre ultima (`onclose`).
+   * The one panel head: title 14/600, optional monospace subtitle, optional
+   * chips under the title (`chips`), actions on the right (`actions`), the
+   * close button always last (`onclose`).
    */
   let {
     title,
@@ -13,15 +13,16 @@
     chips,
     actions,
     onclose,
-    closeLabel = 'Chiudi',
+    closeLabel = 'Close',
   }: {
     title: string
     subtitle?: string
-    /** Tooltip nativo sul sottotitolo (cos'è quel dato) */
+    /** Native tooltip on the subtitle (what that datum is) */
     subtitleTitle?: string
     chips?: Snippet
     actions?: Snippet
     onclose?: () => void
+    /** Accessible name and tooltip of the close button: pass it in the language of the app */
     closeLabel?: string
   } = $props()
 </script>

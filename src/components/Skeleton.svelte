@@ -1,6 +1,6 @@
 <script lang="ts">
-  /** Scheletro di caricamento: righe che respirano al posto di "Caricamento…". */
-  let { lines = 3, label = 'Caricamento', compact = false }: { lines?: number; label?: string; compact?: boolean } = $props()
+  /** Loading skeleton: breathing lines in place of a "Loading…" text. `label` is the accessible name. */
+  let { lines = 3, label = 'Loading', compact = false }: { lines?: number; label?: string; compact?: boolean } = $props()
   const widths = ['86%', '62%', '74%', '48%', '68%']
 </script>
 
