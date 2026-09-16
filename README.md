@@ -107,6 +107,7 @@ at it once:
 - [`docs/design-rules.md`](docs/design-rules.md) — the rules of the system
   and what does not belong in the package.
 - [`CHANGELOG.md`](CHANGELOG.md) — what changed in each version.
+- [`docs/roadmap.md`](docs/roadmap.md) — what is likely to come next.
 - [`AGENTS.md`](AGENTS.md) — how to change, version and publish the package;
   [`CONTRIBUTING.md`](CONTRIBUTING.md) for the short version.
 - [Showcase](https://tabrigos.github.io/plancia-ui/) — every component in

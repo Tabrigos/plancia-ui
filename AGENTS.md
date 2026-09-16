@@ -22,7 +22,7 @@ tests/                    vitest in jsdom: one file per component, tokens, scale
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 showcase/                 Vite showcase (every component in every state); reads ../src, not dist
 skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
-docs/                     tokens, design rules, publishing + archivio/ (history, never updated)
+docs/                     tokens, design rules, publishing, roadmap + archivio/ (history, never updated)
 dist/                     output of `npm run build`, git-ignored: it is what goes to npm
 ```
 
@@ -180,6 +180,7 @@ Rules:
    (`E_STAGE_REQUIRED`), but the package already exists. The token lives in
    the publisher's `~/.npmrc`, never in the repo;
 5. push commit and tag, GitHub release with the changelog text;
+   `docs/roadmap.md` updated: what shipped goes out, what moved goes up;
 6. in the reference consumer (Sidereus) raise the version and verify.
 
 Details and history in `docs/publishing.md`.
