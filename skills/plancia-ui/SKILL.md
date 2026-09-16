@@ -89,11 +89,11 @@ never split, never truncated, never overlapping the label.
 **`PanelHead`** — `title: string`, `subtitle?: string` (monospace),
 `subtitleTitle?: string` (tooltip on the subtitle), snippet `chips` (under
 the title), snippet `actions` (right side), `onclose?: () => void` (renders
-the close button, always last), `closeLabel?: string` (accessible name of the
-close button, default `'Chiudi'`: pass your own).
+the close button, always last), `closeLabel?: string` (accessible name and tooltip
+of the close button, default `'Close'`: pass it in the app's language).
 
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name,
-default `'Caricamento'`: pass your own), `compact?: boolean`.
+default `'Loading'`: pass it in the app's language), `compact?: boolean`.
 
 **`Notice`** — `kind?: 'empty' | 'info' | 'warn' | 'error'` (`info`),
 `title?: string`, `text?: string`, `compact?: boolean`. Content is the action
