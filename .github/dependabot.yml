@@ -1,0 +1,18 @@
+# Aggiornamenti settimanali delle dipendenze di sviluppo (il pacchetto non
+# ne ha a runtime) e delle azioni della CI. Le PR passano dalla CI come
+# tutte le altre; una minor di svelte-package o vite si fonde dopo aver
+# guardato la vetrina.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /showcase
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
