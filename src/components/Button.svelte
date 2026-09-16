@@ -8,9 +8,9 @@
   import type { HTMLButtonAttributes } from 'svelte/elements'
 
   /**
-   * Bottone in quattro varianti (primario, secondario, silenzioso, icona) e
-   * due taglie. Il primario è uno per pannello. Accetta tutti gli attributi
-   * nativi (onclick, title, aria-*, type, disabled).
+   * Button in four variants (primary, secondary, quiet, icon) and two
+   * sizes. One primary per panel. Accepts every native attribute
+   * (onclick, title, aria-*, type, disabled).
    */
   let {
     variant = 'secondary',
@@ -21,7 +21,7 @@
   }: HTMLButtonAttributes & {
     variant?: ButtonVariant
     size?: ButtonSize
-    /** Stato "premuto" per i bottoni che commutano una vista */
+    /** "Pressed" state for the buttons that toggle a view */
     active?: boolean
     children?: Snippet
   } = $props()

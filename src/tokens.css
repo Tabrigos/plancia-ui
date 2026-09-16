@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   plancia-ui — token (GENERATO da tokens.json con `npm run tokens`: non
-   modificare a mano). Tema scuro "plancia" su :root; il tema chiaro
-   ridefinisce le stesse variabili di colore sotto [data-theme="light"]
-   (l'applicazione decide quando mettere l'attributo sull'elemento radice).
+   plancia-ui — tokens (GENERATED from tokens.json with `npm run tokens`: do
+   not edit by hand). Dark "plancia" theme on :root; the light theme
+   redefines the same color variables under [data-theme="light"]
+   (the application decides when to put the attribute on the root element).
    ═══════════════════════════════════════════════════════════════════════════ */
 :root {
   --p-bg: #070a12;
@@ -82,13 +82,13 @@
   color-scheme: dark;
 }
 
-/* Densità: la riga standard è 32 px con padding 8; "comfortable" respira */
+/* Density: the standard row is 32 px with 8 px padding; "comfortable" breathes */
 [data-density="comfortable"] {
   --p-row: 12px;
   --p-row-h: 40px;
 }
 
-/* Tema chiaro: stesso contratto di variabili, valori di colore diversi */
+/* Light theme: same variable contract, different color values */
 [data-theme="light"] {
   --p-bg: #e9edf3;
   --p-s1: #f4f6fa;

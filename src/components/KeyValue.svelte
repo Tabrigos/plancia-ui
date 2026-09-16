@@ -3,14 +3,14 @@
   import type { Tone } from '../index'
 
   /**
-   * Riga etichetta / valore: l'etichetta a sinistra in 12 px NON va mai a
-   * capo; il valore a destra in monospazio sta su una riga; se c'è
-   * un'informazione in più (`sub`) va su una seconda riga secondaria,
-   * mai spezzando il valore. `tone` colora il valore (es. ok/danger).
+   * Label / value row: the 12 px label on the left NEVER wraps; the
+   * monospace value on the right stays on one line; extra information
+   * (`sub`) goes on a secondary second line, never by splitting the
+   * value. `tone` colors the value (e.g. ok/danger).
    *
-   * Quando i due non stanno in riga (un valore lungo come "fuori dal
-   * modello (100–1000 km)") il valore scende su una riga sua, intero e
-   * allineato a destra: non si accavalla mai all'etichetta.
+   * When the two do not fit on one line (a long value such as "outside
+   * the model (100–1000 km)") the value drops to its own line, whole and
+   * right-aligned: it never overlaps the label.
    */
   let {
     label,
@@ -23,11 +23,11 @@
   }: {
     label: string
     sub?: string
-    /** Tono della riga secondaria (es. warn se sopra la mediana) */
+    /** Tone of the secondary line (e.g. warn when above the median) */
     subTone?: Tone
     tone?: Tone
     id?: string
-    /** Tooltip nativo (spiegazione del dato) */
+    /** Native tooltip (explanation of the datum) */
     title?: string
     children?: Snippet
   } = $props()

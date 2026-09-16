@@ -2,11 +2,11 @@
   import type { Snippet } from 'svelte'
 
   /**
-   * Riga di metadati sotto il contenuto di una card: età del dato, soglie,
-   * note di metodo, piccole azioni. 11 px in colore attenuato, voci ai due
-   * estremi (`align="start"` per metterle in fila), a capo per voce intera
-   * quando non entrano: un valore non si spezza mai. Ogni voce porta il suo
-   * tooltip con `title`; un `<b>` dentro è il valore in evidenza (mono, hi).
+   * Metadata row under the content of a card: data age, thresholds, notes
+   * on method, small actions. 11 px, dim color, items at the two ends
+   * (`align="start"` to line them up), wrapping by whole item when they
+   * do not fit: a value is never split. Every item carries its own
+   * tooltip with `title`; a `<b>` inside is the highlighted value (mono, hi).
    */
   let { align = 'between', children }: { align?: 'between' | 'start'; children?: Snippet } = $props()
 </script>

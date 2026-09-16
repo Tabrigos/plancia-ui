@@ -1,12 +1,12 @@
-// Genera src/tokens.css da src/tokens.json (sorgente unica dei token).
-// Ogni gruppo diventa un prefisso: color.accent → --p-accent, size.t13 →
+// Generates src/tokens.css from src/tokens.json (single source of the tokens).
+// Every group becomes a prefix: color.accent → --p-accent, size.t13 →
 // --p-t13, space.2 → --p-space-2, glow.ok → --p-ok-glow, shadow.1 → --p-sh1,
 // scale[2] → --p-scale-2, z.panel → --p-z-panel, motion.fast →
 // --p-motion-fast, font.ui → --p-font-ui.
-// Il blocco `light` ridefinisce SOLO ciò che è colore (color, scale, glow,
-// shadow) sotto [data-theme="light"], con le stesse chiavi del tema scuro:
-// una chiave in più o in meno da un lato ferma la generazione, così un token
-// nuovo non può nascere senza la sua controparte chiara.
+// The `light` block redefines ONLY what is color (color, scale, glow,
+// shadow) under [data-theme="light"], with the same keys as the dark theme:
+// a key more or less on one side stops the generation, so a new token
+// cannot be born without its light counterpart.
 import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -22,7 +22,7 @@ for (const group of THEMED) {
   const missing = dark.filter((k) => !light.includes(k))
   const extra = light.filter((k) => !dark.includes(k))
   if (missing.length || extra.length) {
-    throw new Error(`tokens.json: ${group} — nel tema chiaro mancano [${missing}] e avanzano [${extra}]`)
+    throw new Error(`tokens.json: ${group} — the light theme is missing [${missing}] and has extra [${extra}]`)
   }
 }
 
@@ -51,27 +51,27 @@ put('focus', t.focus)
 const lightLines = themed(t.light)
 
 const css = `/* ═══════════════════════════════════════════════════════════════════════════
-   plancia-ui — token (GENERATO da tokens.json con \`npm run tokens\`: non
-   modificare a mano). Tema scuro "plancia" su :root; il tema chiaro
-   ridefinisce le stesse variabili di colore sotto [data-theme="light"]
-   (l'applicazione decide quando mettere l'attributo sull'elemento radice).
+   plancia-ui — tokens (GENERATED from tokens.json with \`npm run tokens\`: do
+   not edit by hand). Dark "plancia" theme on :root; the light theme
+   redefines the same color variables under [data-theme="light"]
+   (the application decides when to put the attribute on the root element).
    ═══════════════════════════════════════════════════════════════════════════ */
 :root {
 ${lines.join('\n')}
   color-scheme: dark;
 }
 
-/* Densità: la riga standard è 32 px con padding 8; "comfortable" respira */
+/* Density: the standard row is 32 px with 8 px padding; "comfortable" breathes */
 [data-density="comfortable"] {
   --p-row: ${t.density.comfortable.row};
   --p-row-h: ${t.density.comfortable['row-h']};
 }
 
-/* Tema chiaro: stesso contratto di variabili, valori di colore diversi */
+/* Light theme: same variable contract, different color values */
 [data-theme="light"] {
 ${lightLines.join('\n')}
   color-scheme: light;
 }
 `
 writeFileSync(join(src, 'tokens.css'), css)
-console.log(`tokens.css: ${lines.length} variabili, ${lightLines.length} ridefinite dal tema chiaro`)
+console.log(`tokens.css: ${lines.length} variables, ${lightLines.length} redefined by the light theme`)

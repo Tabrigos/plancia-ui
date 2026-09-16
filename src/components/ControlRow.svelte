@@ -2,12 +2,12 @@
   import type { Snippet } from 'svelte'
 
   /**
-   * Riga di comando di una scheda: etichetta a sinistra (mai a capo, con
-   * ellissi se non entra), comandi a destra — un interruttore, un pulsante
-   * (i), un chip. È la testa delle schede di una console.
+   * Control row of a card: label on the left (never wrapping, ellipsis
+   * when it does not fit), controls on the right — a toggle, an (i)
+   * button, a chip. It is the head of the cards of a console.
    *
-   * `help` mette il cursore da spiegazione: usalo quando `title` spiega
-   * davvero il dato, non per ripetere l'etichetta.
+   * `help` sets the help cursor: use it when `title` really explains the
+   * datum, not to repeat the label.
    */
   let {
     label,
@@ -18,11 +18,11 @@
   }: {
     label: string
     title?: string
-    /** Il titolo spiega il dato: cursore da aiuto */
+    /** The title explains the datum: help cursor */
     help?: boolean
-    /** `hi` (predefinito) o `dim` per le righe secondarie */
+    /** `hi` (default) or `dim` for secondary rows */
     tone?: 'hi' | 'dim'
-    /** I comandi a destra, nell'ordine in cui devono comparire */
+    /** The controls on the right, in the order they must appear */
     children?: Snippet
   } = $props()
 </script>

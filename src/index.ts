@@ -1,6 +1,6 @@
 /**
- * plancia-ui — componenti Svelte 5 del tema "plancia".
- * Gli stili di base e i token si importano a parte:
+ * plancia-ui — the Svelte 5 components of the "plancia" theme.
+ * Base styles and tokens are imported separately:
  *   import 'plancia-ui/tokens.css'; import 'plancia-ui/base.css'
  */
 export { default as Button } from './components/Button.svelte'
@@ -24,7 +24,7 @@ export type { NoticeKind } from './components/Notice.svelte'
 export type { SegmentedItem } from './components/Segmented.svelte'
 export type { LegendDot } from './components/LegendDots.svelte'
 
-/** Tono semantico dei livelli delle scale NOAA (R/S/G 0–5). */
+/** Semantic tone of the NOAA scale levels (R/S/G 0–5). */
 export function scaleTone(level: number): Tone {
   if (level <= 0) return 'ok'
   if (level <= 2) return 'warn'
