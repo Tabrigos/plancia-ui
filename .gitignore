@@ -1,2 +1,7 @@
-# generato da svelte-package (svelte2tsx) durante il build; dist/ e node_modules/ sono nel .gitignore di radice
+node_modules/
+dist/
+# generato da svelte-package (svelte2tsx) durante il build
 .svelte-kit/
+showcase/dist/
+.DS_Store
+Thumbs.db

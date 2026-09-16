@@ -52,13 +52,12 @@ altri progetti.
    il progetto deve avere `@sveltejs/vite-plugin-svelte`, o l'equivalente
    del suo bundler, perché il pacchetto pubblica i `.svelte` così come
    sono, con i `.ts` compilati e i `.d.ts` accanto: `dist/`, generato da
-   `@sveltejs/package`). Sidereus, che vive nello stesso repo, NON passa da
-   `dist`: tiene la dipendenza `file:../packages/plancia-ui` e in
-   `vite.config.ts` / `vitest.config.ts` un alias verso `src/` (più `paths`
-   in `tsconfig.app.json`), così il dev server, il build dell'immagine e i
-   test leggono i sorgenti e le modifiche arrivano in HMR senza ricostruire
-   il pacchetto. In un'immagine Docker copiare la cartella del pacchetto
-   prima di `npm ci`.
+   `@sveltejs/package`). Sidereus, il primo consumatore, lo installa da npm
+   come qualunque altro progetto (dal 2026-09-16: prima viveva nello stesso
+   repo come dipendenza `file:`). Per lavorare al pacchetto con un
+   consumatore accanto: `npm link` dalla radice di questo repo e
+   `npm link plancia-ui` nel progetto, dopo `npm run build` qui (il
+   consumatore legge `dist`).
 2. **Caricare i fogli di stile una volta**, nell'entry point, in
    quest'ordine:
 
@@ -107,10 +106,10 @@ altri progetti.
    3D, che non legge le custom property, decide da sé se seguire il tema —
    in Sidereus il globo, il disco del Sole e l'eliosfera restano scuri perché
    sono spazio.
-6. **Verificare**: la vetrina `/plancia` di Sidereus
-   (`frontend/app/src/pages/PlanciaPage.svelte`) mostra ogni componente
-   in ogni stato ed è il posto dove si prova una modifica prima di
-   toccare l'app.
+6. **Verificare**: la vetrina (`showcase/`, `npm run dev` lì dentro,
+   http://localhost:5174) mostra ogni componente in ogni stato, nei due temi
+   e nelle due densità, e legge i sorgenti di `src/` in HMR: è il posto dove
+   si prova una modifica prima di pubblicarla.
 
 ## Regole del sistema (dalla revisione del 2026-09-10)
 
@@ -144,6 +143,10 @@ stessa forma serve in più posti e non sa niente del dominio.
 
 ## Stato
 
+Dal 2026-09-16 il pacchetto ha un repo suo (`lavoro/plancia-ui`, con la
+vetrina in `showcase/` e i documenti in `docs/`); prima stava in
+`frontend/packages/plancia-ui` di Sidereus, che ora lo installa da npm.
+
 0.3.0 (2026-09-14) — **prima versione su npm** (`npm install plancia-ui`) e
 **tema chiaro**: il blocco `light` di `tokens.json`
 ridefinisce ogni token di colore (più la rampa `--p-scale-0..5` delle scale
@@ -155,7 +158,7 @@ tavolozze affiancate con il selettore del tema. Chi applica l'attributo
 
 0.2.0 (2026-09-11) — token, base, **quattordici componenti**. Sidereus è il
 primo consumatore: la migrazione dell'app è finita il 2026-09-10 e la
-rifinitura l'11 (diario in `docs/archivio/plancia-ui-migrazione.md`).
+rifinitura l'11 (diario in `docs/archivio/migrazione.md`).
 
 Dalla 0.1.0: `MetaRow`, `ControlRow`, `SettingRow`, `LegendDots`; `Segmented`
 ha la variante `size="sm"` in linea; utilità `p-help` e `p-sr-only`;
@@ -163,7 +166,6 @@ ha la variante `size="sm"` in linea; utilità `p-help` e `p-sr-only`;
 all'etichetta; tutta la tipografia dei consumatori passa dalla scala
 (`--p-t*`), nessun corpo sotto gli 11 px.
 
-Non ancora pronto per npm: il pacchetto espone i sorgenti invece di un
-`dist` costruito con `@sveltejs/package`, e i componenti non hanno test
-propri (la garanzia oggi è indiretta, dallo smoke test di Sidereus). Il
-lavoro che manca è elencato in `docs/plancia-ui-pubblicazione.md`.
+Manca ancora: i componenti non hanno test propri (la garanzia oggi è
+indiretta, dallo smoke test di Sidereus) e non c'è una CI. Il lavoro che
+manca è elencato in `docs/pubblicazione.md`.
