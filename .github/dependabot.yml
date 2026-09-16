@@ -1,7 +1,6 @@
-# Aggiornamenti settimanali delle dipendenze di sviluppo (il pacchetto non
-# ne ha a runtime) e delle azioni della CI. Le PR passano dalla CI come
-# tutte le altre; una minor di svelte-package o vite si fonde dopo aver
-# guardato la vetrina.
+# Weekly updates of the development dependencies (the package has none at
+# runtime) and of the CI actions. The PRs go through CI like any other; a
+# minor of svelte-package or vite is merged after a look at the showcase.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -12,6 +11,12 @@ updates:
     directory: /showcase
     schedule:
       interval: weekly
+    ignore:
+      # svelte-check 4.7 declares `typescript ^5 || ^6`: a TypeScript major in
+      # the showcase cannot resolve until svelte-check widens the range.
+      # Remove this entry when it does (PR #4 was closed for this reason).
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
