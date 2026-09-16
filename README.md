@@ -11,6 +11,11 @@ of a ship. It was born in the mission-control cockpit of
 space weather) and is made to be reused in other consoles, dashboards and
 control panels.
 
+[![The plancia-ui showcase in the dark and light theme](https://raw.githubusercontent.com/Tabrigos/plancia-ui/main/docs/images/showcase.png)](https://tabrigos.github.io/plancia-ui/)
+
+**Live showcase**: [tabrigos.github.io/plancia-ui](https://tabrigos.github.io/plancia-ui/)
+(every component in every state; add `?theme=light` for the light theme).
+
 - **No runtime dependencies**: `svelte` ≥ 5 as the only peer dependency.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
@@ -104,8 +109,9 @@ at it once:
 - [`CHANGELOG.md`](CHANGELOG.md) — what changed in each version.
 - [`AGENTS.md`](AGENTS.md) — how to change, version and publish the package;
   [`CONTRIBUTING.md`](CONTRIBUTING.md) for the short version.
-- `showcase/` — every component in every state, in both themes and both
-  densities: `cd showcase && npm install && npm run dev`.
+- [Showcase](https://tabrigos.github.io/plancia-ui/) — every component in
+  every state, in both themes and both densities, built from `main`.
+  Locally: `cd showcase && npm install && npm run dev`.
 
 ## License
 

@@ -139,8 +139,13 @@ Rules:
 
 ## 6. Git and GitHub
 
-- `main` is always publishable; work goes on a branch and lands with a pull
-  request, even when you are alone: the PR is where the diff gets re-read;
+- `main` is always publishable. Anything under `src/` (what consumers see
+  and what ends up in a version) goes on a branch and lands with a pull
+  request, even when you are alone: CI runs before the merge and the PR is
+  where the diff gets re-read. Documentation, showcase, CI configuration and
+  metadata may go straight to `main` from a maintainer; if CI turns red
+  after the push, it gets fixed at once. External contributors always open
+  a PR;
 - small commits, with a message in English that says what changes for the
   user of the package and why; the title is a sentence, not a code;
 - no **personal data** in the message (names, surnames, e-mail addresses), no

@@ -17,6 +17,9 @@ All notable changes to plancia-ui. The format follows
   `npx skills add Tabrigos/plancia-ui`.
 - `AGENTS.md`, in the tarball: how to get into the project, write the code,
   version it, keep the changelog and publish. `CONTRIBUTING.md`.
+- The showcase is online at https://tabrigos.github.io/plancia-ui/ (GitHub
+  Pages, rebuilt from `main` on every push), in English, with `?theme=light`
+  in the URL to open it in the light theme.
 - README rewritten as a short entry point, with the `repository`,
   `homepage` and `bugs` fields in `package.json`; `docs/tokens.md` and
   `docs/design-rules.md` take the details.

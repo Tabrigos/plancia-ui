@@ -3,10 +3,10 @@ import 'plancia-ui/tokens.css'
 import 'plancia-ui/base.css'
 import './fonts.css'
 import Showcase from './Showcase.svelte'
-import { applyStoredTheme } from './theme'
+import { applyInitialTheme } from './theme'
 
-// Il pacchetto non decide quando applicare il tema chiaro: lo fa la pagina,
-// prima del mount, dalla preferenza salvata (`plancia.theme`).
-applyStoredTheme()
+// The package never decides when to apply the light theme: the page does,
+// before mount, from the URL or from the stored preference (`plancia.theme`).
+applyInitialTheme()
 
 export default mount(Showcase, { target: document.getElementById('app')! })

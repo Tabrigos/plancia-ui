@@ -1,6 +1,6 @@
-/* Caratteri self-hosted (SIL Open Font License): file variabili in peso,
- * sottoinsiemi latin + latin-ext presi da Google Fonts il 2026-09-08
- * (sprint autonomia). Le famiglie sono quelle di tokens.css. */
+/* Self-hosted fonts (SIL Open Font License): variable-weight files, latin +
+ * latin-ext subsets taken from Google Fonts on 2026-09-08. The families are
+ * the ones named in tokens.css. */
 
 @font-face {
   font-family: 'Inter';

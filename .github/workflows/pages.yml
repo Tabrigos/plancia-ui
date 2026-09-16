@@ -1,0 +1,53 @@
+# Publishes the showcase to GitHub Pages on every push to main:
+# https://tabrigos.github.io/plancia-ui/ shows what is on the main branch,
+# not necessarily the latest version on npm.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            showcase/package-lock.json
+      - name: Package dependencies (the showcase reads ../src)
+        run: npm ci
+      - name: Showcase build with the Pages base path
+        working-directory: showcase
+        env:
+          PAGES_BASE: /plancia-ui/
+        run: |
+          npm ci
+          npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: showcase/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
