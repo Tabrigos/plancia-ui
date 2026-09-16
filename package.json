@@ -4,6 +4,14 @@
   "description": "Tema \"plancia\" (sala di comando): token, stili base e componenti Svelte 5 per console dense, scure o chiare. Nato in Sidereus, pensato per essere riusato.",
   "author": "Paolo Guerrera",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tabrigos/plancia-ui.git"
+  },
+  "homepage": "https://github.com/Tabrigos/plancia-ui#readme",
+  "bugs": {
+    "url": "https://github.com/Tabrigos/plancia-ui/issues"
+  },
   "type": "module",
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,6 +29,7 @@
   "files": [
     "dist",
     "README.md",
+    "AGENTS.md",
     "CHANGELOG.md",
     "LICENSE"
   ],
@@ -30,7 +39,8 @@
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
     "build": "npm run tokens && svelte-package -i src -o dist",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "skill:install": "node scripts/install-skill.mjs"
   },
   "publishConfig": {
     "access": "public"

@@ -1,9 +1,23 @@
 # plancia-ui
 
-Tema "plancia" — la sala di comando di una nave — per console dense, scure
-per nascita e chiare a scelta: token, stili base e componenti Svelte 5. Nato
-dal cockpit "mission control" di Sidereus; pensato per essere riusato in
-altri progetti.
+[![npm](https://img.shields.io/npm/v/plancia-ui)](https://www.npmjs.com/package/plancia-ui)
+[![licenza MIT](https://img.shields.io/badge/licenza-MIT-blue)](LICENSE)
+
+Tema "plancia" — la sala di comando di una nave — per console dense: token
+CSS, stili base e componenti Svelte 5, **scuri per nascita e chiari a
+scelta**. Nato dal cockpit "mission control" di
+[Sidereus](https://github.com/Tabrigos/Sidereus) (tracking satellitare e
+meteo spaziale) e pensato per essere riusato in altre console, dashboard e
+pannelli di controllo.
+
+- nessuna dipendenza a runtime: solo `svelte` ≥ 5 come peer dependency;
+- un solo file di token (`tokens.json`) da cui nasce tutto il colore, nei
+  due temi;
+- quattordici componenti piccoli, ognuno leggibile in un minuto;
+- una vetrina che mostra ogni componente in ogni stato.
+
+Se stai per **modificare** il pacchetto, la guida è [`AGENTS.md`](AGENTS.md).
+Se stai per **usarlo** in un progetto, continua qui.
 
 ## Tre strati
 
@@ -13,10 +27,10 @@ altri progetti.
    corpi, minimo 11 px), spaziatura a 4 px, raggi, ombre, z-index nominati,
    movimento. Usabili in qualunque progetto, anche senza Svelte. Due
    densità (`data-density="comfortable"` sull'elemento radice) e due temi:
-   scuro su `:root`, chiaro sotto `[data-theme="light"]` (dal 2026-09-14),
-   con le STESSE variabili di colore ridefinite — lo script dei token
-   rifiuta una chiave presente da un lato solo. La rampa `--p-scale-0..5`
-   (livelli 0–5 delle scale NOAA) fa parte dei token e segue il tema.
+   scuro su `:root`, chiaro sotto `[data-theme="light"]`, con le STESSE
+   variabili di colore ridefinite — lo script dei token rifiuta una chiave
+   presente da un lato solo. La rampa `--p-scale-0..5` (livelli 0–5 delle
+   scale NOAA) fa parte dei token e segue il tema.
 2. **Stili base** (`plancia-ui/base.css`): reset minimo, tipografia,
    classi delle superfici (`p-panel`, `p-card`, `p-inset`), titolo di
    sezione (`p-sec-title`: l'unico uso del maiuscolo spaziato), utilità di
@@ -32,7 +46,7 @@ altri progetti.
    | `Chip` | stato, scala, banda, contatore | `tone` neutral · accent · ok · warn · orange · danger · info, `count`, `small`, `color` (colore libero, es. quello di un gruppo) |
    | `Toggle` | interruttore accessibile (vero checkbox) | `checked` bindabile, `disabled`, `label`, `title`, `onchange(v)` |
    | `KeyValue` | riga etichetta / valore | `label`, `sub` (seconda riga secondaria), `subTone`, `tone`, `title`, `id`; il valore è il contenuto |
-   | `Stat` | numero grande con etichetta | `label`, `unit`, `id`; il valore è il contenuto |
+   | `Stat` | numero grande con etichetta | `label`, `sub`, `tone`, `title`, `id`; il valore è il contenuto |
    | `PanelHead` | testa di un pannello flottante | `title`, `subtitle`, `subtitleTitle`, snippet `chips` e `actions`, `onclose`, `closeLabel` |
    | `Skeleton` | attesa | `lines` |
    | `Notice` | stati vuoto / info / avviso / errore | `kind` empty · info · warn · error, `title`, `text`, `compact`; il contenuto è l'azione a destra |
@@ -44,7 +58,8 @@ altri progetti.
    | `LegendDots` | legenda a pallini di ciò che è disegnato altrove (globo, canvas) | `items` `{ color, label, opacity?, title? }`, `label` del gruppo |
 
    Più `scaleTone(level)`: il tono semantico dei livelli delle scale NOAA
-   (R/S/G 0–5), da passare a `Chip`.
+   (R/S/G 0–5), da passare a `Chip`. I tipi esportati: `Tone`,
+   `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`, `LegendDot`.
 
 ## Uso in un progetto
 
@@ -52,12 +67,10 @@ altri progetti.
    il progetto deve avere `@sveltejs/vite-plugin-svelte`, o l'equivalente
    del suo bundler, perché il pacchetto pubblica i `.svelte` così come
    sono, con i `.ts` compilati e i `.d.ts` accanto: `dist/`, generato da
-   `@sveltejs/package`). Sidereus, il primo consumatore, lo installa da npm
-   come qualunque altro progetto (dal 2026-09-16: prima viveva nello stesso
-   repo come dipendenza `file:`). Per lavorare al pacchetto con un
-   consumatore accanto: `npm link` dalla radice di questo repo e
-   `npm link plancia-ui` nel progetto, dopo `npm run build` qui (il
-   consumatore legge `dist`).
+   `@sveltejs/package`). Sidereus, il primo consumatore, lo installa così
+   come qualunque altro progetto. Per lavorare al pacchetto con un
+   consumatore accanto: `npm run build` + `npm link` dalla radice di questo
+   repo e `npm link plancia-ui` nel progetto (il consumatore legge `dist`).
 2. **Caricare i fogli di stile una volta**, nell'entry point, in
    quest'ordine:
 
@@ -67,22 +80,45 @@ altri progetti.
    import './styles/app.css'   // il CSS del progetto: layout e casi propri
    ```
 
-3. **Usare i componenti**:
+3. **Usare i componenti**. Un pannello tipo, con snippet e binding di
+   Svelte 5:
 
    ```svelte
    <script lang="ts">
-     import { Button, Chip, KeyValue, MetaRow, Notice, scaleTone } from 'plancia-ui'
+     import { Button, Chip, KeyValue, MetaRow, Notice, PanelHead, Segmented, Toggle, scaleTone } from 'plancia-ui'
+     let { onclose }: { onclose: () => void } = $props()
+     let vista = $state('mappa')
+     let seguiOggetto = $state(true)
    </script>
 
-   <KeyValue label="Aria a 547 km" sub="−34 % sulla mediana globale">0.21 ng/m³</KeyValue>
-   <Chip tone={scaleTone(2)}>G2</Chip>
-   <Button variant="primary" onclick={follow}>Segui satellite</Button>
-   <MetaRow>
-     <span title="Ora di osservazione alla fonte">dato di 8 min fa</span>
-     <span>≥100 MeV <b>0.4 pfu</b></span>
-   </MetaRow>
-   <Notice kind="warn" title="Fonte non raggiungibile: dati di 40 min fa" />
+   <section class="p-panel">
+     <PanelHead title="ISS (ZARYA)" subtitle="NORAD 25544" {onclose}>
+       {#snippet chips()}<Chip tone="accent">STAZIONI</Chip><Chip tone={scaleTone(2)}>G2</Chip>{/snippet}
+       {#snippet actions()}<Button variant="icon" size="sm" title="Informazioni">i</Button>{/snippet}
+     </PanelHead>
+
+     <div class="p-inset" style="padding: 4px 12px">
+       <KeyValue label="Altitudine">420.6 km</KeyValue>
+       <KeyValue label="Aria a 420 km" sub="−34 % sulla mediana globale" subTone="warn">0.21 ng/m³</KeyValue>
+     </div>
+
+     <MetaRow>
+       <span title="Ora di osservazione alla fonte">dato di 8 min fa</span>
+       <span>≥100 MeV <b>0.4 pfu</b></span>
+       <Segmented size="sm" label="Vista" items={[{ id: 'mappa', label: 'mappa' }, { id: 'lista', label: 'lista' }]} bind:value={vista} />
+       <Toggle bind:checked={seguiOggetto} label="Segui l'oggetto" />
+     </MetaRow>
+
+     <Notice kind="warn" title="Fonte non raggiungibile: dati di 40 min fa">
+       <Button variant="quiet" size="sm">riprova</Button>
+     </Notice>
+   </section>
    ```
+
+   Gli snippet (`chips`, `actions` di `PanelHead`, `icon` di `SettingRow`)
+   sono `Snippet` di Svelte 5 e si passano con `{#snippet nome()}…{/snippet}`
+   dentro il componente; `Toggle.checked` e `Segmented.value` sono
+   `$bindable`, quindi `bind:` funziona e in più arriva `onchange`.
 
 4. **Nel CSS del progetto usare i token, mai valori a mano**: colori
    `var(--p-text-dim)`, `var(--p-accent)`, superfici `var(--p-s3a)`,
@@ -106,10 +142,18 @@ altri progetti.
    3D, che non legge le custom property, decide da sé se seguire il tema —
    in Sidereus il globo, il disco del Sole e l'eliosfera restano scuri perché
    sono spazio.
-6. **Verificare**: la vetrina (`showcase/`, `npm run dev` lì dentro,
+6. **Font**: i token nominano `Inter` (interfaccia) e `JetBrains Mono`
+   (telemetria) con fallback di sistema; il pacchetto non porta i file dei
+   font, il progetto li carica se li vuole (la vetrina li ha self-hosted,
+   SIL Open Font License).
+7. **Verificare**: la vetrina (`showcase/`, `npm run dev` lì dentro,
    http://localhost:5174) mostra ogni componente in ogni stato, nei due temi
    e nelle due densità, e legge i sorgenti di `src/` in HMR: è il posto dove
    si prova una modifica prima di pubblicarla.
+
+Chi lavora con Claude Code trova in `skill/` una skill che riassume questa
+guida per l'uso in altri progetti: `npm run skill:install` la copia in
+`~/.claude/skills/plancia-ui/`.
 
 ## Regole del sistema (dalla revisione del 2026-09-10)
 
@@ -141,18 +185,39 @@ Il contenuto: testi, schede informative dei prodotti, attribuzioni delle
 fonti, layout del cockpit. Un componente entra nel pacchetto quando la
 stessa forma serve in più posti e non sa niente del dominio.
 
+## Leggere il codice
+
+Il repo si legge in un pomeriggio, ed è fatto apposta:
+
+```
+src/index.ts              cosa esporta il pacchetto (componenti, tipi, scaleTone)
+src/tokens.json           i token, tema scuro e blocco `light`: l'unico posto dove vive un colore
+src/tokens.css            generato dal JSON (npm run tokens): non si modifica a mano
+src/base.css              reset, tipografia, superfici, utilità, focus
+src/components/*.svelte   un componente per file, ~40–120 righe: prop tipizzate in testa,
+                          un commento che dice a cosa serve, markup, CSS scoped sui token
+scripts/build-tokens.mjs  il generatore dei token (60 righe)
+showcase/                 la vetrina: Showcase.svelte usa ogni componente in ogni stato
+docs/                     come si pubblica, e lo storico (audit e migrazione di Sidereus)
+```
+
+Gli identificatori sono in inglese, i commenti e i documenti in italiano.
+Per contribuire: [`CONTRIBUTING.md`](CONTRIBUTING.md) e [`AGENTS.md`](AGENTS.md)
+(struttura, comandi, regole di scrittura, versionamento, changelog,
+pubblicazione).
+
 ## Stato
 
-Dal 2026-09-16 il pacchetto ha un repo suo (`lavoro/plancia-ui`, con la
-vetrina in `showcase/` e i documenti in `docs/`); prima stava in
-`frontend/packages/plancia-ui` di Sidereus, che ora lo installa da npm.
+Dal 2026-09-16 il pacchetto ha un repo suo (con la vetrina in `showcase/`
+e i documenti in `docs/`); prima stava in `frontend/packages/plancia-ui` di
+Sidereus, che ora lo installa da npm.
 
 0.3.0 (2026-09-14) — **prima versione su npm** (`npm install plancia-ui`) e
 **tema chiaro**: il blocco `light` di `tokens.json`
 ridefinisce ogni token di colore (più la rampa `--p-scale-0..5` delle scale
 NOAA, nuova in entrambi i temi, e `--p-yellow`), lo script di generazione
 rifiuta una chiave presente da un lato solo, `Segmented` non ha più un nero
-fisso nell'ombra della voce attiva. La vetrina `/plancia` mostra le due
+fisso nell'ombra della voce attiva. La vetrina mostra le due
 tavolozze affiancate con il selettore del tema. Chi applica l'attributo
 `data-theme` è il progetto, non il pacchetto.
 
@@ -167,5 +232,10 @@ all'etichetta; tutta la tipografia dei consumatori passa dalla scala
 (`--p-t*`), nessun corpo sotto gli 11 px.
 
 Manca ancora: i componenti non hanno test propri (la garanzia oggi è
-indiretta, dallo smoke test di Sidereus) e non c'è una CI. Il lavoro che
-manca è elencato in `docs/pubblicazione.md`.
+indiretta, dallo smoke test di Sidereus) e la CI copre build, token e
+vetrina ma non i test. Il lavoro che manca è elencato in
+`docs/pubblicazione.md`.
+
+## Licenza
+
+MIT, © Paolo Guerrera. Vedi [`LICENSE`](LICENSE).

@@ -5,3 +5,6 @@ dist/
 showcase/dist/
 .DS_Store
 Thumbs.db
+
+# istruzioni private di chi lavora con Claude Code (importa AGENTS.md)
+CLAUDE.md

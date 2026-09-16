@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pacchetto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            showcase/package-lock.json
+
+      - name: Dipendenze del pacchetto
+        run: npm ci
+
+      - name: I token committati sono quelli generati da tokens.json
+        run: |
+          npm run tokens
+          git diff --exit-code -- src/tokens.css
+
+      - name: Build (svelte-package)
+        run: npm run build
+
+      - name: Cosa partirebbe su npm
+        run: npm pack --dry-run
+
+      - name: Vetrina — dipendenze, svelte-check, build
+        working-directory: showcase
+        run: |
+          npm ci
+          npm run check
+          npm run build

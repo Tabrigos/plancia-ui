@@ -4,6 +4,20 @@ Tutte le modifiche rilevanti di plancia-ui. Il formato segue
 [Keep a Changelog](https://keepachangelog.com/it/1.1.0/), le versioni
 [SemVer](https://semver.org/lang/it/).
 
+## [Unreleased]
+
+### Aggiunto
+- Repo proprio del pacchetto (`github.com/Tabrigos/plancia-ui`): la vetrina
+  in `showcase/`, i documenti in `docs/`, la CI (token rigenerati identici
+  ai committati, build, svelte-check e build della vetrina, `npm pack`).
+- `AGENTS.md`, nel tarball: come si entra nel progetto, si scrive il codice,
+  si versiona, si compila il changelog e si pubblica. `CONTRIBUTING.md`.
+- `skill/`: la skill per Claude Code che riassume come usare il pacchetto
+  in un altro progetto (`npm run skill:install`).
+- README con un pannello completo di esempio (snippet e `bind:`), la sezione
+  "Leggere il codice" e i campi `repository`/`homepage`/`bugs` in
+  `package.json`.
+
 ## [0.3.0] — 2026-09-14
 
 Prima versione pubblicata su npm.
