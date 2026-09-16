@@ -1,61 +1,69 @@
 # Changelog
 
-Tutte le modifiche rilevanti di plancia-ui. Il formato segue
-[Keep a Changelog](https://keepachangelog.com/it/1.1.0/), le versioni
-[SemVer](https://semver.org/lang/it/).
+All notable changes to plancia-ui. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions follow
+[SemVer](https://semver.org/).
 
 ## [Unreleased]
 
-### Aggiunto
-- Repo proprio del pacchetto (`github.com/Tabrigos/plancia-ui`): la vetrina
-  in `showcase/`, i documenti in `docs/`, la CI (token rigenerati identici
-  ai committati, build, svelte-check e build della vetrina, `npm pack`).
-- `AGENTS.md`, nel tarball: come si entra nel progetto, si scrive il codice,
-  si versiona, si compila il changelog e si pubblica. `CONTRIBUTING.md`.
-- `skill/`: la skill per Claude Code che riassume come usare il pacchetto
-  in un altro progetto (`npm run skill:install`).
-- README con un pannello completo di esempio (snippet e `bind:`), la sezione
-  "Leggere il codice" e i campi `repository`/`homepage`/`bugs` in
-  `package.json`.
+### Added
+- Own repository for the package (`github.com/Tabrigos/plancia-ui`): the
+  showcase in `showcase/`, the documents in `docs/`, CI (tokens regenerated
+  identical to the committed ones, build, svelte-check and build of the
+  showcase, `npm pack`).
+- `skills/plancia-ui/SKILL.md`, in the tarball: the complete usage guide
+  for AI coding agents (every component, prop, class and token, with the
+  rules of the system), in the Agent Skills format. Installable with
+  `npx skills add Tabrigos/plancia-ui`.
+- `AGENTS.md`, in the tarball: how to get into the project, write the code,
+  version it, keep the changelog and publish. `CONTRIBUTING.md`.
+- README rewritten as a short entry point, with the `repository`,
+  `homepage` and `bugs` fields in `package.json`; `docs/tokens.md` and
+  `docs/design-rules.md` take the details.
+
+### Changed
+- Documentation, changelog and commit messages are in English from now on;
+  files still in Italian get translated whole when they are touched.
 
 ## [0.3.0] — 2026-09-14
 
-Prima versione pubblicata su npm.
+First version published on npm.
 
-### Aggiunto
-- **Tema chiaro**: il blocco `light` di `tokens.json` ridefinisce ogni token
-  di colore sotto `[data-theme="light"]`; lo script di generazione rifiuta
-  una chiave presente in un solo tema. È il progetto a mettere l'attributo
-  sull'elemento radice, il pacchetto non decide quando.
-- Rampa `--p-scale-0..5` (livelli 0–5 delle scale NOAA) e `--p-yellow`,
-  entrambi in tutti e due i temi.
-- Confezionamento con `@sveltejs/package`: `dist/` con i `.svelte` così come
-  sono, i `.ts` compilati e i `.d.ts`; `tokens.css`, `base.css` e
-  `tokens.json` copiati come asset. `prepublishOnly` rigenera i token e il
-  pacchetto.
-- `LICENSE` (MIT) e questo changelog.
+### Added
+- **Light theme**: the `light` block of `tokens.json` redefines every color
+  token under `[data-theme="light"]`; the build script refuses a key present
+  in one theme only. The project puts the attribute on the root element, the
+  package never decides when.
+- `--p-scale-0..5` ramp (NOAA scale levels 0–5) and `--p-yellow`, both in
+  both themes.
+- Packaging with `@sveltejs/package`: `dist/` with the `.svelte` files as
+  they are, the compiled `.ts` and the `.d.ts`; `tokens.css`, `base.css` and
+  `tokens.json` copied as assets. `prepublishOnly` regenerates tokens and
+  package.
+- `LICENSE` (MIT) and this changelog.
 
-### Cambiato
-- `Segmented`: l'ombra della voce attiva usa il token del bordo invece di un
-  nero fisso (nel tema chiaro il nero stonava).
+### Changed
+- `Segmented`: the shadow of the active item uses the border token instead
+  of a fixed black (it clashed in the light theme).
 
 ## [0.2.0] — 2026-09-11
 
-### Aggiunto
+### Added
 - `MetaRow`, `ControlRow`, `SettingRow`, `LegendDots`.
-- `Segmented` con la variante `size="sm"` in linea.
-- Utilità `p-help` e `p-sr-only`.
+- `Segmented` with the inline `size="sm"` variant.
+- `p-help` and `p-sr-only` utilities.
 
-### Cambiato
-- `KeyValue` manda a capo intero il valore che non entra accanto
-  all'etichetta invece di sovrapporlo o troncarlo.
-- Scala tipografica con minimo 11 px: tutti i consumatori passano dai token.
-- `SettingRow` conserva la propria classe quando chi lo usa ne passa una e
-  inoltra gli attributi `data-*`.
+### Changed
+- `KeyValue` drops a value that does not fit next to the label to its own
+  full line instead of overlapping or truncating it.
+- Typographic scale with an 11 px minimum: every consumer goes through the
+  tokens.
+- `SettingRow` keeps its own class when the consumer passes one and forwards
+  `data-*` attributes.
 
 ## [0.1.0] — 2026-09-10
 
-Prima estrazione dal cockpit di Sidereus: token (`tokens.json` →
-`tokens.css`), stili base e dieci componenti (`Button`, `Chip`, `Toggle`,
+First extraction from the Sidereus cockpit: tokens (`tokens.json` →
+`tokens.css`), base styles and ten components (`Button`, `Chip`, `Toggle`,
 `KeyValue`, `Stat`, `PanelHead`, `Skeleton`, `Notice`, `Legend`,
-`Segmented`), più `scaleTone()`.
+`Segmented`), plus `scaleTone()`.

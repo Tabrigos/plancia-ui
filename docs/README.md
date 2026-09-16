@@ -1,11 +1,15 @@
-# Documenti di plancia-ui
+# plancia-ui documents
 
-| Documento | Cosa dice |
+| Document | What it says |
 |---|---|
-| [`pubblicazione.md`](pubblicazione.md) | come si pubblica la prossima versione su npm (staging, token, `E_STAGE_REQUIRED`) e cosa manca ancora (test dei componenti, CI) |
-| [`archivio/audit-visivo.md`](archivio/audit-visivo.md) | storico: l'audit del cockpit di Sidereus (2026-09-10) da cui il pacchetto è nato — 12 corpi tipografici, 21 colori fuori scala |
-| [`archivio/migrazione.md`](archivio/migrazione.md) | storico: il diario dei passi 0–9 con cui Sidereus è passato ai componenti del pacchetto (finito il 2026-09-10) |
+| [`tokens.md`](tokens.md) | the three layers of the package, how the tokens are generated, the two themes, density, fonts |
+| [`design-rules.md`](design-rules.md) | the rules of the system the components embody, and what does not belong in the package |
+| [`publishing.md`](publishing.md) | how the next version is published on npm (staged publishing, tokens, `E_STAGE_REQUIRED`) and what is still missing (component tests, CI) |
+| [`archivio/audit-visivo.md`](archivio/audit-visivo.md) | history, in Italian: the audit of the Sidereus cockpit (2026-09-10) the package was born from — 12 type sizes, 21 colors off scale |
+| [`archivio/migrazione.md`](archivio/migrazione.md) | history, in Italian: the diary of steps 0–9 with which Sidereus moved to the package components (finished 2026-09-10) |
 
-I documenti in `archivio/` descrivono ciò che era vero allora e non si
-aggiornano. La guida d'uso del pacchetto (strati, componenti, regole del
-sistema) è il `README.md` di radice, che parte anche nel tarball npm.
+The documents in `archivio/` describe what was true then and are never
+updated. The complete API reference (every prop, class and token) is
+[`skills/plancia-ui/SKILL.md`](../skills/plancia-ui/SKILL.md), which also
+ships in the npm package; the entry point for users is the root
+`README.md`; the guide for contributors is `AGENTS.md`.
