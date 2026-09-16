@@ -125,7 +125,7 @@ order. The label never wraps (ellipsis).
 **`SettingRow`** — `label: string`, `title?: string`, `help?: boolean`,
 snippet `icon` (18 px glyph on the left). Content is the controls on the
 right (toggle, chip, counter, buttons). Forwards its own attributes
-(`data-*`, `id`, `class` is merged, not replaced). Touches the column edges
+(`data-*`, `id`, `title`); it keeps its own `class`, so style it through a wrapper. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
 
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,

@@ -35,38 +35,19 @@ still missing.
    package, and its smoke test uses every component. A version that passes
    this repository's CI has only proven that it compiles.
 
-## What is still missing
+## Tests
 
-### Component tests
-
-The fourteen components have no tests of their own; the guarantee is
-indirect (the Sidereus smoke test uses them all). The plan, inside the
-package:
-
-- `vitest` + `@testing-library/svelte` + `jsdom` (or `@vitest/browser` to
-  test the visible focus for real);
-- one test per component on what the README promises: `Toggle` emits
-  `onchange` with the new value and is a real checkbox (role, `aria-label`,
-  `disabled`); `Button` applies variant, size and `active` (`aria-pressed`);
-  `Chip` maps the tones and the counter variant; `KeyValue` never wraps the
-  label, shows `sub` and drops a long value to a full line instead of
-  overlapping the label (a real regression of 2026-09-11); `Notice` picks
-  `role="alert"` only for `error`; `Segmented` changes the value and marks
-  `aria-pressed`; `MetaRow` distributes the items; `Legend` orients the
-  gradient; `PanelHead` renders the close button and the snippets;
-  `Skeleton` counts the lines; `ControlRow` never wraps the label and puts
-  the controls on the right; `SettingRow` keeps its own class when the
-  consumer passes one (a real regression of 2026-09-11) and forwards
-  `data-*` attributes; `LegendDots` renders one dot per item with the
-  requested opacity; `scaleTone` covers the five NOAA levels;
-- a regression test of the tokens: `tokens.css` regenerated from
-  `tokens.json` is identical to the committed one (today CI does this with
-  `git diff`).
-
-### CI
-
-A test job next to the build one, run on every push and pull request, and
-required by the branch protection of `main` like the build.
+Since 2026-09-16 the components have tests of their own (`npm test`: vitest in
+jsdom with `@testing-library/svelte`, one file per component in
+`tests/components/`, plus `tests/tokens.test.ts` and `tests/scaleTone.test.ts`),
+run by CI before the build. They check what the README promises: roles and
+accessible names, props, classes, the snippets, the default labels, that the
+committed `tokens.css` is what `tokens.json` generates and that the light
+theme mirrors every color key. Layout (a value dropping to its own line, a
+label never wrapping) is asserted on the scoped CSS rules, not measured:
+jsdom does not lay out, so the showcase stays the place where a change is
+looked at. The reference consumer remains the last check before a version
+is called good.
 
 ## History
 
