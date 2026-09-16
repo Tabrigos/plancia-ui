@@ -137,6 +137,10 @@ in italiano. Regole:
   pull request, anche se sei solo: la PR è dove si rilegge il diff;
 - commit piccoli, con un messaggio in italiano che dice cosa cambia per chi
   usa il pacchetto e perché; il titolo è una frase, non una sigla;
+- nel messaggio niente **dati personali** (nomi, cognomi, indirizzi e-mail),
+  nessun riferimento ad **assistenti AI** — trailer `Co-Authored-By`
+  compreso — e niente cronaca del ragionamento: il repository è pubblico e
+  la storia di git è la parte che poi non si ripulisce più;
 - la CI (`.github/workflows/ci.yml`) su ogni push e PR: `npm ci`, token
   rigenerati identici a quelli committati, `npm run build`, svelte-check e
   build della vetrina, `npm pack --dry-run`. Una PR rossa non si fonde;
