@@ -1,7 +1,7 @@
 {
   "name": "plancia-ui",
   "version": "0.3.0",
-  "description": "Tema \"plancia\" (sala di comando): token, stili base e componenti Svelte 5 per console dense, scure o chiare. Nato in Sidereus, pensato per essere riusato.",
+  "description": "Design system for dense consoles: CSS tokens, base styles and Svelte 5 components, dark by birth and light by choice. Ships a usage guide for AI coding agents.",
   "author": "Paolo Guerrera",
   "license": "MIT",
   "repository": {
@@ -28,6 +28,7 @@
   },
   "files": [
     "dist",
+    "skills",
     "README.md",
     "AGENTS.md",
     "CHANGELOG.md",
@@ -55,10 +56,14 @@
   },
   "keywords": [
     "svelte",
+    "svelte5",
     "design-system",
-    "dark",
-    "light",
+    "css-variables",
+    "design-tokens",
+    "dark-theme",
+    "light-theme",
     "dashboard",
-    "mission-control"
+    "mission-control",
+    "agent-skills"
   ]
 }

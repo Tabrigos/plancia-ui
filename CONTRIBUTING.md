@@ -1,12 +1,13 @@
-# Contribuire
+# Contributing
 
-Grazie. Tutto ciò che serve per entrare nel progetto sta in
-[`AGENTS.md`](AGENTS.md): struttura, comandi, come si scrive il codice, come
-si versiona, come si compila il changelog e come si pubblica. Vale per le
-persone come per gli agenti.
+Thank you. Everything needed to get into the project is in
+[`AGENTS.md`](AGENTS.md): structure, commands, how the code is written, how
+it is versioned, how the changelog is kept and how it is published. It
+applies to people and agents alike.
 
-In breve: un ramo, una pull request con la CI verde, una riga sotto
-`[Unreleased]` in `CHANGELOG.md` per ogni cambiamento visibile a chi usa il
-pacchetto, la vetrina guardata nei due temi. Per un componente o un token
-nuovo apri prima una issue: il pacchetto cresce solo con forme che servono in
-più posti e non sanno niente del dominio.
+In short: a branch, a pull request with green CI, a line under
+`[Unreleased]` in `CHANGELOG.md` for every change visible to users of the
+package, the showcase checked in both themes, the agent guide in
+`skills/plancia-ui/SKILL.md` kept in step with the code. For a new
+component or token, open an issue first: the package only grows with shapes
+that are needed in more than one place and know nothing about the domain.
