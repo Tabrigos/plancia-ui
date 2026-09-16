@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-09-16
+
 ### Breaking
 - `PanelHead` and `Skeleton`: the default accessible labels are now in
   English (`closeLabel` "Close", `label` "Loading") instead of Italian. How
