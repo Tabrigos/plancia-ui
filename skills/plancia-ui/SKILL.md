@@ -59,6 +59,7 @@ Never alias the package sources: the contract is `dist`.
 | exclusive choice among a few options | `Segmented` | `size="sm"` inline |
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
+| collapsible section of a console | `Section` | state owned by the app, summary readable while closed |
 
 ## Component reference
 
@@ -135,6 +136,14 @@ snippet `icon` (18 px glyph on the left). Content is the controls on the
 right (toggle, chip, counter, buttons). Forwards its own attributes
 (`data-*`, `id`, `title`); a `class` of the consumer is added next to its own. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
+
+**`Section`** — `title: string` (rendered as `p-sec-title`), `summary?: string`
+(one monospace line next to the title: the gist of the content, readable
+while closed), `open?: boolean` (bindable, `true`), `onchange?: (open:
+boolean) => void`, snippet `actions` (controls on the right of the head,
+outside the toggle button), `id?: string` (of the content region, generated
+when absent). Content is the body. The head is a `<button aria-expanded>`;
+closed content stays mounted and `hidden`. Sibling sections get a divider.
 
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,
 `1–2 → warn`, `3 → orange`, `4–5 → danger`. Pass the result to `Chip`.

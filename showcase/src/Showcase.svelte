@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Button, Chip, ControlRow, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Segmented, SettingRow, Skeleton, Stat, Toggle, scaleTone } from 'plancia-ui'
+  import { Button, Chip, ControlRow, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Toggle, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -15,6 +15,7 @@
   let mode = $state('tracking')
   let on = $state(true)
   let density = $state<'compact' | 'comfortable'>('compact')
+  let kpOpen = $state(true)
   // The showcase is where the theme gets tried: the URL wins on load, the
   // stored preference (`plancia.theme`) remembers the user's own choice.
   let theme = $state<Theme>(readRequestedTheme() ?? readStoredTheme(THEME_STORAGE_KEY))
@@ -182,6 +183,25 @@
   </section>
 
   <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">Sections</h2>
+      <div class="p-card demo">
+        <div class="p-inset" style="padding: 0 12px">
+          <Section title="Planetary Kp" summary="1.3 · quiet" bind:open={kpOpen}>
+            {#snippet actions()}<Button variant="icon" size="sm" title="What is Kp">i</Button>{/snippet}
+            <KeyValue label="Now" tone="ok">1.3</KeyValue>
+            <KeyValue label="Forecast 3 h">2.0</KeyValue>
+          </Section>
+          <Section title="Solar wind" summary="412 km/s · Bz −3 nT" open={false}>
+            <KeyValue label="Speed">412 km/s</KeyValue>
+          </Section>
+          <Section title="Active regions" summary="4 regions · largest 3914">
+            <Notice kind="empty" title="No region with flare potential" compact />
+          </Section>
+        </div>
+        <span class="p-t12 p-dim">Kp section: <span class="p-mono p-hi">{kpOpen ? 'open' : 'closed'}</span> (state owned by the page)</span>
+      </div>
+    </div>
     <div>
       <h2 class="p-sec-title">Console rows</h2>
       <div class="p-card demo">
