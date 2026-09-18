@@ -60,12 +60,14 @@ Never alias the package sources: the contract is `dist`.
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
 | collapsible section of a console | `Section` | state owned by the app, summary readable while closed |
+| inline state of a datum or layer (spinner, dot) | `Status` | the glance inside a row; `Notice` is the block message |
+| freshness of a datum ("3m ago") | `Age` | a chip that turns warn/danger with age |
 
 ## Component reference
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -145,6 +147,20 @@ outside the toggle button), `id?: string` (of the content region, generated
 when absent). Content is the body. The head is a `<button aria-expanded>`;
 closed content stays mounted and `hidden`. Sibling sections get a divider.
 
+**`Status`** — `kind?: 'loading' | 'ok' | 'stale' | 'error' | 'idle'` (`idle`),
+`text?: string` (short, next to the indicator), `title?: string` (tooltip; the
+accessible name when there is no text), `help?: boolean` (help cursor).
+Renders `role="status"`, `aria-busy` while loading, a `p-spinner` or a
+`p-dot` with the tone (ok, stale → warn, error → danger, idle → neutral).
+
+**`Age`** — `updatedAt: Date | number | string` (required),
+`staleAfter?: number` and `deadAfter?: number` (ages in milliseconds past
+which the chip turns `warn` and `danger`), `locale?: string` (BCP 47, the
+browser's when absent), `title?: string` (tooltip; the absolute time when
+absent), `now?: number` (a clock the app controls; otherwise a 30 s timer).
+Renders a `Chip` with a `<time datetime>`. `formatAge(ageMs, locale?)` is
+exported: the largest whole unit, narrow style ("3m ago", "2h ago").
+
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,
 `1–2 → warn`, `3 → orange`, `4–5 → danger`. Pass the result to `Chip`.
 
@@ -169,7 +185,7 @@ stored as nothing); `applyStoredTheme(key)` reads and applies in one call;
 - `p-help` (help cursor, goes with a `title`), `p-sr-only` (screen readers
   only: live regions, off-screen labels);
 - `p-dot` status dot, with `ok` / `warn` / `danger` / `accent` for the color
-  and its glow;
+  and its glow; `p-spinner`, the 12 px loading spinner;
 - inherited: body font and colors, links in accent, visible focus ring on
   every focusable element, `prefers-reduced-motion`, thin scrollbars.
 
