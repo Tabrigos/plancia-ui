@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Button, Chip, ControlRow, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Toggle, scaleTone } from 'plancia-ui'
+  import { Age, Button, Chip, ControlRow, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -16,6 +16,8 @@
   let on = $state(true)
   let density = $state<'compact' | 'comfortable'>('compact')
   let kpOpen = $state(true)
+  const now = Date.now()
+  const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
   // stored preference (`plancia.theme`) remembers the user's own choice.
   let theme = $state<Theme>(readRequestedTheme() ?? readStoredTheme(THEME_STORAGE_KEY))
@@ -156,6 +158,19 @@
       <h2 class="p-sec-title">States</h2>
       <div class="p-card demo">
         <Skeleton lines={3} label="Loading" />
+        <div class="row-wrap">
+          <Status kind="loading" text="loading" />
+          <Status kind="ok" text="updated" />
+          <Status kind="stale" text="stale · 40 min" title="The source did not answer, showing the last data" help />
+          <Status kind="error" text="unavailable" />
+          <Status kind="idle" text="off" />
+        </div>
+        <div class="row-wrap">
+          <Age updatedAt={now - 3 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
+          <Age updatedAt={now - 25 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
+          <Age updatedAt={now - 3 * 60 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
+          <span class="p-t11 p-dim">Age: fresh · stale · dead, locale of the browser</span>
+        </div>
         <Notice kind="empty" title="No relevant CME in flight" text="3 slow or not Earth-directed · data from 4 min ago" />
         <Notice kind="info" title="The Enlil run follows the Heliosphere frame" />
         <Notice kind="warn" title="Ambient Enlil run: no CME inserted" />

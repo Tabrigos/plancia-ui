@@ -12,6 +12,15 @@ All notable changes to plancia-ui. The format follows
   and the content under it. `open` is bindable and `onchange` reports the
   click: the state belongs to the app, the package stores nothing. Closed
   content stays mounted and hidden, so its state survives.
+- `Status`: the inline state of a datum or a layer, a spinner while
+  `loading` and a status dot with the tone otherwise (`ok`, `stale`,
+  `error`, `idle`), a short `text`, a `title` that explains. `Notice` is
+  the block message, `Status` the glance inside a row.
+- `Age`: the freshness of a datum as a chip ("3m ago"), neutral while fresh,
+  `warn` past `staleAfter`, `danger` past `deadAfter`; text from
+  `Intl.RelativeTimeFormat` in the app's locale, absolute time as tooltip,
+  refreshed every thirty seconds. `formatAge(ms, locale)` is exported.
+- `p-spinner`: the 12 px loading spinner as a base class.
 - `setLabels({ close, loading })`: the default accessible names of the
   `PanelHead` close button and of the `Skeleton` region are set once, before
   mount, in the language of the app, instead of passing `closeLabel` and

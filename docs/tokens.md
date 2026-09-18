@@ -37,7 +37,8 @@ A minimal reset, body typography and colors, links, the surface classes
 (`p-sec-title`, the only spaced uppercase in the system), text utilities
 (`p-mono`, `p-dim`, `p-hi`, `p-t11` … `p-t28`, `p-w500`, `p-w600`,
 `p-nowrap`, `p-ellipsis`), `p-help` (help cursor, goes with a `title`),
-`p-sr-only` (screen readers only), `p-dot` (status dot with its glow), the
+`p-sr-only` (screen readers only), `p-dot` (status dot with its glow),
+`p-spinner` (12 px loading spinner), the
 focus ring on every focusable element, `prefers-reduced-motion` and thin
 scrollbars. Everything is written with tokens; no fixed color anywhere.
 

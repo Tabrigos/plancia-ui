@@ -83,6 +83,14 @@ a:hover { text-decoration: underline; }
 .p-dot.danger { background: var(--p-danger); box-shadow: var(--p-danger-glow); }
 .p-dot.accent { background: var(--p-accent); box-shadow: var(--p-accent-glow); }
 
+/* ── Spinner (loading, 12 px, accent) ──────────────────────────────────── */
+.p-spinner {
+  display: inline-block; width: 12px; height: 12px; flex: none;
+  border: 2px solid var(--p-accent-soft); border-top-color: var(--p-accent); border-radius: 50%;
+  animation: p-spin 0.7s linear infinite;
+}
+@keyframes p-spin { to { transform: rotate(360deg); } }
+
 /* ── Focus and motion ───────────────────────────────────────────────────── */
 :where(button, a, input, select, textarea, [tabindex]):focus-visible {
   outline: none;

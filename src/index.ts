@@ -18,12 +18,15 @@ export { default as ControlRow } from './components/ControlRow.svelte'
 export { default as LegendDots } from './components/LegendDots.svelte'
 export { default as SettingRow } from './components/SettingRow.svelte'
 export { default as Section } from './components/Section.svelte'
+export { default as Status } from './components/Status.svelte'
+export { default as Age, formatAge } from './components/Age.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'
 export type { NoticeKind } from './components/Notice.svelte'
 export type { SegmentedItem } from './components/Segmented.svelte'
 export type { LegendDot } from './components/LegendDots.svelte'
+export type { StatusKind } from './components/Status.svelte'
 
 export { setLabels, getLabels, type Labels } from './labels.svelte.js'
 export {
