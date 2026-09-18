@@ -24,12 +24,20 @@ what changed.
    import './styles/app.css'
    ```
 3. Theme: dark is `:root`; light is enabled by putting `data-theme="light"`
-   on the root element BEFORE mount (the package never decides it). Density:
-   `data-density="comfortable"` on the root or on a container (default is
-   compact).
+   on the root element BEFORE mount (the package never decides it). The
+   helpers do it with a storage key the app chooses:
+   `applyStoredTheme('myapp.theme')` in the entry point, then
+   `rememberTheme(theme, 'myapp.theme')` when the user switches;
+   `readRequestedTheme()` reads `?theme=light` from the URL, `applyTheme`
+   and `parseTheme` are the pieces. Density: `data-density="comfortable"`
+   on the root or on a container (default is compact).
 4. Fonts: the tokens name Inter (ui) and JetBrains Mono (mono) with system
    fallbacks; the package ships no font files, the project loads them if it
    wants them.
+5. Labels: the components speak English by default (close button of
+   `PanelHead`, `Skeleton` region). In another language call once, before
+   mount, `setLabels({ close: 'Chiudi', loading: 'Caricamento' })`; a prop
+   passed to a component still wins.
 
 Never alias the package sources: the contract is `dist`.
 
@@ -90,10 +98,10 @@ never split, never truncated, never overlapping the label.
 `subtitleTitle?: string` (tooltip on the subtitle), snippet `chips` (under
 the title), snippet `actions` (right side), `onclose?: () => void` (renders
 the close button, always last), `closeLabel?: string` (accessible name and tooltip
-of the close button, default `'Close'`: pass it in the app's language).
+of the close button; default from `setLabels()`, `'Close'`).
 
-**`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name,
-default `'Loading'`: pass it in the app's language), `compact?: boolean`.
+**`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
+from `setLabels()`, `'Loading'`), `compact?: boolean`.
 
 **`Notice`** — `kind?: 'empty' | 'info' | 'warn' | 'error'` (`info`),
 `title?: string`, `text?: string`, `compact?: boolean`. Content is the action
@@ -125,11 +133,21 @@ order. The label never wraps (ellipsis).
 **`SettingRow`** — `label: string`, `title?: string`, `help?: boolean`,
 snippet `icon` (18 px glyph on the left). Content is the controls on the
 right (toggle, chip, counter, buttons). Forwards its own attributes
-(`data-*`, `id`, `title`); it keeps its own `class`, so style it through a wrapper. Touches the column edges
+(`data-*`, `id`, `title`); a `class` of the consumer is added next to its own. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
 
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,
 `1–2 → warn`, `3 → orange`, `4–5 → danger`. Pass the result to `Chip`.
+
+**`setLabels(partial: { close?: string; loading?: string })`** — the default
+accessible names, reactive (a runtime change reaches mounted components).
+`getLabels()` reads them.
+
+**Theme helpers** — `type Theme = 'dark' | 'light'`; `parseTheme(raw)`
+(unknown → `'dark'`); `applyTheme(theme)` (light sets `data-theme`, dark
+removes it); `readStoredTheme(key)`, `rememberTheme(theme, key)` (dark is
+stored as nothing); `applyStoredTheme(key)` reads and applies in one call;
+`readRequestedTheme()` returns the theme in `?theme=` or `null`.
 
 ## Base classes (`base.css`)
 

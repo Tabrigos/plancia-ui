@@ -24,6 +24,18 @@ export type { NoticeKind } from './components/Notice.svelte'
 export type { SegmentedItem } from './components/Segmented.svelte'
 export type { LegendDot } from './components/LegendDots.svelte'
 
+export { setLabels, getLabels, type Labels } from './labels.svelte.js'
+export {
+  applyTheme,
+  applyStoredTheme,
+  parseTheme,
+  readRequestedTheme,
+  readStoredTheme,
+  rememberTheme,
+  DEFAULT_THEME,
+  type Theme,
+} from './theme.js'
+
 /** Semantic tone of the NOAA scale levels (R/S/G 0–5). */
 export function scaleTone(level: number): Tone {
   if (level <= 0) return 'ok'

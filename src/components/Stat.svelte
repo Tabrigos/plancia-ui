@@ -15,7 +15,7 @@
 
 <div class="p-stat" {title} {id}>
   <span class="k">{label}</span>
-  <span class="v" class:ok={tone === 'ok'} class:warn={tone === 'warn'} class:danger={tone === 'danger'} class:accent={tone === 'accent'}>{@render children?.()}</span>
+  <span class="v {tone ?? ''}">{@render children?.()}</span>
   {#if sub}<span class="sub">{sub}</span>{/if}
 </div>
 
@@ -24,5 +24,7 @@
   .k { font-size: var(--p-t11); letter-spacing: 0.06em; text-transform: uppercase; color: var(--p-text-dim); font-weight: 600; white-space: nowrap; }
   .v { font-family: var(--p-font-mono); font-size: var(--p-t16); font-weight: 500; color: var(--p-text-hi); white-space: nowrap; }
   .sub { font-size: var(--p-t11); color: var(--p-text-dim); }
-  .v.ok { color: var(--p-ok); } .v.warn { color: var(--p-warn); } .v.danger { color: var(--p-danger); } .v.accent { color: var(--p-accent); }
+  /* Every Tone */
+  .v.ok { color: var(--p-ok); } .v.warn { color: var(--p-warn); } .v.orange { color: var(--p-orange); } .v.danger { color: var(--p-danger); }
+  .v.accent { color: var(--p-accent); } .v.info { color: var(--p-info); } .v.neutral { color: var(--p-text-dim); }
 </style>

@@ -14,7 +14,7 @@ describe('SettingRow', () => {
     expect(container.querySelector('.ctl input')).not.toBeNull()
   })
 
-  it('forwards the consumer attributes and keeps its own class', () => {
+  it('forwards the consumer attributes and adds the consumer class next to its own', () => {
     const { container } = render(SettingRow, {
       props: { label: 'Starlink', title: 'Constellation', help: true, id: 'row-starlink', 'data-group': 'starlink', class: 'mine' },
     })
@@ -23,6 +23,7 @@ describe('SettingRow', () => {
     expect(row.dataset.group).toBe('starlink')
     expect(row.title).toBe('Constellation')
     expect(row.classList.contains('p-setting-row')).toBe(true)
+    expect(row.classList.contains('mine')).toBe(true)
     expect(container.querySelector('.name.help')).not.toBeNull()
   })
 })

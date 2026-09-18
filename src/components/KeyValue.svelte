@@ -35,9 +35,9 @@
 
 <div class="p-kv" {title} {id}>
   <span class="k">{label}</span>
-  <span class="v" class:ok={tone === 'ok'} class:warn={tone === 'warn'} class:danger={tone === 'danger'} class:accent={tone === 'accent'} class:info={tone === 'info'}>
+  <span class="v {tone ?? ''}">
     <span class="main">{@render children?.()}</span>
-    {#if sub}<span class="sub" class:s-ok={subTone === 'ok'} class:s-warn={subTone === 'warn'} class:s-danger={subTone === 'danger'} class:s-info={subTone === 'info'}>{sub}</span>{/if}
+    {#if sub}<span class="sub {subTone ?? ''}">{sub}</span>{/if}
   </span>
 </div>
 
@@ -48,7 +48,12 @@
   .v { display: flex; flex-direction: column; align-items: flex-end; margin-left: auto; max-width: 100%; min-width: 0; font-family: var(--p-font-mono); font-size: var(--p-t12); color: var(--p-text-hi); text-align: right; }
   .main { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sub { max-width: 100%; font-family: var(--p-font-ui); font-size: var(--p-t11); font-weight: 400; color: var(--p-text-dim); }
-  .v.ok { color: var(--p-ok); } .v.warn { color: var(--p-warn); } .v.danger { color: var(--p-danger); }
-  .v.accent { color: var(--p-accent); } .v.info { color: var(--p-info); }
-  .sub.s-ok { color: var(--p-ok); } .sub.s-warn { color: var(--p-warn); } .sub.s-danger { color: var(--p-danger); } .sub.s-info { color: var(--p-info); }
+  /* Every Tone, for the value and for the secondary line alike */
+  .v.ok, .sub.ok { color: var(--p-ok); }
+  .v.warn, .sub.warn { color: var(--p-warn); }
+  .v.orange, .sub.orange { color: var(--p-orange); }
+  .v.danger, .sub.danger { color: var(--p-danger); }
+  .v.accent, .sub.accent { color: var(--p-accent); }
+  .v.info, .sub.info { color: var(--p-info); }
+  .v.neutral, .sub.neutral { color: var(--p-text-dim); }
 </style>

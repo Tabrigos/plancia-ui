@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
+  import { getLabels } from '../labels.svelte.js'
 
   /**
    * The one panel head: title 14/600, optional monospace subtitle, optional
@@ -13,7 +14,7 @@
     chips,
     actions,
     onclose,
-    closeLabel = 'Close',
+    closeLabel,
   }: {
     title: string
     subtitle?: string
@@ -22,9 +23,11 @@
     chips?: Snippet
     actions?: Snippet
     onclose?: () => void
-    /** Accessible name and tooltip of the close button: pass it in the language of the app */
+    /** Accessible name and tooltip of the close button; the default comes from `setLabels()` */
     closeLabel?: string
   } = $props()
+
+  const labels = getLabels()
 </script>
 
 <div class="p-ph">
@@ -35,7 +38,7 @@
   <div class="sp"></div>
   {#if actions}<div class="actions">{@render actions()}</div>{/if}
   {#if onclose}
-    <button type="button" class="close" onclick={onclose} title={closeLabel} aria-label={closeLabel}>
+    <button type="button" class="close" onclick={onclose} title={closeLabel ?? labels.close} aria-label={closeLabel ?? labels.close}>
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
     </button>
   {/if}
