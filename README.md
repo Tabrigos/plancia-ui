@@ -20,7 +20,7 @@ control panels.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Fourteen small components**, each readable in a minute, accessible by
+- **Fifteen small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -80,6 +80,7 @@ Tokens, themes, density and fonts are explained in
 | `Segmented` | exclusive choice among a few options | `items` `{ id, label, title? }`, `value` (bindable), `onchange`, `label`, `size` |
 | `ControlRow` | head of a card: label left, controls right | `label`, `title`, `help`, `tone`; the controls are the content |
 | `SettingRow` | list row: icon, name, control | `label`, `title`, `help`, snippet `icon`; forwards `data-*` and `id` |
+| `Section` | collapsible console section | `title`, `summary`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
 
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
 to `Chip`; `setLabels()` for the default labels; the theme helpers

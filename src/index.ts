@@ -17,6 +17,7 @@ export { default as MetaRow } from './components/MetaRow.svelte'
 export { default as ControlRow } from './components/ControlRow.svelte'
 export { default as LegendDots } from './components/LegendDots.svelte'
 export { default as SettingRow } from './components/SettingRow.svelte'
+export { default as Section } from './components/Section.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'

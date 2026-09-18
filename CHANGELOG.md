@@ -7,6 +7,11 @@ All notable changes to plancia-ui. The format follows
 ## [Unreleased]
 
 ### Added
+- `Section`: a collapsible console section with the `p-sec-title` title, a
+  one-line `summary` readable while closed, optional `actions` on the right
+  and the content under it. `open` is bindable and `onchange` reports the
+  click: the state belongs to the app, the package stores nothing. Closed
+  content stays mounted and hidden, so its state survives.
 - `setLabels({ close, loading })`: the default accessible names of the
   `PanelHead` close button and of the `Skeleton` region are set once, before
   mount, in the language of the app, instead of passing `closeLabel` and
