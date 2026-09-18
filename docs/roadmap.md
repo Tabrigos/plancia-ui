@@ -9,6 +9,13 @@ release, next to the changelog.
 
 ## 0.6.0 — medium, with a design choice to make first
 
+0. **`plancia-ui/theme` and `plancia-ui/labels` subpath exports** — the
+   helpers and `setLabels()` without the components behind them. The
+   package index pulls in `.svelte` files, which a pure Node module (an
+   entry point tested in Node, a vitest config without the Svelte plugin)
+   cannot load: found on 2026-09-18 updating Sidereus to 0.5.0, whose
+   `lib/theme.ts` had to keep its own copy. A new `exports` entry, so a
+   minor by the table; first in line.
 1. **`FloatingPanel`** — `PanelHead` plus the behavior three panels repeat:
    Esc closes, focus returns to the opener, full width with inner scroll
    under 700 px.
