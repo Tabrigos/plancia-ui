@@ -7,44 +7,22 @@ needed in more than one place, knowing nothing about the domain. Requests
 from consumers arrive as GitHub issues; this file is updated with every
 release, next to the changelog.
 
-## 0.5.0 — small, compatible, closes real friction
-
-1. **Default labels per context** — a `setLabels({ close, loading })`
-   (context or module) so an app in another language sets them once instead
-   of passing `closeLabel` to every `PanelHead`; the first step toward i18n.
-2. **Theme helpers exported** — `parseTheme`, `applyTheme`, the reading of
-   a stored preference with the storage key chosen by the consumer. Sidereus
-   and the showcase implement the same functions today.
-3. **Fixes** — `KeyValue` and `Stat` accept every `Tone` but map only some
-   (`orange`, `neutral` do nothing); `SettingRow` drops a `class` passed by
-   the consumer instead of merging it.
-4. **`Section`** — a collapsible console section: `p-sec-title` title,
-   summary line, optional (i) button, open/closed state owned by the
-   consumer (no storage in the package). The primitive of every console;
-   eleven uses in Sidereus.
-5. **`Status`** — the state row with a spinner: loading, error, stale data
-   with a tone, help text. Generic shape, today in the app's CSS.
-6. **`Age`** — a freshness chip ("updated 3 min ago") built on `Chip`, with
-   `updatedAt` and a threshold after which the tone changes.
-7. **Issue templates** — component proposal and bug, since requests come
-   as issues.
-
 ## 0.6.0 — medium, with a design choice to make first
 
-8. **`FloatingPanel`** — `PanelHead` plus the behavior three panels repeat:
+1. **`FloatingPanel`** — `PanelHead` plus the behavior three panels repeat:
    Esc closes, focus returns to the opener, full width with inner scroll
    under 700 px.
-9. **`Tooltip`** — delegated on `title`, the package measures the space
+2. **`Tooltip`** — delegated on `title`, the package measures the space
    above and below and picks the side; `prefers-reduced-motion` respected.
-10. **`InfoButton` + `InfoCard`** — the (i) button and the inline card it
+3. **`InfoButton` + `InfoCard`** — the (i) button and the inline card it
     opens: frame (head, close, bold) in the package, content in the app.
-11. **Dataviz tokens, then `Sparkline` and `Bars`** — categorical,
+4. **Dataviz tokens, then `Sparkline` and `Bars`** — categorical,
     sequential and diverging palettes in both themes in `tokens.json`
     first; the SVG mini-charts on those tokens and on the type scale after.
-12. **Small utilities** — `Kbd` for shortcuts, `announce()` for live
+5. **Small utilities** — `Kbd` for shortcuts, `announce()` for live
     regions (with `p-sr-only`), open/close transitions on the motion tokens
     for `Section` and `FloatingPanel`.
-13. **`List` / `Row` vocabulary** — the dense list with label, value,
+6. **`List` / `Row` vocabulary** — the dense list with label, value,
     controls and attribution row. To design first: it overlaps `SettingRow`
     and `KeyValue`.
 
@@ -54,8 +32,8 @@ release, next to the changelog.
 - Form controls: `Select`, `NumberField`, `Checkbox`, `Radio`, `Tabs`.
 - `Combobox`, `Transport` (playback pill), `Scrubber`, `DataTable`: one use
   each in Sidereus today.
-- `LayerRow`: probably `SettingRow` + `Status`, to be checked once `Status`
-  exists.
+- `LayerRow`: probably `SettingRow` + `Status` (0.5.0), to be checked against
+  the Sidereus layer rows.
 - A high-contrast third theme (`forced-colors`) as a block in `tokens.json`.
 - A documented CSS-only path for non-Svelte consumers; a web-components
   build if someone asks.

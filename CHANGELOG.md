@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-09-18
+
 ### Added
 - `Section`: a collapsible console section with the `p-sec-title` title, a
   one-line `summary` readable while closed, optional `actions` on the right
