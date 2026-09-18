@@ -1,6 +1,6 @@
 # plancia-ui — audit visivo del tema "mission control" (2026-09-10)
 
-Punto di partenza del pacchetto **`plancia-ui`** (nome scelto da Paolo il
+Punto di partenza del pacchetto **`plancia-ui`** (nome scelto dal maintainer il
 2026-09-10: la plancia è la sala di comando di una nave; `plancia` nudo è
 occupato su npm, `plancia-ui` è libero; scope personale possibile in
 seguito). Tema chiaro: dopo, ma i token nascono già con i due set.
@@ -102,7 +102,7 @@ del clock, `Timeline`, `EmptyState`, `Legend` (gradiente + soglie).
 
 ## 6. Stato (2026-09-10)
 
-- Mockup approvati da Paolo sul canvas di Claude Design (token,
+- Mockup approvati dal maintainer sul canvas di Claude Design (token,
   componenti, tre schermate); una regola nata lì: etichetta mai a capo,
   valore su una riga, seconda riga secondaria per l'informazione in più.
 - **Pacchetto**: `frontend/packages/plancia-ui` **0.2.0** (token da JSON,

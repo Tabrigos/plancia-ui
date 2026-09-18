@@ -296,7 +296,7 @@ delle legende, del globo con le etichette del Sole e delle sentinelle.
 
 ## Correzioni di sovrapposizione (2026-09-11)
 
-Segnalato da Paolo: con un satellite fuori dalla fascia del modello
+Segnalato dal maintainer: con un satellite fuori dalla fascia del modello
 termosferico (un geostazionario a 35 781 km) l'etichetta "Aria a 35781 km" e
 il valore "fuori dal modello (100–1000 km)" si stampavano uno sopra l'altro.
 
@@ -335,7 +335,7 @@ le righe di console e la legenda a pallini.
 Il progetto si chiamava Sidereus finché non è saltato fuori
 `sidereus.world`: stesso nome, stesso scopo (tracking satellitare, tema
 scuro, SGP4 nel browser, ricerca per nome e NORAD) e icona vicina alla
-nostra. Il tema resta com'è per scelta di Paolo; cambiano nome e segno.
+nostra. Il tema resta com'è per scelta del maintainer; cambiano nome e segno.
 
 **Sidereus** viene dal *Sidereus Nuncius* di Galileo (1610), il primo
 resoconto di quello che si vede puntando uno strumento al cielo. Scelto fra
