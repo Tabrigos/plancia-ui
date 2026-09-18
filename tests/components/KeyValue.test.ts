@@ -19,7 +19,7 @@ describe('KeyValue', () => {
     })
     const sub = container.querySelector('.sub') as HTMLElement
     expect(sub.textContent).toBe('−34 % vs. global median')
-    expect(sub.classList.contains('s-warn')).toBe(true)
+    expect(sub.classList.contains('warn')).toBe(true)
   })
 
   it('colors the value with the tone and forwards title and id', () => {
@@ -30,6 +30,15 @@ describe('KeyValue', () => {
     expect(row.id).toBe('radiation')
     expect(row.title).toBe('Outside the SAA')
     expect(container.querySelector('.v.ok')).not.toBeNull()
+  })
+
+  it('maps every tone, orange and neutral included, on value and secondary line', () => {
+    for (const tone of ['neutral', 'accent', 'ok', 'warn', 'orange', 'danger', 'info'] as const) {
+      const { container, unmount } = render(KeyValue, { props: { label: 'Kp', tone, sub: 'note', subTone: tone, children: html('<span>3</span>') } })
+      expect(container.querySelector(`.v.${tone}`)).not.toBeNull()
+      expect(container.querySelector(`.sub.${tone}`)).not.toBeNull()
+      unmount()
+    }
   })
 
   it('keeps a long value whole: the row may wrap, label and value never do', () => {

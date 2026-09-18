@@ -54,9 +54,12 @@ Then use the components:
 </section>
 ```
 
-Light theme: put `data-theme="light"` on the root element. Comfortable
-density: `data-density="comfortable"`. The package never decides either;
-the project does. Tokens, themes, density and fonts are explained in
+Light theme: put `data-theme="light"` on the root element, or call
+`applyStoredTheme('myapp.theme')` before mount and `rememberTheme()` when
+the user switches. Comfortable density: `data-density="comfortable"`. The
+package never decides either; the project does. In another language, set
+the default labels once: `setLabels({ close: 'Chiudi', loading: 'Caricamento' })`.
+Tokens, themes, density and fonts are explained in
 [`docs/tokens.md`](docs/tokens.md).
 
 ## Components
@@ -79,7 +82,9 @@ the project does. Tokens, themes, density and fonts are explained in
 | `SettingRow` | list row: icon, name, control | `label`, `title`, `help`, snippet `icon`; forwards `data-*` and `id` |
 
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
-to `Chip`. The full reference of every prop, base class and token is in
+to `Chip`; `setLabels()` for the default labels; the theme helpers
+`applyTheme`, `applyStoredTheme`, `readStoredTheme`, `rememberTheme`,
+`readRequestedTheme`, `parseTheme`. The full reference of every prop, base class and token is in
 [`skills/plancia-ui/SKILL.md`](skills/plancia-ui/SKILL.md); the design rules
 the components embody are in [`docs/design-rules.md`](docs/design-rules.md).
 

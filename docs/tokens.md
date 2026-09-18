@@ -74,8 +74,11 @@ The light block also sets `color-scheme: light`.
 
 **The package never decides when to apply the light theme.** The project
 puts `data-theme="light"` on the root element, ideally before the first
-render (Sidereus reads a preference from `localStorage` in every entry
-point). In light the semantic colors are darker (amber, yellow and green
+render. The helpers exported from `plancia-ui` do the mechanical part with
+a storage key the project chooses: `applyStoredTheme('myapp.theme')` in the
+entry point before mount, `rememberTheme(theme, 'myapp.theme')` when the
+user switches, `readRequestedTheme()` for a `?theme=light` deep link,
+`parseTheme` and `applyTheme` for the pieces. In light the semantic colors are darker (amber, yellow and green
 readable on white): whatever draws with those colors on a `<canvas>` or in
 a 3D engine, which do not read custom properties, decides by itself whether
 to follow the theme. In Sidereus the globe, the Sun disk and the heliosphere

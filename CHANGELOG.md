@@ -6,6 +6,24 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `setLabels({ close, loading })`: the default accessible names of the
+  `PanelHead` close button and of the `Skeleton` region are set once, before
+  mount, in the language of the app, instead of passing `closeLabel` and
+  `label` everywhere; a prop passed to a component still wins. Reactive: a
+  change at runtime reaches the components on screen.
+- Theme helpers exported from the package: `parseTheme`, `applyTheme`,
+  `readStoredTheme(key)`, `rememberTheme(theme, key)`, `applyStoredTheme(key)`,
+  `readRequestedTheme()` and the `Theme` type. The app still decides when to
+  apply the light theme and under which storage key; it no longer writes the
+  same six functions itself.
+
+### Fixed
+- `KeyValue` and `Stat`: every `Tone` now colors the value (`orange` and
+  `neutral` did nothing); `KeyValue.subTone` too.
+- `SettingRow`: a `class` passed by the consumer is added next to the
+  component's own instead of being dropped.
+
 ## [0.4.0] — 2026-09-16
 
 ### Breaking

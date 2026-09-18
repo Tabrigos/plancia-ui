@@ -19,4 +19,12 @@ describe('Stat', () => {
     expect(stat.id).toBe('kp')
     expect(container.querySelector('.sub')).toBeNull()
   })
+
+  it('maps every tone, orange and neutral included', () => {
+    for (const tone of ['neutral', 'accent', 'ok', 'warn', 'orange', 'danger', 'info'] as const) {
+      const { container, unmount } = render(Stat, { props: { label: 'Kp', tone, children: html('<span>3</span>') } })
+      expect(container.querySelector(`.v.${tone}`)).not.toBeNull()
+      unmount()
+    }
+  })
 })

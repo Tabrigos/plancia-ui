@@ -9,14 +9,15 @@
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
-  import { applyTheme, readInitialTheme, rememberTheme, type Theme } from './theme'
+  import { applyTheme, readRequestedTheme, readStoredTheme, rememberTheme, type Theme } from 'plancia-ui'
+  import { THEME_STORAGE_KEY } from './config'
 
   let mode = $state('tracking')
   let on = $state(true)
   let density = $state<'compact' | 'comfortable'>('compact')
   // The showcase is where the theme gets tried: the URL wins on load, the
   // stored preference (`plancia.theme`) remembers the user's own choice.
-  let theme = $state<Theme>(readInitialTheme())
+  let theme = $state<Theme>(readRequestedTheme() ?? readStoredTheme(THEME_STORAGE_KEY))
   $effect(() => { applyTheme(theme) })
   const colors = Object.entries(tokens.color as Record<string, string>)
   const lightColors = tokens.light.color as Record<string, string>
@@ -34,7 +35,7 @@
     </div>
     <div class="head-ctl">
       <span class="p-t12 p-dim">theme</span>
-      <Segmented items={[{ id: 'dark', label: 'dark' }, { id: 'light', label: 'light' }]} bind:value={theme} onchange={(id) => rememberTheme(id as Theme)} label="Theme" />
+      <Segmented items={[{ id: 'dark', label: 'dark' }, { id: 'light', label: 'light' }]} bind:value={theme} onchange={(id) => rememberTheme(id as Theme, THEME_STORAGE_KEY)} label="Theme" />
       <span class="p-t12 p-dim">density</span>
       <Segmented items={[{ id: 'compact', label: 'compact' }, { id: 'comfortable', label: 'comfortable' }]} bind:value={density} label="Density" />
     </div>

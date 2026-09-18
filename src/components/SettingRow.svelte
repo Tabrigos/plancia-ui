@@ -12,6 +12,7 @@
     help = false,
     icon,
     children,
+    class: consumerClass,
     ...rest
   }: {
     label: string
@@ -22,14 +23,14 @@
     icon?: Snippet
     /** Controls on the right (toggle, chip, counter, buttons) */
     children?: Snippet
+    /** A class of the consumer, added next to the component's own */
+    class?: string
     /** The consumer's own attributes (`data-*`, `id`, …) */
     [key: string]: unknown
   } = $props()
 </script>
 
-<!-- the spread FIRST: the component's class is not lost when the consumer
-     passes a `class` of its own -->
-<div {...rest} class="p-setting-row" {title}>
+<div {...rest} class="p-setting-row {consumerClass ?? ''}" {title}>
   {#if icon}<span class="ic" aria-hidden="true">{@render icon()}</span>{/if}
   <span class="name" class:help>{label}</span>
   {#if children}<span class="ctl">{@render children()}</span>{/if}
