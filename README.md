@@ -116,4 +116,4 @@ at it once:
 
 ## License
 
-MIT, © Paolo Guerrera. See [`LICENSE`](LICENSE).
+MIT, © Sidereus Team. See [`LICENSE`](LICENSE).
