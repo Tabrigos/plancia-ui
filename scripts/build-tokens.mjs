@@ -3,8 +3,10 @@
 // --p-t13, space.2 → --p-space-2, glow.ok → --p-ok-glow, shadow.1 → --p-sh1,
 // scale[2] → --p-scale-2, z.panel → --p-z-panel, motion.fast →
 // --p-motion-fast, font.ui → --p-font-ui.
+// scale[2] → --p-scale-2, viz[0] → --p-viz-1, seq[0] → --p-seq-1, div[3] →
+// --p-div-4 (the midpoint of a seven-step diverging ramp).
 // The `light` block redefines ONLY what is color (color, scale, glow,
-// shadow) under [data-theme="light"], with the same keys as the dark theme:
+// shadow, viz, seq, div) under [data-theme="light"], with the same keys as the dark theme:
 // a key more or less on one side stops the generation, so a new token
 // cannot be born without its light counterpart.
 // `generateTokensCss` is exported so the tests can check that the committed
@@ -13,7 +15,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
-const THEMED = ['color', 'scale', 'glow', 'shadow']
+const THEMED = ['color', 'scale', 'glow', 'shadow', 'viz', 'seq', 'div']
 
 export function generateTokensCss(t) {
   for (const group of THEMED) {
@@ -31,6 +33,9 @@ export function generateTokensCss(t) {
     const put = (name, value) => lines.push(`  --p-${name}: ${value};`)
     for (const [k, v] of Object.entries(theme.color)) put(k, v)
     theme.scale.forEach((v, i) => put(`scale-${i}`, v))
+    theme.viz.forEach((v, i) => put(`viz-${i + 1}`, v))
+    theme.seq.forEach((v, i) => put(`seq-${i + 1}`, v))
+    theme.div.forEach((v, i) => put(`div-${i + 1}`, v))
     for (const [k, v] of Object.entries(theme.glow)) put(`${k}-glow`, v)
     for (const [k, v] of Object.entries(theme.shadow)) put(`sh${k}`, v)
     return lines
