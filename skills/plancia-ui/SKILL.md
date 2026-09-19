@@ -54,6 +54,7 @@ Never alias the package sources: the contract is `dist`.
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
 | head of a floating panel | `PanelHead` | close button always last |
+| a whole panel floating over a stage (globe, map) | `FloatingPanel` | frame + head + scrolling body, Esc, focus return; the app positions it |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -105,6 +106,19 @@ never split, never truncated, never overlapping the label.
 the title), snippet `actions` (right side), `onclose?: () => void` (renders
 the close button, always last), `closeLabel?: string` (accessible name and tooltip
 of the close button; default from `setLabels()`, `'Close'`).
+
+**`FloatingPanel`** — `title: string`, `subtitle?`, `subtitleTitle?`, snippets
+`chips` and `actions`, `onclose?: () => void` (the close button and Esc call
+it; the app then removes the panel), `closeLabel?`, `opener?: HTMLElement |
+string` (element or id that opened it: focus goes back to it on close if it
+was inside), `autofocus?: boolean` (`false`; move focus into the panel on
+mount), `label?: string` (accessible name; the title when absent), `class`
+and other attributes forwarded (`id`, `data-*`, `style`). Content is the
+body, which scrolls inside `--p-floating-max-height` (default
+`calc(100vh - 110px)`). Renders `role="dialog"`. The app positions it with
+a class of its own (`position`, `top`, `right`, `width`; keep it a class,
+not an id, so the package's rule under 700 px — full width with gutters —
+can win). The package keeps no open/closed state: render it when open.
 
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.

@@ -7,6 +7,11 @@ All notable changes to plancia-ui. The format follows
 ## [Unreleased]
 
 ### Added
+- `FloatingPanel`: a panel floating over a stage, with the frame, a
+  `PanelHead` touching the edges, a body that scrolls inside a bounded
+  height, Esc closing while focus is inside, focus returning to the
+  `opener` on close, full width with gutters under 700 px. The app positions
+  it with a class of its own and decides when it exists.
 - `plancia-ui/theme` and `plancia-ui/labels`: the theme helpers and
   `setLabels()` as plain-JavaScript entries, loadable from Node without the
   Svelte compiler (an entry point tested in Node, a vitest run without the
