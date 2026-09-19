@@ -20,7 +20,7 @@ control panels.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Twenty-three small components**, each readable in a minute, accessible by
+- **Twenty-five small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -91,6 +91,8 @@ Tokens, themes, density and fonts are explained in
 | `InfoCard` | frame of an explanation: paragraph, `<dl>` of facts, link | `summary` (native details) or always open with `onclose`; the content is the body |
 | `Kbd` | a key in a hint ("Esc closes") | the key is the content |
 | `LiveRegion` | the polite live region `announce()` writes into, mounted once | |
+| `Sparkline` | a line in a box, no axes | `values`, `label`, `color`, `area`, `endDot`, `min`, `max`, `width`, `height` |
+| `Bars` | a short series of bars, zero baseline, no axes | `bars` `{ value, label?, color? }`, `label`, `color`, `max`, `width`, `height` |
 
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
 to `Chip`; `setLabels()` for the default labels; the theme helpers

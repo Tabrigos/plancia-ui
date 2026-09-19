@@ -24,6 +24,11 @@ All notable changes to plancia-ui. The format follows
   Computed and validated per theme on the card surface: lightness band,
   chroma floor, colorblind separation of adjacent slots (worst pair ΔE 12.4,
   target 8), 3:1 contrast. Series colors: never the status tokens.
+- `Sparkline` and `Bars`: a line and a short series of bars in a box, no
+  axes, on the dataviz tokens (2 px stroke, optional area and end dot;
+  thin bars with rounded data-ends anchored to a zero baseline and a 2 px
+  surface gap, a color per bar when it means a level). Named for assistive
+  technology by `label`; text and axes stay outside, in the text tokens.
 - `Kbd`: a key as shown in hints ("Esc closes"), monospace on a raised
   inset.
 - `announce(text)` and `LiveRegion`: the polite live region for what

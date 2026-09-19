@@ -61,6 +61,8 @@ Never alias the package sources: the contract is `dist`.
 | the frame of an explanation ("what is this datum") | `InfoCard` | native `<details>` with `summary`, or always open with a close button |
 | a key in a hint ("Esc closes") | `Kbd` | |
 | telling screen readers what happened on the stage | `LiveRegion` + `announce()` | mount once; call from a store |
+| the shape of a series next to its value | `Sparkline` | no axes; numbers written by the app |
+| a short series of magnitudes (Kp over a day) | `Bars` | zero baseline; a status token per bar when it means a level |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -157,6 +159,19 @@ re-exported by the index) writes into it: only for what follows an action
 of the user and cannot be seen on the stage (an object selected, a panel
 closed with Esc), never for telemetry. Empties after 5 s; the same text
 announced again is read again.
+
+**`Sparkline`** — `values: number[]`, `label: string` (accessible name,
+required), `width?` (`120`), `height?` (`32`), `color?` (`'var(--p-viz-1)'`),
+`area?: boolean` (15 % fill under the line), `endDot?: boolean` (`true`),
+`min?` / `max?` (pin an end of the scale, e.g. `min={0}`), `title?`. An
+`<svg role="img">`; text and axes stay outside, in the text tokens.
+
+**`Bars`** — `bars: Bar[]` where `Bar = { value: number; label?: string;
+color?: string }` (`label` is the bar's tooltip and accessible text; `color`
+per bar, e.g. `var(--p-scale-3)` when the bar means a level), `label: string`
+(accessible name, required), `width?` (`120`), `height?` (`32`), `color?`
+(`'var(--p-viz-1)'`), `max?` (top of the scale; the bottom is always 0),
+`gap?` (`2` px surface gap). Rounded data-ends anchored to the baseline.
 
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.
