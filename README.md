@@ -55,10 +55,12 @@ Then use the components:
 ```
 
 Light theme: put `data-theme="light"` on the root element, or call
-`applyStoredTheme('myapp.theme')` before mount and `rememberTheme()` when
-the user switches. Comfortable density: `data-density="comfortable"`. The
+`applyStoredTheme('myapp.theme')` from `plancia-ui/theme` before mount and
+`rememberTheme()` when the user switches. Comfortable density: `data-density="comfortable"`. The
 package never decides either; the project does. In another language, set
-the default labels once: `setLabels({ close: 'Chiudi', loading: 'Caricamento' })`.
+the default labels once, from `plancia-ui/labels`:
+`setLabels({ close: 'Chiudi', loading: 'Caricamento' })`. Both entries are
+plain JavaScript, usable from Node and in tests without the Svelte compiler.
 Tokens, themes, density and fonts are explained in
 [`docs/tokens.md`](docs/tokens.md).
 

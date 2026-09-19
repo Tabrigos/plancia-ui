@@ -109,7 +109,7 @@ time, without tools. In practice:
 
 The **public contract** of the package is: the exported components and their
 props; the NAMES of the `--p-*` tokens; the `p-*` classes of `base.css`; the
-`exports` entries (`.`, `./tokens.css`, `./base.css`, `./tokens.json`); the
+`exports` entries (`.`, `./theme`, `./labels`, `./tokens.css`, `./base.css`, `./tokens.json`); the
 `data-theme` and `data-density` attributes; the peer dependency. Everything
 else is implementation.
 
@@ -166,8 +166,9 @@ Rules:
   chronicle of the reasoning: the repository is public and git history is the
   part that never gets cleaned up;
 - CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
-  regenerated identical to the committed ones, `npm test`, `npm run build`, svelte-check
-  and build of the showcase, `npm pack --dry-run`. A red PR is not merged;
+  regenerated identical to the committed ones, `npm test`, `npm run build`, the
+  subpath exports imported from plain Node, svelte-check and build of the
+  showcase, `npm pack --dry-run`. A red PR is not merged;
 - no personal files in the repo: `CLAUDE.md` is in `.gitignore` on purpose
   (whoever works with Claude Code keeps their own, importing this file). The
   shared instructions live HERE.
