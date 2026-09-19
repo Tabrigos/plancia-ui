@@ -55,6 +55,7 @@ Never alias the package sources: the contract is `dist`.
 | big number with a label | `Stat` | |
 | head of a floating panel | `PanelHead` | close button always last |
 | a whole panel floating over a stage (globe, map) | `FloatingPanel` | frame + head + scrolling body, Esc, focus return; the app positions it |
+| themed tooltips instead of the native `title` ones | `Tooltip` | mount once at the root; keep writing `title` |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -119,6 +120,15 @@ body, which scrolls inside `--p-floating-max-height` (default
 a class of its own (`position`, `top`, `right`, `width`; keep it a class,
 not an id, so the package's rule under 700 px — full width with gutters —
 can win). The package keeps no open/closed state: render it when open.
+
+**`Tooltip`** — mount `<Tooltip />` once, at the app root. `delay?: number`
+(`180` ms between hover and tooltip; focus shows it at once), `maxWidth?:
+number` (`300`), `gap?: number` (`8`), `avoid?: string` (selector of the
+elements it should not cover, e.g. `'.p-floating'`; the element's own panel
+does not count). Delegated: any element with `title` gets the themed tooltip,
+the text moves to `data-tip` so the browser shows nothing of its own; while
+visible the anchor has `aria-describedby`. Esc, pointerdown, scroll and
+blur hide it. Write `title` as before; nothing else changes.
 
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.

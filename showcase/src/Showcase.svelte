@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Button, Chip, ControlRow, FloatingPanel, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, scaleTone } from 'plancia-ui'
+  import { Age, Button, Chip, ControlRow, FloatingPanel, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -30,12 +30,15 @@
 
 <svelte:head><title>plancia-ui · showcase</title></svelte:head>
 
+<!-- One themed tooltip for the page: every `title` below goes through it -->
+<Tooltip avoid=".p-floating" />
+
 <main data-density={density}>
   <header class="head">
     <div>
       <h1>plancia-ui</h1>
       <p class="p-dim p-t13">Design system for dense consoles: tokens, base styles and Svelte 5 components. Version {version}, built from the main branch.</p>
-      <p class="p-dim p-t12 links"><a href="https://github.com/Tabrigos/plancia-ui">GitHub</a> · <a href="https://www.npmjs.com/package/plancia-ui">npm</a></p>
+      <p class="p-dim p-t12 links"><a href="https://github.com/Tabrigos/plancia-ui">GitHub</a> · <a href="https://www.npmjs.com/package/plancia-ui">npm</a> · <span title="Every title on this page renders through the package Tooltip, mounted once at the root">hover me for the themed tooltip</span></p>
     </div>
     <div class="head-ctl">
       <span class="p-t12 p-dim">theme</span>

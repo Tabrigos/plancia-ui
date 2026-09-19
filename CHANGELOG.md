@@ -12,6 +12,11 @@ All notable changes to plancia-ui. The format follows
   height, Esc closing while focus is inside, focus returning to the
   `opener` on close, full width with gutters under 700 px. The app positions
   it with a class of its own and decides when it exists.
+- `Tooltip`: one themed tooltip for the whole page, mounted once at the
+  root, delegated on `title`: the text moves to `data-tip` and renders in a
+  glass box below or above the element, on the side that covers less of
+  the elements in `avoid`; focus shows it at once, Esc hides it, the anchor
+  gets `aria-describedby` while visible. Apps keep writing `title`.
 - `plancia-ui/theme` and `plancia-ui/labels`: the theme helpers and
   `setLabels()` as plain-JavaScript entries, loadable from Node without the
   Svelte compiler (an entry point tested in Node, a vitest run without the
