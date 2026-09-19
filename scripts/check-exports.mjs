@@ -5,6 +5,7 @@
 // self-reference (`exports` in package.json), so it checks the real entries.
 const theme = await import('plancia-ui/theme')
 const labels = await import('plancia-ui/labels')
+const live = await import('plancia-ui/live')
 
 if (typeof theme.applyStoredTheme !== 'function' || typeof theme.parseTheme !== 'function') {
   throw new Error('plancia-ui/theme: helpers missing')
@@ -13,4 +14,5 @@ labels.setLabels({ close: 'x' })
 if (labels.getLabels().close !== 'x' || labels.getLabels().loading !== 'Loading') {
   throw new Error('plancia-ui/labels: setLabels/getLabels do not round-trip')
 }
-console.log(`subpath exports load in Node ${process.version}: theme (${Object.keys(theme).length} exports), labels`)
+if (typeof live.announce !== 'function') throw new Error('plancia-ui/live: announce missing')
+console.log(`subpath exports load in Node ${process.version}: theme (${Object.keys(theme).length} exports), labels, live`)

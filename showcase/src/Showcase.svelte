@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, scaleTone } from 'plancia-ui'
+  import { Age, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -33,6 +33,7 @@
 
 <!-- One themed tooltip for the page: every `title` below goes through it -->
 <Tooltip avoid=".p-floating" />
+<LiveRegion />
 
 <main data-density={density}>
   <header class="head">
@@ -149,7 +150,7 @@
         {:else}
           <Button id="open-demo-panel" variant="secondary" size="sm" onclick={() => { panelOpen = true }}>open the panel</Button>
         {/if}
-        <span class="p-t11 p-dim stage-note">Esc closes while focus is inside; the body scrolls; the page positions it.</span>
+        <span class="p-t11 p-dim stage-note"><Kbd>Esc</Kbd> closes while focus is inside; the body scrolls; the page positions it.</span>
       </div>
       <h2 class="p-sec-title">Panel head</h2>
       <div class="p-card demo">
@@ -186,6 +187,10 @@
           <Status kind="stale" text="stale · 40 min" title="The source did not answer, showing the last data" help />
           <Status kind="error" text="unavailable" />
           <Status kind="idle" text="off" />
+        </div>
+        <div class="row-wrap">
+          <Button variant="quiet" size="sm" onclick={() => announce('ISS selected')}>announce to screen readers</Button>
+          <span class="p-t11 p-dim">writes "ISS selected" into the LiveRegion, empties after 5 s · keys: <Kbd>↑</Kbd> <Kbd>↓</Kbd> move, <Kbd>Enter</Kbd> picks</span>
         </div>
         <div class="row-wrap">
           <Age updatedAt={now - 3 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />

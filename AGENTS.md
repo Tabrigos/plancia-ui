@@ -9,7 +9,7 @@ the document gets fixed.
 
 plancia-ui is a design system for dense consoles, dark by birth and light by
 choice: CSS **tokens** (`--p-*`), **base styles** (`p-*` classes) and
-**twenty-one Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
+**twenty-three Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
 and **no runtime dependency**: that is a rule, not an accident.
 
 ```
@@ -109,7 +109,7 @@ time, without tools. In practice:
 
 The **public contract** of the package is: the exported components and their
 props; the NAMES of the `--p-*` tokens; the `p-*` classes of `base.css`; the
-`exports` entries (`.`, `./theme`, `./labels`, `./tokens.css`, `./base.css`, `./tokens.json`); the
+`exports` entries (`.`, `./theme`, `./labels`, `./live`, `./tokens.css`, `./base.css`, `./tokens.json`); the
 `data-theme` and `data-density` attributes; the peer dependency. Everything
 else is implementation.
 

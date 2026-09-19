@@ -17,6 +17,13 @@ All notable changes to plancia-ui. The format follows
   glass box below or above the element, on the side that covers less of
   the elements in `avoid`; focus shows it at once, Esc hides it, the anchor
   gets `aria-describedby` while visible. Apps keep writing `title`.
+- `Kbd`: a key as shown in hints ("Esc closes"), monospace on a raised
+  inset.
+- `announce(text)` and `LiveRegion`: the polite live region for what
+  follows an action of the user and cannot be seen on the stage; the text
+  empties after five seconds and the same text is read again. `announce`
+  is plain JavaScript from `plancia-ui/live`, to call from a store;
+  `LiveRegion` is mounted once.
 - `InfoButton` and `InfoCard`: the (i) that opens the explanation of a
   datum (a disclosure button: `active`, `controls`, name from `setLabels()`)
   and the frame of the explanation, an inset card with the typography for a
@@ -32,6 +39,10 @@ All notable changes to plancia-ui. The format follows
   the `.svelte` components, which plain Node cannot load.
 
 ### Changed
+- `Section` opens and closes with a height transition on the motion tokens
+  (off under `prefers-reduced-motion`); closed content stays mounted,
+  `inert` and hidden from readers, instead of `hidden`. `FloatingPanel`
+  fades in on mount.
 - `getLabels()` returns a snapshot; the reactive form is the `labels` store
   (`svelte/store`), which the components subscribe to. `setLabels()` is
   unchanged.

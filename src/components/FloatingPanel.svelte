@@ -81,7 +81,9 @@
     background: var(--p-s3a); backdrop-filter: blur(16px) saturate(1.3);
     border: 1px solid var(--p-border); border-radius: var(--p-r3); box-shadow: var(--p-sh2);
     color: var(--p-text); outline: none;
+    animation: p-float-in var(--p-motion-base) var(--p-motion-ease);
   }
+  @keyframes p-float-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   .p-floating:focus-visible { box-shadow: var(--p-sh2), var(--p-focus); }
   .body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--p-space-3) var(--p-space-4) var(--p-space-4); }
   /* A phone has no room for a panel beside the stage: it takes the width, with

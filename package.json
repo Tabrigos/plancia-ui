@@ -32,6 +32,10 @@
       "types": "./dist/labels.d.ts",
       "default": "./dist/labels.js"
     },
+    "./live": {
+      "types": "./dist/live.d.ts",
+      "default": "./dist/live.js"
+    },
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./tokens.json": "./dist/tokens.json",

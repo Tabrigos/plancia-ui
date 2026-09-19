@@ -11,7 +11,10 @@
    * optional actions on the right (an (i) button, a chip), the content
    * under it. The open/closed state belongs to the consumer (`open` is
    * bindable, `onchange` reports a click): the package stores nothing.
-   * Closed content stays mounted and `hidden`, so its state survives.
+   * Closed content stays mounted, `inert` and hidden from readers, so its
+   * state survives; the height animates on the motion tokens (a grid row
+   * from 1fr to 0fr: no JavaScript, and `prefers-reduced-motion` turns it
+   * off from base.css).
    */
   let {
     title,
@@ -52,7 +55,9 @@
     </button>
     {#if actions}<div class="actions">{@render actions()}</div>{/if}
   </div>
-  <div class="body" id={bodyId} hidden={!open}>{@render children?.()}</div>
+  <div class="body" id={bodyId} inert={!open} aria-hidden={!open}>
+    <div class="inner">{@render children?.()}</div>
+  </div>
 </section>
 
 <style>
@@ -72,7 +77,8 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .actions { display: flex; align-items: center; gap: 6px; flex: none; }
-  .body { display: flex; flex-direction: column; gap: var(--p-space-2); padding-bottom: var(--p-row); }
-  /* `display: flex` would beat the `hidden` attribute: closed means closed */
-  .body[hidden] { display: none; }
+  .body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows var(--p-motion-base) var(--p-motion-ease); }
+  .body[inert] { grid-template-rows: 0fr; }
+  .inner { display: flex; flex-direction: column; gap: var(--p-space-2); min-height: 0; overflow: hidden; }
+  .open .inner { padding-bottom: var(--p-row); }
 </style>
