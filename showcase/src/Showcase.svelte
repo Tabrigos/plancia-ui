@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -32,9 +32,11 @@
     ['seq', tokens.seq as string[], 'sequential · accent hue, near-zero to full'],
     ['div', tokens.div as string[], 'diverging · blue to red through a neutral midpoint'],
   ]
-  // A small series for the chart preview: bars on viz-1, a line on viz-2, cells on seq
-  const bars = [3, 5, 4, 7, 6, 8, 5, 9]
-  const line = [4, 4, 5, 6, 5, 7, 8, 7]
+  // Small series for the chart preview: Kp bars colored by level, an X-ray sparkline, wind with an area
+  const kp = [1, 2, 2, 3, 5, 4, 6, 3]
+  const kpBars = kp.map((v, i) => ({ value: v, label: `${String(i * 3).padStart(2, '0')} UTC · Kp ${v}`, color: `var(--p-scale-${Math.min(5, Math.max(0, v - 4))})` }))
+  const xray = [1.2, 1.4, 1.3, 2.8, 5.1, 3.2, 2.1, 1.9, 1.7, 1.6, 2.2, 1.8]
+  const wind = [380, 392, 410, 405, 430, 455, 448, 470, 462, 440]
 </script>
 
 <svelte:head><title>plancia-ui · showcase</title></svelte:head>
@@ -87,10 +89,9 @@
         </div>
       {/each}
       <div class="p-card chart-demo" aria-label="Chart preview on the dataviz tokens">
-        <svg viewBox="0 0 240 80" width="240" height="80" role="img" aria-label="Eight bars on viz-1, a line on viz-2">
-          {#each bars as v, i (i)}<rect x={8 + i * 29} y={72 - v * 7} width="18" height={v * 7} rx="2" fill="var(--p-viz-1)" />{/each}
-          <polyline points={line.map((v, i) => `${17 + i * 29},${72 - v * 7}`).join(' ')} fill="none" stroke="var(--p-viz-2)" stroke-width="2" stroke-linejoin="round" />
-        </svg>
+        <div class="chart-row"><Bars bars={kpBars} max={9} width={160} height={40} label="Kp, last 24 h" /><span class="p-t11 p-dim">Bars · Kp by 3 h, a status token per bar</span></div>
+        <div class="chart-row"><Sparkline values={xray} label="X-ray flux, last 12 h" width={160} height={32} color="var(--p-viz-5)" /><span class="p-t11 p-dim">Sparkline · X-ray, viz-5</span></div>
+        <div class="chart-row"><Sparkline values={wind} min={300} label="Solar wind speed" width={160} height={32} area /><span class="p-t11 p-dim">Sparkline · wind, area, scale pinned at 300</span></div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-seq-{s})"></i>{/each}</div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-div-{s})"></i>{/each}</div>
       </div>
@@ -355,6 +356,7 @@
   .ramp-row { display: flex; gap: 4px; }
   .chart-demo { grid-row: 1 / span 3; grid-column: 2; padding: 12px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
   .cells { display: flex; gap: 2px; }
+  .chart-row { display: flex; align-items: center; gap: 12px; }
   .cells i { display: inline-block; width: 28px; height: 12px; border-radius: 2px; }
   .type { padding: 4px 16px; }
   .type-row { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; padding: 8px 0; }
