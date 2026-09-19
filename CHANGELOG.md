@@ -17,6 +17,13 @@ All notable changes to plancia-ui. The format follows
   glass box below or above the element, on the side that covers less of
   the elements in `avoid`; focus shows it at once, Esc hides it, the anchor
   gets `aria-describedby` while visible. Apps keep writing `title`.
+- Dataviz tokens, in both themes: `--p-viz-1..6` (categorical, six hues in
+  a fixed order: blue, rose, lime, violet, orange, teal), `--p-seq-1..7`
+  (sequential, the accent hue from near-zero to full) and `--p-div-1..7`
+  (diverging, blue to red through a neutral midpoint at `--p-div-4`).
+  Computed and validated per theme on the card surface: lightness band,
+  chroma floor, colorblind separation of adjacent slots (worst pair ΔE 12.4,
+  target 8), 3:1 contrast. Series colors: never the status tokens.
 - `Kbd`: a key as shown in hints ("Esc closes"), monospace on a raised
   inset.
 - `announce(text)` and `LiveRegion`: the polite live region for what

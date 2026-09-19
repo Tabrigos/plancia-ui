@@ -258,6 +258,14 @@ stored as nothing); `applyStoredTheme(key)` reads and applies in one call;
   `danger`, `info`, `neutral`; glows: `accent-glow`, `ok-glow`, `warn-glow`,
   `danger-glow`; shadows: `sh1`, `sh2`;
 - NOAA scale ramp: `scale-0` … `scale-5`;
+- dataviz: `viz-1` … `viz-6` (categorical: blue, rose, lime, violet, orange,
+  teal, assigned in this order and never cycled; a 7th series folds into
+  "Other"), `seq-1` … `seq-7` (sequential, accent hue, near-zero to full;
+  discrete marks start at `seq-2`), `div-1` … `div-7` (diverging, blue to red,
+  `div-4` the neutral midpoint). Validated per theme for colorblind
+  separation and 3:1 contrast on the card surface. A series that means good
+  or bad wears the status tokens with an icon or label, never a `viz` slot;
+  chart text wears the text tokens, never the series color;
 - typography: `font-ui`, `font-mono`, sizes `t11` `t12` `t13` `t14` `t16`
   `t20` `t28` (11 px minimum, no smaller text anywhere);
 - spacing (4 px grid): `space-1` (4) `space-2` (8) `space-3` (12) `space-4`

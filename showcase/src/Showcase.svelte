@@ -27,6 +27,14 @@
   const colors = Object.entries(tokens.color as Record<string, string>)
   const lightColors = tokens.light.color as Record<string, string>
   const sizes = Object.entries(tokens.size as Record<string, string>)
+  const ramps: Array<[string, string[], string]> = [
+    ['viz', tokens.viz as string[], 'categorical · blue, rose, lime, violet, orange, teal, in this order'],
+    ['seq', tokens.seq as string[], 'sequential · accent hue, near-zero to full'],
+    ['div', tokens.div as string[], 'diverging · blue to red through a neutral midpoint'],
+  ]
+  // A small series for the chart preview: bars on viz-1, a line on viz-2, cells on seq
+  const bars = [3, 5, 4, 7, 6, 8, 5, 9]
+  const line = [4, 4, 5, 6, 5, 7, 8, 7]
 </script>
 
 <svelte:head><title>plancia-ui · showcase</title></svelte:head>
@@ -64,6 +72,28 @@
     <div class="scale-row">
       <span class="p-t11 p-dim">NOAA scale ramp (--p-scale-0..5, follows the theme)</span>
       {#each [0, 1, 2, 3, 4, 5] as level (level)}<i class="scale-box" style="background:var(--p-scale-{level})" title="--p-scale-{level}"></i>{/each}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="p-sec-title">Dataviz tokens</h2>
+    <p class="p-dim p-t12 sw-note">Three ramps for charts, computed and validated per theme on the card surface (lightness band, chroma floor, colorblind separation of adjacent slots, 3:1 contrast). Series colors are never the status tokens.</p>
+    <div class="ramps">
+      {#each ramps as [name, steps, note] (name)}
+        <div class="ramp">
+          <span class="p-mono p-t11 p-hi">--p-{name}-1..{steps.length}</span>
+          <div class="ramp-row">{#each steps as _, i (i)}<i class="scale-box" style="background:var(--p-{name}-{i + 1})" title="--p-{name}-{i + 1}"></i>{/each}</div>
+          <span class="p-t11 p-dim">{note}</span>
+        </div>
+      {/each}
+      <div class="p-card chart-demo" aria-label="Chart preview on the dataviz tokens">
+        <svg viewBox="0 0 240 80" width="240" height="80" role="img" aria-label="Eight bars on viz-1, a line on viz-2">
+          {#each bars as v, i (i)}<rect x={8 + i * 29} y={72 - v * 7} width="18" height={v * 7} rx="2" fill="var(--p-viz-1)" />{/each}
+          <polyline points={line.map((v, i) => `${17 + i * 29},${72 - v * 7}`).join(' ')} fill="none" stroke="var(--p-viz-2)" stroke-width="2" stroke-linejoin="round" />
+        </svg>
+        <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-seq-{s})"></i>{/each}</div>
+        <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-div-{s})"></i>{/each}</div>
+      </div>
     </div>
   </section>
 
@@ -320,6 +350,12 @@
   .sw-box { height: 40px; border-radius: var(--p-r2); border: 1px solid var(--p-border); }
   .scale-row { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
   .scale-box { display: inline-block; width: 28px; height: 16px; border-radius: var(--p-r1); border: 1px solid var(--p-border); }
+  .ramps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 32px; align-items: start; }
+  .ramp { display: flex; flex-direction: column; gap: 4px; }
+  .ramp-row { display: flex; gap: 4px; }
+  .chart-demo { grid-row: 1 / span 3; grid-column: 2; padding: 12px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .cells { display: flex; gap: 2px; }
+  .cells i { display: inline-block; width: 28px; height: 12px; border-radius: 2px; }
   .type { padding: 4px 16px; }
   .type-row { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; padding: 8px 0; }
   .type-row + .type-row { border-top: 1px solid var(--p-border); }

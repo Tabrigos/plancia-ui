@@ -19,6 +19,9 @@ written by hand anywhere else. Each group of the JSON becomes a prefix:
 | glows | `accent-glow`, `ok-glow`, `warn-glow`, `danger-glow` | box shadows for status dots and active states |
 | shadows | `sh1`, `sh2` | |
 | NOAA scale | `scale-0` … `scale-5` | the ramp of the R/S/G scale levels |
+| dataviz, categorical | `viz-1` … `viz-6` | series identity, in a fixed order (see below) |
+| dataviz, sequential | `seq-1` … `seq-7` | magnitude, one hue, from near-zero (`seq-1`) to full |
+| dataviz, diverging | `div-1` … `div-7` | polarity, blue to red, `div-4` the neutral midpoint |
 | typography | `font-ui`, `font-mono`; `t11` `t12` `t13` `t14` `t16` `t20` `t28` | seven sizes, 11 px minimum |
 | spacing | `space-1` (4 px) `space-2` (8) `space-3` (12) `space-4` (16) `space-6` (24) `space-8` (32) | a 4 px grid |
 | radii | `r1` (4 px) `r2` (8) `r3` (12) `r-pill` | |
@@ -100,6 +103,34 @@ The tokens name `Inter` for the interface and `JetBrains Mono` for
 telemetry, each with system fallbacks (`Segoe UI`, `system-ui`, `Consolas`).
 The package ships no font files: the project loads them if it wants them.
 The showcase self-hosts both (SIL Open Font License).
+
+## Dataviz tokens
+
+Charts take their colors from three ramps, redefined by the light theme like
+every other color, and computed rather than picked: each theme's set was
+validated on the card surface (`--p-s2`) for lightness band, chroma floor,
+colorblind separation between adjacent slots (protan and deutan simulated;
+worst adjacent pair ΔE 12.4 in OKLab ×100, target 8) and 3:1 contrast.
+
+- **Categorical** `--p-viz-1` … `--p-viz-6`: blue, rose, lime, violet,
+  orange, teal. Assign in this order, never cycled, and let the color follow
+  the entity (a filter that removes series must not repaint the survivors);
+  a seventh series folds into "Other" or becomes a small multiple. With
+  more than three series where any two marks can touch (scatter, maps), keep
+  a secondary encoding: labels, gaps, texture.
+- **Sequential** `--p-seq-1` … `--p-seq-7`: the accent hue from near-zero,
+  which recedes toward the surface, to full. For discrete ordered marks
+  (tiers, buckets) start at `--p-seq-2`: the first step sits under 2:1 on
+  purpose.
+- **Diverging** `--p-div-1` … `--p-div-7`: blue for one side, red for the
+  other, three steps each, `--p-div-4` a neutral gray that reads as
+  "nothing". Equal steps per arm.
+
+The status tokens (`ok`, `warn`, `orange`, `danger`) keep their meaning in
+charts: a series that *means* good or bad wears them, with an icon or a
+label, and a series that is just "series 5" never does. Slot 5 sits close
+to the status orange in the dark theme, so that rule matters there. Text in
+a chart wears the text tokens, never the series color.
 
 ## Changing the tokens
 
