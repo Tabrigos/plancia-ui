@@ -17,6 +17,14 @@ All notable changes to plancia-ui. The format follows
   glass box below or above the element, on the side that covers less of
   the elements in `avoid`; focus shows it at once, Esc hides it, the anchor
   gets `aria-describedby` while visible. Apps keep writing `title`.
+- `InfoButton` and `InfoCard`: the (i) that opens the explanation of a
+  datum (a disclosure button: `active`, `controls`, name from `setLabels()`)
+  and the frame of the explanation, an inset card with the typography for a
+  paragraph, a `<dl>` of facts and a link, either a native `<details>` with
+  a `summary` or an always-open region with a close button. The text stays
+  in the app.
+- `setLabels()` gains `info`, the accessible name of `InfoButton`
+  ("What is this").
 - `plancia-ui/theme` and `plancia-ui/labels`: the theme helpers and
   `setLabels()` as plain-JavaScript entries, loadable from Node without the
   Svelte compiler (an entry point tested in Node, a vitest run without the

@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/svelte'
 import { flushSync } from 'svelte'
 import { PanelHead, Skeleton, getLabels, setLabels } from '../src/index'
 
-afterEach(() => setLabels({ close: 'Close', loading: 'Loading' }))
+afterEach(() => setLabels({ close: 'Close', loading: 'Loading', info: 'What is this' }))
 
 describe('setLabels', () => {
   it('getLabels returns a snapshot of the current defaults', () => {
-    expect(getLabels()).toEqual({ close: 'Close', loading: 'Loading' })
+    expect(getLabels()).toEqual({ close: 'Close', loading: 'Loading', info: 'What is this' })
     setLabels({ close: 'Chiudi' })
-    expect(getLabels()).toEqual({ close: 'Chiudi', loading: 'Loading' })
+    expect(getLabels()).toEqual({ close: 'Chiudi', loading: 'Loading', info: 'What is this' })
   })
 
   it('changes the default accessible names of PanelHead and Skeleton', () => {

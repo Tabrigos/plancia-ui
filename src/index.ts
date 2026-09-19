@@ -22,6 +22,8 @@ export { default as Status } from './components/Status.svelte'
 export { default as Age, formatAge } from './components/Age.svelte'
 export { default as FloatingPanel } from './components/FloatingPanel.svelte'
 export { default as Tooltip } from './components/Tooltip.svelte'
+export { default as InfoButton } from './components/InfoButton.svelte'
+export { default as InfoCard } from './components/InfoCard.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'

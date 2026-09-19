@@ -37,8 +37,9 @@ what changed.
    fallbacks; the package ships no font files, the project loads them if it
    wants them.
 5. Labels: the components speak English by default (close button of
-   `PanelHead`, `Skeleton` region). In another language call once, before
-   mount, `setLabels({ close: 'Chiudi', loading: 'Caricamento' })` from
+   `PanelHead`, `Skeleton` region, `InfoButton`). In another language call
+   once, before mount, `setLabels({ close: 'Chiudi', loading: 'Caricamento',
+   info: "Cos'è questo dato" })` from
    `plancia-ui/labels` (plain JavaScript, like `plancia-ui/theme`); a prop
    passed to a component still wins.
 
@@ -56,6 +57,8 @@ Never alias the package sources: the contract is `dist`.
 | head of a floating panel | `PanelHead` | close button always last |
 | a whole panel floating over a stage (globe, map) | `FloatingPanel` | frame + head + scrolling body, Esc, focus return; the app positions it |
 | themed tooltips instead of the native `title` ones | `Tooltip` | mount once at the root; keep writing `title` |
+| the (i) that opens an explanation | `InfoButton` | a disclosure button; the card is `InfoCard` |
+| the frame of an explanation ("what is this datum") | `InfoCard` | native `<details>` with `summary`, or always open with a close button |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -130,6 +133,18 @@ the text moves to `data-tip` so the browser shows nothing of its own; while
 visible the anchor has `aria-describedby`. Esc, pointerdown, scroll and
 blur hide it. Write `title` as before; nothing else changes.
 
+**`InfoButton`** — `active?: boolean` (`aria-expanded`), `onclick?`,
+`controls?: string` (id of the `InfoCard` it opens, `aria-controls`),
+`label?: string` (accessible name and tooltip; default from `setLabels()`,
+`'What is this'`). 20 px, quiet, accent when active.
+
+**`InfoCard`** — with `summary?: string` it is a native `<details>` (`open`
+bindable, `false`); without, an always-open `role="region"` named by
+`label?: string`, with a close button when `onclose?` is given
+(`closeLabel?`). `id?` for `aria-controls`. Content is the body: `<p>`,
+`<b>`, a `<dl>` of facts (`dt` dim, `dd` monospace) and `<a>` are styled.
+The text is the app's.
+
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.
 
@@ -191,7 +206,7 @@ exported: the largest whole unit, narrow style ("3m ago", "2h ago").
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,
 `1–2 → warn`, `3 → orange`, `4–5 → danger`. Pass the result to `Chip`.
 
-**`setLabels(partial: { close?: string; loading?: string })`** — the default
+**`setLabels(partial: { close?: string; loading?: string; info?: string })`** — the default
 accessible names; a runtime change reaches mounted components. `getLabels()`
 returns a snapshot; `labels` is the `svelte/store` behind it. From
 `plancia-ui/labels` (also re-exported by the index).

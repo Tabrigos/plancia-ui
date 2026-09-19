@@ -1,6 +1,7 @@
 /**
  * Default texts the components speak by themselves: the accessible name of
- * the close button of `PanelHead` and of the `Skeleton` region. English by
+ * the close button of `PanelHead`, of the `Skeleton` region, of the (i) of
+ * `InfoButton`. English by
  * default; an app in another language sets them once, before mount, with
  * `setLabels()`, instead of passing `closeLabel` and `label` everywhere. A
  * prop passed to a component still wins.
@@ -17,10 +18,12 @@ export interface Labels {
   close: string
   /** Accessible name of the `Skeleton` loading region */
   loading: string
+  /** Accessible name of `InfoButton`, the (i) that opens an explanation */
+  info: string
 }
 
 /** The current defaults, as a readable store the components subscribe to. */
-export const labels = writable<Labels>({ close: 'Close', loading: 'Loading' })
+export const labels = writable<Labels>({ close: 'Close', loading: 'Loading', info: 'What is this' })
 
 export function setLabels(partial: Partial<Labels>): void {
   labels.update((current) => ({ ...current, ...partial }))
