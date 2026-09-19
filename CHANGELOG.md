@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-09-19
+
 ### Added
 - `FloatingPanel`: a panel floating over a stage, with the frame, a
   `PanelHead` touching the edges, a body that scrolls inside a bounded
