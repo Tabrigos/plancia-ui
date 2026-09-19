@@ -4,6 +4,9 @@ import { flushSync } from 'svelte'
 import { Section } from '../../src/index'
 import { html } from '../helpers'
 
+// jsdom has no `inert` property: Svelte sets it as a property in browsers (reflected to the attribute) and as an attribute here
+const isInert = (el: Element): boolean => el.hasAttribute('inert') || (el as unknown as { inert?: boolean }).inert === true
+
 describe('Section', () => {
   it('is open by default, with a button that controls the content region', () => {
     const { container } = render(Section, { props: { title: 'Solar wind', summary: '412 km/s · Bz −3', children: html('<p>content</p>') } })
@@ -11,13 +14,13 @@ describe('Section', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true')
     const body = container.querySelector('.body') as HTMLElement
     expect(body.id).toBe(button.getAttribute('aria-controls'))
-    expect(body.hidden).toBe(false)
+    expect(isInert(body)).toBe(false)
     expect(body.querySelector('p')?.textContent).toBe('content')
     expect(container.querySelector('.summary')?.textContent).toBe('412 km/s · Bz −3')
     expect(container.querySelector('.p-sec-title')?.textContent).toBe('Solar wind')
   })
 
-  it('closes and reopens on click, keeping the content mounted, and reports the change', () => {
+  it('closes and reopens on click, keeping the content mounted but inert, and reports the change', () => {
     const onchange = vi.fn()
     const { container } = render(Section, { props: { title: 'Kp', onchange, children: html('<p>content</p>') } })
     const button = screen.getByRole('button')
@@ -25,12 +28,13 @@ describe('Section', () => {
     flushSync()
     expect(button.getAttribute('aria-expanded')).toBe('false')
     const body = container.querySelector('.body') as HTMLElement
-    expect(body.hidden).toBe(true)
+    expect(isInert(body)).toBe(true)
+    expect(body.getAttribute('aria-hidden')).toBe('true')
     expect(body.querySelector('p')).not.toBeNull()
     expect(onchange).toHaveBeenLastCalledWith(false)
     button.click()
     flushSync()
-    expect(body.hidden).toBe(false)
+    expect(isInert(body)).toBe(false)
     expect(onchange).toHaveBeenLastCalledWith(true)
   })
 
@@ -38,7 +42,7 @@ describe('Section', () => {
     const { container } = render(Section, { props: { title: 'Regions', open: false, id: 'regions' } })
     expect(screen.getByRole('button').getAttribute('aria-expanded')).toBe('false')
     expect(screen.getByRole('button').getAttribute('aria-controls')).toBe('regions')
-    expect((container.querySelector('#regions') as HTMLElement).hidden).toBe(true)
+    expect(isInert(container.querySelector('#regions') as HTMLElement)).toBe(true)
   })
 
   it('renders the actions outside the toggle button', () => {

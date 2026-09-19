@@ -59,6 +59,8 @@ Never alias the package sources: the contract is `dist`.
 | themed tooltips instead of the native `title` ones | `Tooltip` | mount once at the root; keep writing `title` |
 | the (i) that opens an explanation | `InfoButton` | a disclosure button; the card is `InfoCard` |
 | the frame of an explanation ("what is this datum") | `InfoCard` | native `<details>` with `summary`, or always open with a close button |
+| a key in a hint ("Esc closes") | `Kbd` | |
+| telling screen readers what happened on the stage | `LiveRegion` + `announce()` | mount once; call from a store |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -145,6 +147,17 @@ bindable, `false`); without, an always-open `role="region"` named by
 `<b>`, a `<dl>` of facts (`dt` dim, `dd` monospace) and `<a>` are styled.
 The text is the app's.
 
+**`Kbd`** — content is the key (`<Kbd>Esc</Kbd>`); a combination is several
+side by side with the app's "+".
+
+**`LiveRegion`** — mount `<LiveRegion />` once near the root; no props. A
+`p-sr-only` `role="status"` `aria-live="polite"` region.
+**`announce(text: string)`** (from `plancia-ui/live`, plain JavaScript, also
+re-exported by the index) writes into it: only for what follows an action
+of the user and cannot be seen on the stage (an object selected, a panel
+closed with Esc), never for telemetry. Empties after 5 s; the same text
+announced again is read again.
+
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.
 
@@ -181,7 +194,9 @@ right (toggle, chip, counter, buttons). Forwards its own attributes
 (`data-*`, `id`, `title`); a `class` of the consumer is added next to its own. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
 
-**`Section`** — `title: string` (rendered as `p-sec-title`), `summary?: string`
+**`Section`** — opens and closes with a height transition on the motion
+tokens; closed content stays mounted, `inert` and `aria-hidden`.
+`title: string` (rendered as `p-sec-title`), `summary?: string`
 (one monospace line next to the title: the gist of the content, readable
 while closed), `open?: boolean` (bindable, `true`), `onchange?: (open:
 boolean) => void`, snippet `actions` (controls on the right of the head,

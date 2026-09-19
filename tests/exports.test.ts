@@ -4,6 +4,7 @@ import pkg from '../package.json'
 // the built entries from plain Node.
 import theme from '../src/theme.ts?raw'
 import labels from '../src/labels.ts?raw'
+import live from '../src/live.ts?raw'
 import index from '../src/index.ts?raw'
 
 /**
@@ -11,7 +12,7 @@ import index from '../src/index.ts?raw'
  * compiler: the entry exists, its source imports no `.svelte` file and
  * uses no rune.
  */
-const PURE: Record<string, string> = { './theme': theme, './labels': labels }
+const PURE: Record<string, string> = { './theme': theme, './labels': labels, './live': live }
 
 describe('subpath exports', () => {
   it('declares plain-JavaScript entries for the helpers', () => {
@@ -28,5 +29,6 @@ describe('subpath exports', () => {
   it('keeps the index re-exporting the same helpers', () => {
     expect(index).toContain("from './labels.js'")
     expect(index).toContain("from './theme.js'")
+    expect(index).toContain("from './live.js'")
   })
 })
