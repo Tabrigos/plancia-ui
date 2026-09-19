@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Button, Chip, ControlRow, FloatingPanel, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, scaleTone } from 'plancia-ui'
+  import { Age, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, Tooltip, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -17,6 +17,7 @@
   let density = $state<'compact' | 'comfortable'>('compact')
   let kpOpen = $state(true)
   let panelOpen = $state(true)
+  let kpInfo = $state(true)
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -219,6 +220,26 @@
   </section>
 
   <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">Info button · Info card</h2>
+      <div class="p-card demo">
+        <ControlRow label="Planetary Kp" help title="Global geomagnetic activity, 0–9">
+          <InfoButton active={kpInfo} controls="kp-info" onclick={() => { kpInfo = !kpInfo }} />
+          <Chip tone="ok">1.3</Chip>
+        </ControlRow>
+        {#if kpInfo}
+          <InfoCard id="kp-info" label="About Kp" onclose={() => { kpInfo = false }}>
+            <p>The <b>planetary Kp index</b> summarizes geomagnetic activity over three hours, from 0 (quiet) to 9 (extreme storm).</p>
+            <dl><dt>Quantity</dt><dd>index, 0–9</dd><dt>Source</dt><dd>GFZ Potsdam via SWPC</dd><dt>Cadence</dt><dd>3 h</dd></dl>
+            <a href="https://www.swpc.noaa.gov/products/planetary-k-index" title="The product page at SWPC">source and attribution →</a>
+          </InfoCard>
+        {/if}
+        <InfoCard summary="what is this datum">
+          <p>The <b>X-ray flux</b> of the Sun in the 0.1–0.8 nm band, the basis of the flare classes A to X.</p>
+          <dl><dt>Source</dt><dd>GOES via SWPC</dd><dt>Cadence</dt><dd>1 min</dd></dl>
+        </InfoCard>
+      </div>
+    </div>
     <div>
       <h2 class="p-sec-title">Sections</h2>
       <div class="p-card demo">

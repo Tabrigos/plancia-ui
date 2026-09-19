@@ -20,7 +20,7 @@ control panels.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Nineteen small components**, each readable in a minute, accessible by
+- **Twenty-one small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -59,7 +59,7 @@ Light theme: put `data-theme="light"` on the root element, or call
 `rememberTheme()` when the user switches. Comfortable density: `data-density="comfortable"`. The
 package never decides either; the project does. In another language, set
 the default labels once, from `plancia-ui/labels`:
-`setLabels({ close: 'Chiudi', loading: 'Caricamento' })`. Both entries are
+`setLabels({ close: 'Chiudi', loading: 'Caricamento', info: "Cos'è questo dato" })`. Both entries are
 plain JavaScript, usable from Node and in tests without the Svelte compiler.
 Tokens, themes, density and fonts are explained in
 [`docs/tokens.md`](docs/tokens.md).
@@ -87,6 +87,8 @@ Tokens, themes, density and fonts are explained in
 | `Age` | freshness chip ("3m ago") | `updatedAt`, `staleAfter`, `deadAfter`, `locale`, `title` |
 | `FloatingPanel` | panel over a stage: frame, head, scrolling body, Esc, focus return | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `opener`, `autofocus`, `label`; the content is the body |
 | `Tooltip` | themed tooltip for every `title` on the page, mounted once | `delay`, `maxWidth`, `gap`, `avoid` |
+| `InfoButton` | the (i) that opens an explanation | `active`, `onclick`, `controls`, `label` |
+| `InfoCard` | frame of an explanation: paragraph, `<dl>` of facts, link | `summary` (native details) or always open with `onclose`; the content is the body |
 
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
 to `Chip`; `setLabels()` for the default labels; the theme helpers
