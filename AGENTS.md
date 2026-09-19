@@ -76,6 +76,14 @@ time, without tools. In practice:
   11 px. A transparency is `color-mix(in srgb, var(--p-x) N%, transparent)`;
 - **no JavaScript where CSS is enough** and no dependencies: if a library
   seems necessary, open an issue first;
+- **what runs without a component gets its own entry**: a helper meant for
+  an entry point, a store or a pure module (the theme helpers, `setLabels`)
+  is exported from a JavaScript-only subpath (`plancia-ui/theme`,
+  `plancia-ui/labels`), not only from the package index. The index
+  re-exports the `.svelte` components, and whoever imports it from plain
+  Node — a vitest run without the Svelte plugin, a script — fails on the
+  first `.svelte` file. Found with the reference consumer on 2026-09-18: its
+  pure theme module could not use the helpers of 0.5.0;
 - **accessibility by default**: every interactive element is a native element
   (`button`, `input`), has the visible focus ring inherited from `base.css`
   and an accessible name; `aria-pressed` for toggling states; `role="alert"`
