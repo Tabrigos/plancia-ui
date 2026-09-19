@@ -75,7 +75,8 @@ The light block also sets `color-scheme: light`.
 
 **The package never decides when to apply the light theme.** The project
 puts `data-theme="light"` on the root element, ideally before the first
-render. The helpers exported from `plancia-ui` do the mechanical part with
+render. The helpers exported from `plancia-ui/theme` (plain JavaScript, no
+component behind them) do the mechanical part with
 a storage key the project chooses: `applyStoredTheme('myapp.theme')` in the
 entry point before mount, `rememberTheme(theme, 'myapp.theme')` when the
 user switches, `readRequestedTheme()` for a `?theme=light` deep link,

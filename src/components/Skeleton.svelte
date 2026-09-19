@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { getLabels } from '../labels.svelte.js'
+  import { labels } from '../labels.js'
 
   /** Loading skeleton: breathing lines in place of a "Loading…" text. `label` is the accessible name; the default comes from `setLabels()`. */
   let { lines = 3, label, compact = false }: { lines?: number; label?: string; compact?: boolean } = $props()
   const widths = ['86%', '62%', '74%', '48%', '68%']
-  const labels = getLabels()
 </script>
 
-<div class="p-skel" class:compact role="status" aria-label={label ?? labels.loading}>
+<div class="p-skel" class:compact role="status" aria-label={label ?? $labels.loading}>
   {#each Array.from({ length: lines }) as _, i (i)}
     <span class="line" style="width:{widths[i % widths.length]}"></span>
   {/each}

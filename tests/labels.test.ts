@@ -1,11 +1,17 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/svelte'
 import { flushSync } from 'svelte'
-import { PanelHead, Skeleton, setLabels } from '../src/index'
+import { PanelHead, Skeleton, getLabels, setLabels } from '../src/index'
 
 afterEach(() => setLabels({ close: 'Close', loading: 'Loading' }))
 
 describe('setLabels', () => {
+  it('getLabels returns a snapshot of the current defaults', () => {
+    expect(getLabels()).toEqual({ close: 'Close', loading: 'Loading' })
+    setLabels({ close: 'Chiudi' })
+    expect(getLabels()).toEqual({ close: 'Chiudi', loading: 'Loading' })
+  })
+
   it('changes the default accessible names of PanelHead and Skeleton', () => {
     setLabels({ close: 'Chiudi', loading: 'Caricamento' })
     render(PanelHead, { props: { title: 'ISS', onclose: () => {} } })

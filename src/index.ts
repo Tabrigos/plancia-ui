@@ -28,7 +28,7 @@ export type { SegmentedItem } from './components/Segmented.svelte'
 export type { LegendDot } from './components/LegendDots.svelte'
 export type { StatusKind } from './components/Status.svelte'
 
-export { setLabels, getLabels, type Labels } from './labels.svelte.js'
+export { setLabels, getLabels, labels, type Labels } from './labels.js'
 export {
   applyTheme,
   applyStoredTheme,

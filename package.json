@@ -24,6 +24,14 @@
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./labels": {
+      "types": "./dist/labels.d.ts",
+      "default": "./dist/labels.js"
+    },
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./tokens.json": "./dist/tokens.json",

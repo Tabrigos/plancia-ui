@@ -6,6 +6,18 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `plancia-ui/theme` and `plancia-ui/labels`: the theme helpers and
+  `setLabels()` as plain-JavaScript entries, loadable from Node without the
+  Svelte compiler (an entry point tested in Node, a vitest run without the
+  Svelte plugin). The package index still re-exports them; it also pulls in
+  the `.svelte` components, which plain Node cannot load.
+
+### Changed
+- `getLabels()` returns a snapshot; the reactive form is the `labels` store
+  (`svelte/store`), which the components subscribe to. `setLabels()` is
+  unchanged.
+
 ## [0.5.0] — 2026-09-18
 
 ### Added
