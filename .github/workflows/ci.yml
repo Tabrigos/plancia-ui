@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
       - name: Subpath exports load in plain Node, without the Svelte compiler
-        run: node --input-type=module -e "const t = await import('plancia-ui/theme'); const l = await import('plancia-ui/labels'); l.setLabels({ close: 'x' }); if (typeof t.applyStoredTheme !== 'function' || l.getLabels().close !== 'x') throw new Error('subpath exports broken')"
+        run: node scripts/check-exports.mjs
 
       - name: What would go to npm
         run: npm pack --dry-run
