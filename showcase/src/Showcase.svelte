@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Button, Chip, ControlRow, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, scaleTone } from 'plancia-ui'
+  import { Age, Button, Chip, ControlRow, FloatingPanel, KeyValue, Legend, LegendDots, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Stat, Status, Toggle, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -16,6 +16,7 @@
   let on = $state(true)
   let density = $state<'compact' | 'comfortable'>('compact')
   let kpOpen = $state(true)
+  let panelOpen = $state(true)
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -129,6 +130,23 @@
       </div>
     </div>
     <div>
+      <h2 class="p-sec-title">Floating panel</h2>
+      <div class="p-card demo stage">
+        {#if panelOpen}
+          <FloatingPanel title="Sun now" subtitle="304 Å · 3 min ago" class="demo-floating" onclose={() => { panelOpen = false }} opener="open-demo-panel" style="--p-floating-max-height: 220px">
+            {#snippet chips()}<Chip tone="warn">stale image</Chip>{/snippet}
+            {#snippet actions()}<Button variant="icon" size="sm" title="Details">i</Button>{/snippet}
+            <KeyValue label="Band">304 Å</KeyValue>
+            <KeyValue label="X-ray class" tone="warn">M1.2</KeyValue>
+            <KeyValue label="Regions">4 · largest 3914</KeyValue>
+            <KeyValue label="Wind">412 km/s</KeyValue>
+            <KeyValue label="Bz">−3 nT</KeyValue>
+          </FloatingPanel>
+        {:else}
+          <Button id="open-demo-panel" variant="secondary" size="sm" onclick={() => { panelOpen = true }}>open the panel</Button>
+        {/if}
+        <span class="p-t11 p-dim stage-note">Esc closes while focus is inside; the body scrolls; the page positions it.</span>
+      </div>
       <h2 class="p-sec-title">Panel head</h2>
       <div class="p-card demo">
         <div class="p-panel">
@@ -280,5 +298,9 @@
   .row-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
   .body { padding: 12px 14px; }
+  .stage { position: relative; min-height: 280px; margin-bottom: 24px; background: radial-gradient(circle at 30% 40%, var(--p-s3) 0, var(--p-bg) 70%); }
+  /* A single class, as an app should: the package rule under 700 px must win */
+  :global(.demo-floating) { position: absolute; top: 16px; right: 16px; width: 300px; }
+  .stage-note { position: absolute; left: 16px; bottom: 12px; }
   @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 </style>
