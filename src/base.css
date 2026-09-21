@@ -16,7 +16,12 @@ body {
 }
 
 a { color: var(--p-accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+
+/* Hover styles live under `hover: hover`, here and in every component: on a
+   touch screen a tap would leave the hover state stuck on the element */
+@media (hover: hover) {
+  a:hover { text-decoration: underline; }
+}
 
 /* ── Typography ─────────────────────────────────────────────────────────── */
 .p-mono { font-family: var(--p-font-mono); }

@@ -68,6 +68,24 @@ describe('Tooltip', () => {
     expect(screen.queryByRole('tooltip')).toBeNull()
   })
 
+  it('stays silent on touch: no tooltip from a finger, nor from the focus a tap gives', async () => {
+    render(Tooltip, { props: { delay: 0 } })
+    const el = button('Only for a pointer that hovers')
+    await fireEvent.pointerOver(el, { pointerType: 'touch' })
+    vi.advanceTimersByTime(0)
+    flushSync()
+    expect(screen.queryByRole('tooltip')).toBeNull()
+    expect(el.getAttribute('title')).toBe('Only for a pointer that hovers')
+    await fireEvent.pointerDown(el, { pointerType: 'touch' })
+    await fireEvent.focusIn(el)
+    flushSync()
+    expect(screen.queryByRole('tooltip')).toBeNull()
+    vi.advanceTimersByTime(1000)
+    await fireEvent.focusIn(el)
+    flushSync()
+    expect(screen.getByRole('tooltip').textContent).toBe('Only for a pointer that hovers')
+  })
+
   it('finds the title on an ancestor of the hovered node', async () => {
     render(Tooltip, { props: { delay: 0 } })
     const el = button('Ancestor title')

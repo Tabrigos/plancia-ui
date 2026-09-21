@@ -39,6 +39,9 @@
   /* The circle stays 20 px next to its label; the tap target grows to the
      small control height of the density (26 px, 32 on touch) */
   .p-info-btn::after { content: ''; position: absolute; inset: calc((var(--p-control-h-sm) - 100%) / -2); }
-  .p-info-btn:hover { color: var(--p-accent); background: var(--p-accent-soft); }
   .p-info-btn.active { color: var(--p-accent); border-color: var(--p-accent-soft); background: var(--p-accent-soft); }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .p-info-btn:hover { color: var(--p-accent); background: var(--p-accent-soft); }
+  }
 </style>

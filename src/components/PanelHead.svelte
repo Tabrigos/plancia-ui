@@ -56,5 +56,8 @@
     display: inline-flex; align-items: center; justify-content: center; width: var(--p-control-h-sm); height: var(--p-control-h-sm); margin: -3px -4px 0 0;
     border: none; border-radius: var(--p-r2); background: transparent; color: var(--p-text-dim); cursor: pointer;
   }
-  .close:hover { background: var(--p-hover); color: var(--p-text-hi); }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .close:hover { background: var(--p-hover); color: var(--p-text-hi); }
+  }
 </style>

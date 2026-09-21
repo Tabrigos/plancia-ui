@@ -41,8 +41,11 @@
     background: var(--p-text);
     transition: transform var(--p-motion-fast) var(--p-motion-ease), background var(--p-motion-fast) var(--p-motion-ease);
   }
-  .p-toggle:hover .track { box-shadow: 0 0 0 3px var(--p-hover); }
   input:checked + .track { background: var(--p-accent); }
   input:checked + .track::before { transform: translateX(calc(var(--p-toggle-w) - var(--p-toggle-h))); background: var(--p-accent-ink); }
   input:focus-visible + .track { box-shadow: var(--p-focus); }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .p-toggle:hover .track { box-shadow: 0 0 0 3px var(--p-hover); }
+  }
 </style>
