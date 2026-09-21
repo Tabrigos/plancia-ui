@@ -54,6 +54,20 @@ project that uses the package follows the same rules in its own CSS.
   touch, and what it would say has to exist elsewhere (`InfoButton`, a
   visible label).
 
+## Screens and touch
+
+- One breakpoint: below 700 px (`PHONE_BREAKPOINT` from `plancia-ui/theme`)
+  the screen is a phone. The project writes the same number in its own
+  media queries and never a second one.
+- A component adapts to its content and to the space it is in, never to the
+  screen: `KeyValue` drops a long value to a full line, `MetaRow` wraps,
+  `Stat` is laid out by the project in a grid that narrows on a phone. The
+  screen is looked at only by whoever decides the layout: the project, and
+  `FloatingPanel`, which becomes a bottom sheet because the screen is its
+  container.
+- The touch density is not a phone layout: it sizes controls for a finger
+  and applies by itself on a coarse pointer, on a tablet too.
+
 ## What does not belong in the package
 
 Content: product copy, information sheets, source attributions, the layout

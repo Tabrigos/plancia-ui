@@ -7,7 +7,7 @@ const theme = await import('plancia-ui/theme')
 const labels = await import('plancia-ui/labels')
 const live = await import('plancia-ui/live')
 
-if (typeof theme.applyStoredTheme !== 'function' || typeof theme.parseTheme !== 'function') {
+if (typeof theme.applyStoredTheme !== 'function' || typeof theme.parseTheme !== 'function' || theme.PHONE_BREAKPOINT !== 700 || theme.isPhone() !== false) {
   throw new Error('plancia-ui/theme: helpers missing')
 }
 labels.setLabels({ close: 'x' })

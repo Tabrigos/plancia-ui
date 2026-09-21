@@ -13,6 +13,23 @@ export type Theme = 'dark' | 'light'
 
 export const DEFAULT_THEME: Theme = 'dark'
 
+/**
+ * The one breakpoint of the package, in CSS pixels: below it a screen is a
+ * phone and `FloatingPanel` becomes a bottom sheet. The app that lays out
+ * its console around the package uses the same number (in JavaScript
+ * through `PHONE_MEDIA`, in CSS by writing it: a custom property cannot
+ * enter a media query), so the two never drift apart.
+ */
+export const PHONE_BREAKPOINT = 700
+
+/** The media query of a phone screen, for `matchMedia(PHONE_MEDIA)`. */
+export const PHONE_MEDIA = `(max-width: ${PHONE_BREAKPOINT}px)`
+
+/** Whether the screen is a phone right now; `false` without a window (SSR, Node). */
+export function isPhone(): boolean {
+  return typeof matchMedia === 'function' && matchMedia(PHONE_MEDIA).matches
+}
+
 /** Any stored or requested value → a theme; unknown values → the default. */
 export function parseTheme(raw: string | null | undefined): Theme {
   return raw === 'light' || raw === 'dark' ? raw : DEFAULT_THEME

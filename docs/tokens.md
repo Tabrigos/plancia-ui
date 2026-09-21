@@ -83,7 +83,10 @@ component behind them) do the mechanical part with
 a storage key the project chooses: `applyStoredTheme('myapp.theme')` in the
 entry point before mount, `rememberTheme(theme, 'myapp.theme')` when the
 user switches, `readRequestedTheme()` for a `?theme=light` deep link,
-`parseTheme` and `applyTheme` for the pieces. In light the semantic colors are darker (amber, yellow and green
+`parseTheme` and `applyTheme` for the pieces. The same entry exports the
+phone breakpoint, `PHONE_BREAKPOINT` (700 CSS pixels), `PHONE_MEDIA` for
+`matchMedia` and `isPhone()`: the project's own phone CSS writes the same
+number, since a custom property cannot enter a media query. In light the semantic colors are darker (amber, yellow and green
 readable on white): whatever draws with those colors on a `<canvas>` or in
 a 3D engine, which do not read custom properties, decides by itself whether
 to follow the theme. In Sidereus the globe, the Sun disk and the heliosphere
