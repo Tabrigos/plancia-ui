@@ -18,6 +18,9 @@ All notable changes to plancia-ui. The format follows
   and the tap target of `InfoButton` read them instead of fixed sizes.
 - `base.css`: inputs, selects and textareas take their text size from
   `--p-input-size` (zero-specificity rule, any app rule wins).
+- `Section`: `summaryTitle` puts a tooltip on the summary, with the help
+  cursor, for the app to explain a compressed reading ("512 km/s · Bz −4").
+  Requested by the reference consumer (#19).
 - `plancia-ui/theme` exports the phone breakpoint: `PHONE_BREAKPOINT`
   (700), `PHONE_MEDIA` for `matchMedia` and `isPhone()`, so an app stops
   repeating the number the package's own rules use.

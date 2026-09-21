@@ -307,7 +307,7 @@
             <KeyValue label="Now" tone="ok">1.3</KeyValue>
             <KeyValue label="Forecast 3 h">2.0</KeyValue>
           </Section>
-          <Section title="Solar wind" summary="412 km/s · Bz −3 nT" open={false}>
+          <Section title="Solar wind" summary="412 km/s · Bz −3 nT" summaryTitle="Speed and Bz now at L1: the summary reads by itself, the title explains it" open={false}>
             <KeyValue label="Speed">412 km/s</KeyValue>
           </Section>
           <Section title="Active regions" summary="4 regions · largest 3914">

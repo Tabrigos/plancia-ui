@@ -45,6 +45,17 @@ describe('Section', () => {
     expect(isInert(container.querySelector('#regions') as HTMLElement)).toBe(true)
   })
 
+  it('puts summaryTitle on the summary as a title with the help cursor, nothing without it', () => {
+    const { container } = render(Section, { props: { title: 'Solar wind', summary: '512 km/s · Bz −4', summaryTitle: 'Speed and Bz now at L1' } })
+    const summary = container.querySelector('.summary') as HTMLElement
+    expect(summary.getAttribute('title')).toBe('Speed and Bz now at L1')
+    expect(summary.classList.contains('help')).toBe(true)
+    const plain = render(Section, { props: { title: 'Kp', summary: '3.7 · quiet' } })
+    const bare = plain.container.querySelector('.summary') as HTMLElement
+    expect(bare.hasAttribute('title')).toBe(false)
+    expect(bare.classList.contains('help')).toBe(false)
+  })
+
   it('renders the actions outside the toggle button', () => {
     const { container } = render(Section, { props: { title: 'Kp', actions: html('<b class="act">i</b>') } })
     expect(container.querySelector('.actions .act')).not.toBeNull()

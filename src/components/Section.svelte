@@ -19,6 +19,7 @@
   let {
     title,
     summary,
+    summaryTitle,
     open = $bindable(true),
     onchange,
     actions,
@@ -28,6 +29,8 @@
     title: string
     /** One line next to the title: the gist of the content, useful while closed */
     summary?: string
+    /** Tooltip of the summary, with the help cursor: what the compressed reading means (silent on touch, like every title) */
+    summaryTitle?: string
     open?: boolean
     onchange?: (open: boolean) => void
     /** Controls on the right of the head, outside the toggle button */
@@ -51,7 +54,7 @@
     <button type="button" class="toggle" aria-expanded={open} aria-controls={bodyId} onclick={toggle}>
       <svg class="chevron" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l5 5-5 5"/></svg>
       <span class="p-sec-title">{title}</span>
-      {#if summary}<span class="summary">{summary}</span>{/if}
+      {#if summary}<span class="summary" class:help={!!summaryTitle} title={summaryTitle}>{summary}</span>{/if}
     </button>
     {#if actions}<div class="actions">{@render actions()}</div>{/if}
   </div>
@@ -75,6 +78,7 @@
     min-width: 0; font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text-dim);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
+  .summary.help { cursor: help; }
   .actions { display: flex; align-items: center; gap: 6px; flex: none; }
   .body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows var(--p-motion-base) var(--p-motion-ease); }
   .body[inert] { grid-template-rows: 0fr; }
