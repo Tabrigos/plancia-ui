@@ -203,7 +203,7 @@
         {:else}
           <Button id="open-demo-panel" variant="secondary" size="sm" onclick={() => { panelOpen = true }}>open the panel</Button>
         {/if}
-        <span class="p-t11 p-dim stage-note"><Kbd>Esc</Kbd> closes while focus is inside; the body scrolls; the page positions it.</span>
+        <span class="p-t11 p-dim stage-note"><Kbd>Esc</Kbd> closes while focus is inside; the body scrolls; the page positions it; under 700 px it is a sheet from the bottom.</span>
       </div>
       <h2 class="p-sec-title">Panel head</h2>
       <div class="p-card demo">
@@ -406,7 +406,8 @@
     .cells i { flex: 1; min-width: 0; width: auto; }
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .type-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-    /* The touch panel is taller: the stage keeps its note out from under it */
+    /* The panel is a sheet at the bottom of the stage: the note moves up */
     .stage { min-height: 380px; }
+    .stage-note { top: 12px; bottom: auto; }
   }
 </style>

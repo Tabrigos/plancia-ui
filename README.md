@@ -87,7 +87,7 @@ Tokens, themes, density and fonts are explained in
 | `Section` | collapsible console section | `title`, `summary`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
 | `Status` | inline state of a datum or a layer | `kind` loading · ok · stale · error · idle, `text`, `title`, `help` |
 | `Age` | freshness chip ("3m ago") | `updatedAt`, `staleAfter`, `deadAfter`, `locale`, `title` |
-| `FloatingPanel` | panel over a stage: frame, head, scrolling body, Esc, focus return | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `opener`, `autofocus`, `label`; the content is the body |
+| `FloatingPanel` | panel over a stage: frame, head, scrolling body, Esc, focus return; a bottom sheet on a phone | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `opener`, `autofocus`, `label`; the content is the body |
 | `Tooltip` | themed tooltip for every `title` on the page, mounted once; silent on touch | `delay`, `maxWidth`, `gap`, `avoid` |
 | `InfoButton` | the (i) that opens an explanation | `active`, `onclick`, `controls`, `label` |
 | `InfoCard` | frame of an explanation: paragraph, `<dl>` of facts, link | `summary` (native details) or always open with `onclose`; the content is the body |

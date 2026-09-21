@@ -20,6 +20,12 @@ All notable changes to plancia-ui. The format follows
   `--p-input-size` (zero-specificity rule, any app rule wins).
 
 ### Changed
+- `FloatingPanel` under 700 px is a bottom sheet: anchored to the bottom
+  edge at full width, top corners rounded, the head fixed and the body
+  scrolling inside `60dvh` by default, padded by the safe-area inset of a
+  phone (add `viewport-fit=cover` to the viewport meta). It used to keep
+  the app's `top` and take the width with gutters. Heights use `dvh`, so
+  the address bar of a phone browser no longer hides the bottom of a panel.
 - Hover styles of every component and of `base.css` apply only under
   `@media (hover: hover)`: on a touch screen a tap no longer leaves the
   highlight stuck on buttons, rows, toggles and section titles.

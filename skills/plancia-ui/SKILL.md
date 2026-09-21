@@ -126,10 +126,14 @@ was inside), `autofocus?: boolean` (`false`; move focus into the panel on
 mount), `label?: string` (accessible name; the title when absent), `class`
 and other attributes forwarded (`id`, `data-*`, `style`). Content is the
 body, which scrolls inside `--p-floating-max-height` (default
-`calc(100vh - 110px)`). Renders `role="dialog"`. The app positions it with
-a class of its own (`position`, `top`, `right`, `width`; keep it a class,
-not an id, so the package's rule under 700 px — full width with gutters —
-can win). The package keeps no open/closed state: render it when open.
+`calc(100dvh - 110px)`; `60dvh` on a phone). Renders `role="dialog"`. The
+app positions it with a class of its own (`position`, `top`, `right`,
+`width`; keep it a class, not an id, so the package's rule under 700 px can
+win). Under 700 px it is a **bottom sheet**: anchored to the bottom edge,
+full width, top corners rounded, the head fixed and the body scrolling,
+padded by `env(safe-area-inset-bottom)` (put `viewport-fit=cover` in the
+viewport meta). The app opens one panel at a time on a phone. The package
+keeps no open/closed state: render it when open.
 
 **`Tooltip`** — mount `<Tooltip />` once, at the app root. `delay?: number`
 (`180` ms between hover and tooltip; focus shows it at once), `maxWidth?:

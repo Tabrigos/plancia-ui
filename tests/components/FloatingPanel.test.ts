@@ -1,7 +1,10 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import { FloatingPanel } from '../../src/index'
 import { html } from '../helpers'
+import { srcDir } from '../../scripts/build-tokens.mjs'
 
 describe('FloatingPanel', () => {
   it('is a dialog named by its title, with the head and a scrolling body', () => {
@@ -48,6 +51,15 @@ describe('FloatingPanel', () => {
     expect(dialog.id).toBe('sun-disk')
     expect(dialog.classList.contains('top-right')).toBe(true)
     expect(dialog.dataset.panel).toBe('sun')
+  })
+
+  it('is a bottom sheet under 700 px, on the source: jsdom has no layout', () => {
+    const source = readFileSync(join(srcDir, 'components', 'FloatingPanel.svelte'), 'utf8')
+    const phone = source.slice(source.indexOf('@media (max-width: 700px)'))
+    for (const rule of ['top: auto', 'bottom: 0', 'left: 0', 'right: 0', 'env(safe-area-inset-bottom', '60dvh', 'var(--p-r3) var(--p-r3) 0 0']) {
+      expect(phone).toContain(rule)
+    }
+    expect(source).not.toMatch(/100vh/)
   })
 
   it('uses the label over the title for the accessible name', () => {
