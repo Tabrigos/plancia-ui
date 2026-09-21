@@ -223,7 +223,9 @@ right (toggle, chip, counter, buttons). Forwards its own attributes
 tokens; closed content stays mounted, `inert` and `aria-hidden`.
 `title: string` (rendered as `p-sec-title`), `summary?: string`
 (one monospace line next to the title: the gist of the content, readable
-while closed), `open?: boolean` (bindable, `true`), `onchange?: (open:
+while closed), `summaryTitle?: string` (tooltip of the summary, help
+cursor: what the compressed reading means; silent on touch like every
+`title`, so the summary must read by itself), `open?: boolean` (bindable, `true`), `onchange?: (open:
 boolean) => void`, snippet `actions` (controls on the right of the head,
 outside the toggle button), `id?: string` (of the content region, generated
 when absent). Content is the body. The head is a `<button aria-expanded>`;

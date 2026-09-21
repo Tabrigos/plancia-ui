@@ -84,7 +84,7 @@ Tokens, themes, density and fonts are explained in
 | `Segmented` | exclusive choice among a few options | `items` `{ id, label, title? }`, `value` (bindable), `onchange`, `label`, `size` |
 | `ControlRow` | head of a card: label left, controls right | `label`, `title`, `help`, `tone`; the controls are the content |
 | `SettingRow` | list row: icon, name, control | `label`, `title`, `help`, snippet `icon`; forwards `data-*` and `id` |
-| `Section` | collapsible console section | `title`, `summary`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
+| `Section` | collapsible console section | `title`, `summary`, `summaryTitle`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
 | `Status` | inline state of a datum or a layer | `kind` loading · ok · stale · error · idle, `text`, `title`, `help` |
 | `Age` | freshness chip ("3m ago") | `updatedAt`, `staleAfter`, `deadAfter`, `locale`, `title` |
 | `FloatingPanel` | panel over a stage: frame, head, scrolling body, Esc, focus return; a bottom sheet on a phone | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `opener`, `autofocus`, `label`; the content is the body |
