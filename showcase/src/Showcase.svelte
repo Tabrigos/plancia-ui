@@ -14,7 +14,28 @@
 
   let mode = $state('tracking')
   let on = $state(true)
-  let density = $state<'compact' | 'comfortable'>('compact')
+  // 'auto' leaves the density to the root: touch by itself on a coarse pointer.
+  // `?density=touch` picks one from the URL, for screenshots, like `?theme=`.
+  type Density = 'auto' | 'compact' | 'comfortable' | 'touch'
+  const requestedDensity = new URLSearchParams(location.search).get('density')
+  let density = $state<Density>(['compact', 'comfortable', 'touch'].includes(requestedDensity ?? '') ? (requestedDensity as Density) : 'auto')
+  // What the page really got: on a phone `auto` resolves to touch through the
+  // root, and the only way to see that is to read the tokens back
+  let main = $state<HTMLElement | null>(null)
+  let effective = $state('')
+  $effect(() => {
+    void density
+    const read = () => {
+      if (!main) return
+      const style = getComputedStyle(main)
+      const coarse = matchMedia('(pointer: coarse)').matches
+      effective = `rows ${style.getPropertyValue('--p-row-h').trim()} · controls ${style.getPropertyValue('--p-control-h').trim()} · pointer ${coarse ? 'coarse' : 'fine'}`
+    }
+    read()
+    const media = matchMedia('(pointer: coarse)')
+    media.addEventListener('change', read)
+    return () => media.removeEventListener('change', read)
+  })
   let kpOpen = $state(true)
   let panelOpen = $state(true)
   let kpInfo = $state(true)
@@ -45,7 +66,7 @@
 <Tooltip avoid=".p-floating" />
 <LiveRegion />
 
-<main data-density={density}>
+<main data-density={density === 'auto' ? undefined : density} bind:this={main}>
   <header class="head">
     <div>
       <h1>plancia-ui</h1>
@@ -56,7 +77,8 @@
       <span class="p-t12 p-dim">theme</span>
       <Segmented items={[{ id: 'dark', label: 'dark' }, { id: 'light', label: 'light' }]} bind:value={theme} onchange={(id) => rememberTheme(id as Theme, THEME_STORAGE_KEY)} label="Theme" />
       <span class="p-t12 p-dim">density</span>
-      <Segmented items={[{ id: 'compact', label: 'compact' }, { id: 'comfortable', label: 'comfortable' }]} bind:value={density} label="Density" />
+      <Segmented items={[{ id: 'auto', label: 'auto', title: 'The root decides: touch by itself on a phone or a tablet, compact elsewhere' }, { id: 'compact', label: 'compact' }, { id: 'comfortable', label: 'comfortable' }, { id: 'touch', label: 'touch', title: '44 px rows, 40 px buttons, 44×26 toggles, 16 px inputs' }]} bind:value={density} label="Density" />
+      <span class="p-t11 p-dim p-mono" title="The density tokens the page really got, read back from the root">{effective}</span>
     </div>
   </header>
 

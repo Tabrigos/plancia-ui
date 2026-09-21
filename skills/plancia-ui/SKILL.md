@@ -32,7 +32,10 @@ what changed.
    `rememberTheme(theme, 'myapp.theme')` when the user switches;
    `readRequestedTheme()` reads `?theme=light` from the URL, `applyTheme`
    and `parseTheme` are the pieces. Density: `data-density="comfortable"`
-   on the root or on a container (default is compact).
+   or `"touch"` on the root or on a container (default is compact). A
+   coarse pointer (phone, tablet) gets `touch` by itself when the root sets
+   no density: rows 44 px, buttons 40, small buttons 32, toggles 44×26,
+   16 px text in inputs. Set a density on the root only to override that.
 4. Fonts: the tokens name Inter (ui) and JetBrains Mono (mono) with system
    fallbacks; the package ships no font files, the project loads them if it
    wants them.
@@ -286,8 +289,11 @@ stored as nothing); `applyStoredTheme(key)` reads and applies in one call;
 - spacing (4 px grid): `space-1` (4) `space-2` (8) `space-3` (12) `space-4`
   (16) `space-6` (24) `space-8` (32); radii: `r1` (4) `r2` (8) `r3` (12)
   `r-pill`;
-- density: `row` (row padding) and `row-h` (row height), switched by
-  `data-density`; z-index: `z-base` `z-overlay` `z-panel` `z-popover`
+- density: `row` (row padding), `row-h` (row height), `control-h` (button
+  height) and `control-h-sm` (small button), `toggle-w` / `toggle-h`,
+  `input-size` (input text), switched by `data-density`, three values:
+  compact (32 / 26 / 34×20 / 13 px), comfortable (rows 40, controls as
+  compact), touch (44 / 40 / 32 / 44×26 / 16 px); z-index: `z-base` `z-overlay` `z-panel` `z-popover`
   `z-tooltip` `z-modal`; motion: `motion-fast`, `motion-base`, `motion-ease`;
   `focus` (the focus ring shadow).
 

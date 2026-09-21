@@ -25,7 +25,7 @@ written by hand anywhere else. Each group of the JSON becomes a prefix:
 | typography | `font-ui`, `font-mono`; `t11` `t12` `t13` `t14` `t16` `t20` `t28` | seven sizes, 11 px minimum |
 | spacing | `space-1` (4 px) `space-2` (8) `space-3` (12) `space-4` (16) `space-6` (24) `space-8` (32) | a 4 px grid |
 | radii | `r1` (4 px) `r2` (8) `r3` (12) `r-pill` | |
-| density | `row`, `row-h` | row padding and row height, see below |
+| density | `row`, `row-h`, `control-h`, `control-h-sm`, `toggle-w`, `toggle-h`, `input-size` | row padding and height, control sizes, input text: three densities, see below |
 | z-index | `z-base` `z-overlay` `z-panel` `z-popover` `z-tooltip` `z-modal` | named layers, never a number in a component |
 | motion | `motion-fast` (120 ms), `motion-base` (200 ms), `motion-ease` | |
 | focus | `focus` | the focus ring shadow used by `base.css` |
@@ -91,11 +91,28 @@ stay dark because they are space.
 
 ## Density
 
-Two densities: compact (default) and comfortable. `data-density="comfortable"`
-on the root element or on any container switches `--p-row` and `--p-row-h`
-for everything inside it. Components read those two tokens for their row
-padding and height, so a comfortable list and a compact list can coexist on
-the same page.
+Three densities: compact (default), comfortable and touch. `data-density`
+on the root element or on any container switches the density tokens for
+everything inside it, so a comfortable list and a compact list can coexist
+on the same page. Components read the tokens for their row padding and
+height (`row`, `row-h`), the height of buttons and small icon buttons
+(`control-h`, `control-h-sm`), the size of the switch (`toggle-w`,
+`toggle-h`) and the text size of inputs (`input-size`).
+
+| | compact | comfortable | touch |
+|---|---|---|---|
+| `row` / `row-h` | 8 / 32 px | 12 / 40 px | 12 / 44 px |
+| `control-h` / `control-h-sm` | 32 / 26 px | 32 / 26 px | 40 / 32 px |
+| `toggle-w` × `toggle-h` | 34 × 20 px | 34 × 20 px | 44 × 26 px |
+| `input-size` | 13 px | 13 px | 16 px |
+
+Touch is sized for a finger: a 44 px row, a 40 px button, a small button
+of 32 px (the close of a panel, the info circle's tap target), and 16 px
+input text because iOS zooms the page when a focused input is smaller. A
+coarse pointer (a phone, a tablet: `@media (pointer: coarse)`) gets the
+touch density by itself, unless the root element sets a density, so a
+console reads well on a phone without the app doing anything. The app that
+wants to decide sets `data-density` on the root and wins.
 
 ## Fonts
 

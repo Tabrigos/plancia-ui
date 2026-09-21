@@ -31,7 +31,7 @@
 <style>
   .p-seg { display: flex; gap: 2px; padding: 3px; border-radius: var(--p-r2); background: var(--p-inset); border: 1px solid var(--p-border); }
   .p-seg button {
-    flex: 1; padding: 6px 8px; border: none; border-radius: 6px; background: transparent;
+    flex: 1; min-height: calc(var(--p-control-h) - 8px); padding: 6px 8px; border: none; border-radius: 6px; background: transparent;
     font-family: var(--p-font-ui); font-size: var(--p-t12); font-weight: 500; color: var(--p-text-dim); cursor: pointer;
     transition: background var(--p-motion-fast) var(--p-motion-ease), color var(--p-motion-fast) var(--p-motion-ease);
   }

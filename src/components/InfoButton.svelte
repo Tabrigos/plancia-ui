@@ -30,12 +30,15 @@
 
 <style>
   .p-info-btn {
-    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none;
     width: 20px; height: 20px; padding: 0;
     border: 1px solid transparent; border-radius: 6px; background: none;
     color: var(--p-text-dim); cursor: pointer;
     transition: color var(--p-motion-fast) var(--p-motion-ease), background var(--p-motion-fast) var(--p-motion-ease);
   }
+  /* The circle stays 20 px next to its label; the tap target grows to the
+     small control height of the density (26 px, 32 on touch) */
+  .p-info-btn::after { content: ''; position: absolute; inset: calc((var(--p-control-h-sm) - 100%) / -2); }
   .p-info-btn:hover { color: var(--p-accent); background: var(--p-accent-soft); }
   .p-info-btn.active { color: var(--p-accent); border-color: var(--p-accent-soft); background: var(--p-accent-soft); }
 </style>

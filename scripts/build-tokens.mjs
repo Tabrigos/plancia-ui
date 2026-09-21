@@ -9,6 +9,10 @@
 // shadow, viz, seq, div) under [data-theme="light"], with the same keys as the dark theme:
 // a key more or less on one side stops the generation, so a new token
 // cannot be born without its light counterpart.
+// `density` works the same way across its three entries: `compact` is the
+// value of :root, every entry is redefined under [data-density="…"], and
+// `touch` also applies by itself on a coarse pointer when the root sets no
+// density at all (the app can still choose one and win).
 // `generateTokensCss` is exported so the tests can check that the committed
 // tokens.css is what the JSON produces; run as a script it writes the file.
 import { readFileSync, writeFileSync } from 'node:fs'
@@ -25,6 +29,17 @@ export function generateTokensCss(t) {
     const extra = light.filter((k) => !dark.includes(k))
     if (missing.length || extra.length) {
       throw new Error(`tokens.json: ${group} — the light theme is missing [${missing}] and has extra [${extra}]`)
+    }
+  }
+
+  const densities = Object.keys(t.density)
+  for (const name of densities) {
+    const base = Object.keys(t.density.compact)
+    const keys = Object.keys(t.density[name])
+    const missing = base.filter((k) => !keys.includes(k))
+    const extra = keys.filter((k) => !base.includes(k))
+    if (missing.length || extra.length) {
+      throw new Error(`tokens.json: density ${name} — missing [${missing}] and has extra [${extra}]`)
     }
   }
 
@@ -49,11 +64,13 @@ export function generateTokensCss(t) {
   for (const [k, v] of Object.entries(t.radius)) put(`r${k === 'pill' ? '-pill' : k}`, v)
   for (const [k, v] of Object.entries(t.z)) put(`z-${k}`, v)
   for (const [k, v] of Object.entries(t.motion)) put(`motion-${k}`, v)
-  put('row', t.density.compact.row)
-  put('row-h', t.density.compact['row-h'])
+  for (const [k, v] of Object.entries(t.density.compact)) put(k, v)
   put('focus', t.focus)
 
   const lightLines = themed(t.light)
+  const newline = String.fromCharCode(10)
+  const densityLines = (name) => Object.entries(t.density[name]).map(([k, v]) => `  --p-${k}: ${v};`).join(newline)
+  const densityBlocks = densities.map((name) => `[data-density="${name}"] {${newline}${densityLines(name)}${newline}}`).join(newline)
 
   const css = `/* ═══════════════════════════════════════════════════════════════════════════
    plancia-ui — tokens (GENERATED from tokens.json with \`npm run tokens\`: do
@@ -66,10 +83,18 @@ ${lines.join('\n')}
   color-scheme: dark;
 }
 
-/* Density: the standard row is 32 px with 8 px padding; "comfortable" breathes */
-[data-density="comfortable"] {
-  --p-row: ${t.density.comfortable.row};
-  --p-row-h: ${t.density.comfortable['row-h']};
+/* Density: the standard row is 32 px with 8 px padding; "comfortable"
+   breathes; "touch" makes rows, controls and toggles big enough for a finger
+   and input text large enough that iOS does not zoom on focus. Compact has
+   a block of its own so a container can ask for it inside a touch root */
+${densityBlocks}
+
+/* A coarse pointer (a phone, a tablet) gets the touch density by itself,
+   unless the app sets a density on the root element */
+@media (pointer: coarse) {
+  :root:not([data-density]) {
+${densityLines('touch')}
+  }
 }
 
 /* Light theme: same variable contract, different color values */
