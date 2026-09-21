@@ -11,27 +11,52 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.7.0 — consoles at scale
+## 0.7.0 — consoles at scale, on a phone too
 
-The band is driven by the reference consumer adopting 0.6.0: what it
-finds missing or awkward while replacing its local panels, sections and
-charts becomes an issue here, and the answers ship together.
+Most people open the reference consumer on a phone: a shared link, the
+device at hand. So the band starts from touch, and the rest of it (lists,
+rows, recipes) is designed on the touch density from the first sketch.
+The package stays out of application layout: what it adds are shapes and
+tokens, and the app decides where they go.
 
-1. **`List` / `Row` vocabulary** — the dense list with label, value,
+1. **`touch` density** — a third `data-density`, applied by itself on
+   `pointer: coarse` when the app sets none: rows of 44 px, taller
+   buttons and toggles, 16 px text in inputs (so iOS does not zoom on
+   focus). Control heights become tokens on the way, instead of numbers
+   written in the components.
+2. **Hover and tooltip on touch** — hover styles behind `hover: hover`
+   everywhere, so a tap does not leave a stuck highlight; `Tooltip` stays
+   silent on touch, where `InfoButton` is the way to explain something.
+3. **`FloatingPanel` as a bottom sheet** under the phone breakpoint: the
+   head fixed, the body scrolling, closed from the button; safe-area
+   insets and dynamic viewport height. Drag gestures only if a consumer
+   asks.
+4. **One breakpoint, exported** — 700 px separates a phone from the rest
+   and is exported from `plancia-ui/theme` as a constant, so the consumer
+   stops repeating the number. Components that reflow (`KeyValue`,
+   `Stat`, `MetaRow`) use container queries: a shape adapts to the space
+   it is in, not to the screen; only `FloatingPanel` looks at the screen,
+   because the screen is its container.
+5. **Showcase on a phone** — the density switch gains `touch`; every
+   change is looked at in Chrome's device emulation while working and on
+   a real phone before a release (the showcase on GitHub Pages, or
+   `npm run dev -- --host` on the same network).
+6. **`List` / `Row` vocabulary** — the dense list with label, value,
    controls and attribution row (raster layers, active regions, events in
    Sidereus). Designed first, on the real usages: an inventory of the
    consumer's list markup, a proposal in the showcase, then the component
    or components. It overlaps `SettingRow` and `KeyValue`: the design
    decides what is a new shape and what is a recipe.
-2. **`LayerRow`, or a recipe** — `SettingRow` + `Status` + a color sample.
+7. **`LayerRow`, or a recipe** — `SettingRow` + `Status` + a color sample.
    If the composition is enough, it is documented as a recipe rather than
    shipped as a component.
-3. **Recipes page in the showcase** — a full floating panel, a console
-   section with rows and a chart, a list with states: the compositions an
-   app (or an agent) copies, built only from the package.
-4. **Fixes and small props** surfaced by the adoption (`FloatingPanel` in
-   three panels, `Section` in eleven, `InfoCard` for the data sheets,
-   `Bars` for Kp, `Sparkline` for X-ray and wind).
+8. **Recipes page in the showcase** — a full floating panel, a console
+   section with rows and a chart, a list with states, a phone layout with
+   a sheet: the compositions an app (or an agent) copies, built only from
+   the package.
+9. **Fixes and small props** surfaced by the adoption of 0.6.0
+   (`FloatingPanel` in three panels, `Section` in eleven, `InfoCard` for
+   the data sheets, `Bars` for Kp, `Sparkline` for X-ray and wind).
 
 ## 0.8.0 — inputs
 
@@ -49,12 +74,14 @@ and `Toggle`, same focus ring, same tones), shipped together.
 - A high-contrast third theme (`forced-colors`) as a block in `tokens.json`.
 - A documented CSS-only path for non-Svelte consumers; a web-components
   build if someone asks.
+- An installable PWA is the consumer's job (manifest, service worker);
+  the package's part is the touch density and the sheet, in 0.7.0.
 - Token export in Style Dictionary / Figma Tokens format.
 
 ## Infrastructure, whenever it fits
 
-- Visual regression of the showcase in both themes (Playwright screenshots)
-  and an axe audit in CI.
+- Visual regression of the showcase in both themes and at phone width
+  (Playwright screenshots) and an axe audit in CI.
 - Publishing from CI with npm trusted publishing plus staged approval, so
   no token lives on a machine.
 - The dataviz palette search (six hue families in OKLCH, every ordering
