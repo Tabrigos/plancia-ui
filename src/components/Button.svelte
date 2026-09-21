@@ -42,14 +42,17 @@
   }
   .p-btn.sm { height: var(--p-control-h-sm); padding: 0 10px; font-size: var(--p-t12); }
   .p-btn.primary { background: var(--p-accent); color: var(--p-accent-ink); }
-  .p-btn.primary:hover { filter: brightness(1.08); }
   .p-btn.secondary { background: var(--p-s2); border-color: var(--p-border-strong); color: var(--p-text-hi); }
-  .p-btn.secondary:hover { background: var(--p-s3); }
   .p-btn.quiet { font-weight: 500; }
-  .p-btn.quiet:hover { background: var(--p-hover); color: var(--p-text-hi); }
   .p-btn.icon { width: var(--p-control-h); padding: 0; border-color: var(--p-border); }
   .p-btn.icon.sm { width: var(--p-control-h-sm); }
-  .p-btn.icon:hover { background: var(--p-hover); color: var(--p-text-hi); }
   .p-btn.active { border-color: var(--p-accent); color: var(--p-accent); background: var(--p-accent-soft); }
   .p-btn:disabled { opacity: 0.4; cursor: default; filter: none; }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .p-btn.primary:hover { filter: brightness(1.08); }
+    .p-btn.secondary:hover { background: var(--p-s3); }
+    .p-btn.quiet:hover { background: var(--p-hover); color: var(--p-text-hi); }
+    .p-btn.icon:hover { background: var(--p-hover); color: var(--p-text-hi); }
+  }
 </style>

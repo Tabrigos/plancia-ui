@@ -42,7 +42,6 @@
     min-height: var(--p-row-h); padding: 7px 14px 7px 16px;
     transition: background var(--p-motion-fast) var(--p-motion-ease);
   }
-  .p-setting-row:hover { background: var(--p-hover); }
   .ic { display: flex; width: 18px; flex: none; color: var(--p-text-dim); }
   .name.help { cursor: help; }
   .name {
@@ -51,4 +50,8 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .ctl { display: flex; align-items: center; gap: 8px; flex: none; }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .p-setting-row:hover { background: var(--p-hover); }
+  }
 </style>

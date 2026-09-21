@@ -20,6 +20,13 @@ All notable changes to plancia-ui. The format follows
   `--p-input-size` (zero-specificity rule, any app rule wins).
 
 ### Changed
+- Hover styles of every component and of `base.css` apply only under
+  `@media (hover: hover)`: on a touch screen a tap no longer leaves the
+  highlight stuck on buttons, rows, toggles and section titles.
+- `Tooltip` is silent on touch: a finger shows no tooltip, and neither does
+  the focus a tap gives on some phones; keyboard focus and a hovering
+  pointer work as before. A `title` must not be the only place a fact
+  lives (`InfoButton` is the way on a phone).
 - `SettingRow` honors `--p-row-h` as its minimum height: 40 px in the
   comfortable density (it stayed at 32), 44 on touch; compact is unchanged.
 - `InfoCard`: the close button of an inline card is 26 px like the close

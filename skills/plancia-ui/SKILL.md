@@ -138,7 +138,10 @@ elements it should not cover, e.g. `'.p-floating'`; the element's own panel
 does not count). Delegated: any element with `title` gets the themed tooltip,
 the text moves to `data-tip` so the browser shows nothing of its own; while
 visible the anchor has `aria-describedby`. Esc, pointerdown, scroll and
-blur hide it. Write `title` as before; nothing else changes.
+blur hide it. Silent on touch: a finger shows no tooltip, nor does the
+focus that follows a tap, so a `title` must never be the only place a
+fact lives (use `InfoButton` for a phone). Write `title` as before;
+nothing else changes.
 
 **`InfoButton`** — `active?: boolean` (`aria-expanded`), `onclick?`,
 `controls?: string` (id of the `InfoCard` it opens, `aria-controls`),

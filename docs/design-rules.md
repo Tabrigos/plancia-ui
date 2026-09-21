@@ -48,6 +48,11 @@ project that uses the package follows the same rules in its own CSS.
   accessible name; the visible focus ring comes from `base.css` and is never
   removed. Toggling states use `aria-pressed`.
 - No movement under `prefers-reduced-motion`.
+- Hover is a pointer thing: every `:hover` rule lives under
+  `@media (hover: hover)`, so a tap on a phone does not leave the highlight
+  stuck. Nothing is reachable only by hovering: `Tooltip` is silent on
+  touch, and what it would say has to exist elsewhere (`InfoButton`, a
+  visible label).
 
 ## What does not belong in the package
 

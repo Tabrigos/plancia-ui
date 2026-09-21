@@ -71,7 +71,6 @@
   }
   .chevron { flex: none; color: var(--p-text-dim); transition: transform var(--p-motion-fast) var(--p-motion-ease); }
   .open .chevron { transform: rotate(90deg); }
-  .toggle:hover .p-sec-title { color: var(--p-text); }
   .summary {
     min-width: 0; font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text-dim);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -81,4 +80,8 @@
   .body[inert] { grid-template-rows: 0fr; }
   .inner { display: flex; flex-direction: column; gap: var(--p-space-2); min-height: 0; overflow: hidden; }
   .open .inner { padding-bottom: var(--p-row); }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .toggle:hover .p-sec-title { color: var(--p-text); }
+  }
 </style>

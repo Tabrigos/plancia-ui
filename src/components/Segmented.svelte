@@ -35,9 +35,12 @@
     font-family: var(--p-font-ui); font-size: var(--p-t12); font-weight: 500; color: var(--p-text-dim); cursor: pointer;
     transition: background var(--p-motion-fast) var(--p-motion-ease), color var(--p-motion-fast) var(--p-motion-ease);
   }
-  .p-seg button:hover { color: var(--p-text); }
   .p-seg button.on { background: var(--p-s3); color: var(--p-text-hi); box-shadow: 0 1px 0 var(--p-border); }
   .p-seg.sm { display: inline-flex; flex: none; padding: 2px; border-radius: var(--p-r-pill); }
   .p-seg.sm button { flex: none; padding: 1px 8px; border-radius: var(--p-r-pill); font-size: var(--p-t11); white-space: nowrap; }
   .p-seg.sm button.on { background: var(--p-accent-soft); color: var(--p-accent); box-shadow: none; }
+  /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
+  @media (hover: hover) {
+    .p-seg button:hover { color: var(--p-text); }
+  }
 </style>

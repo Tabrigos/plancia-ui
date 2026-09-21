@@ -13,6 +13,8 @@
    * element, inside the window, on the side that covers less of the
    * elements in `avoid` (the arithmetic is in `tooltip-placement.ts`). While
    * visible the anchor gets `aria-describedby`.
+   * Silent on touch: a finger does not hover, and the focus a tap gives on
+   * some phones is not a request to read; `InfoButton` explains things there.
    * Keep writing `title`: this is the only change.
    */
   let {
@@ -41,6 +43,9 @@
   let timer: ReturnType<typeof setTimeout> | null = null
   let anchor: Element | null = null
   let describedBefore: string | null = null
+  /** When a finger last touched the page: the focus that follows a tap is not a hover */
+  let lastTouch = -Infinity
+  const TOUCH_FOCUS_WINDOW = 1000
 
   function claim(target: EventTarget | null): Element | null {
     if (!(target instanceof Element)) return null
@@ -94,6 +99,7 @@
   }
 
   function onOver(event: PointerEvent): void {
+    if (event.pointerType === 'touch') { lastTouch = performance.now(); return }
     const hit = claim(event.target)
     if (!hit || hit === anchor) return
     if (timer) clearTimeout(timer)
@@ -106,7 +112,13 @@
     hide()
   }
 
+  function onDown(event: PointerEvent): void {
+    if (event.pointerType === 'touch') lastTouch = performance.now()
+    hide()
+  }
+
   function onFocus(event: FocusEvent): void {
+    if (performance.now() - lastTouch < TOUCH_FOCUS_WINDOW) return
     const hit = claim(event.target)
     if (hit) show(hit)
   }
@@ -119,7 +131,7 @@
     const opts = { capture: true }
     document.addEventListener('pointerover', onOver, opts)
     document.addEventListener('pointerout', onOut, opts)
-    document.addEventListener('pointerdown', hide, opts)
+    document.addEventListener('pointerdown', onDown, opts)
     document.addEventListener('focusin', onFocus, opts)
     document.addEventListener('focusout', hide, opts)
     document.addEventListener('scroll', hide, opts)
@@ -127,7 +139,7 @@
     return () => {
       document.removeEventListener('pointerover', onOver, opts)
       document.removeEventListener('pointerout', onOut, opts)
-      document.removeEventListener('pointerdown', hide, opts)
+      document.removeEventListener('pointerdown', onDown, opts)
       document.removeEventListener('focusin', onFocus, opts)
       document.removeEventListener('focusout', hide, opts)
       document.removeEventListener('scroll', hide, opts)
