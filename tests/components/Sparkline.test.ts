@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/svelte'
+import { fireEvent, render, screen } from '@testing-library/svelte'
+import { flushSync } from 'svelte'
 import { Sparkline } from '../../src/index'
 
 describe('Sparkline', () => {
@@ -43,6 +44,48 @@ describe('Sparkline', () => {
     const out = render(Sparkline, { props: { values: [1, 2], markIndex: 5, label: 'Out of range' } })
     expect(out.container.querySelector('line.mark')).toBeNull()
     expect(out.container.querySelector('line.zero')).toBeNull()
+  })
+
+  it('reads out the nearest sample under a pointer, a finger or the arrow keys, and only with a readout', async () => {
+    const readout = (i: number, v: number) => `#${i} · ${v} km/s`
+    const { container } = render(Sparkline, { props: { values: [400, 410, null, 430, 440], readout, label: 'Wind' } })
+    const box = screen.getByRole('slider', { name: 'Wind' })
+    expect(box.getAttribute('tabindex')).toBe('0')
+    expect(box.getAttribute('aria-valuenow')).toBe('4')
+    expect(box.getAttribute('aria-valuetext')).toBe('#4 · 440 km/s')
+    const status = container.querySelector('.readout') as HTMLElement
+    expect(status.hidden).toBe(true)
+    // a mouse hovers: x = 60 is the middle, a gap, so its neighbor at 3
+    await fireEvent.pointerMove(box, { clientX: 60, pointerType: 'mouse', buttons: 0 })
+    flushSync()
+    expect(status.hidden).toBe(false)
+    expect(status.textContent).toBe('#3 · 430 km/s')
+    expect(box.getAttribute('aria-valuetext')).toBe('#3 · 430 km/s')
+    expect(container.querySelector('circle.pick')?.getAttribute('cx')).toBe('88.5')
+    await fireEvent.pointerLeave(box, { pointerType: 'mouse' })
+    flushSync()
+    expect(status.hidden).toBe(true)
+    // a finger: down, then a move with the button held; lifting keeps the reading
+    box.setPointerCapture = () => {}
+    await fireEvent.pointerDown(box, { clientX: 3, pointerType: 'touch', pointerId: 1, buttons: 1 })
+    await fireEvent.pointerMove(box, { clientX: 30, pointerType: 'touch', pointerId: 1, buttons: 1 })
+    flushSync()
+    expect(status.textContent).toBe('#1 · 410 km/s')
+    await fireEvent.pointerMove(box, { clientX: 117, pointerType: 'touch', pointerId: 1, buttons: 0 })
+    await fireEvent.pointerLeave(box, { pointerType: 'touch' })
+    flushSync()
+    expect(status.textContent).toBe('#1 · 410 km/s')
+    // keys: left from the last sample, Escape hides
+    await fireEvent.keyDown(box, { key: 'ArrowLeft' })
+    flushSync()
+    expect(status.textContent).toBe('#0 · 400 km/s')
+    await fireEvent.keyDown(box, { key: 'Escape' })
+    flushSync()
+    expect(status.hidden).toBe(true)
+    // without a readout the svg is the image and nothing is focusable
+    const plain = render(Sparkline, { props: { values: [1, 2], label: 'Plain' } })
+    expect(plain.container.querySelector('svg')?.getAttribute('role')).toBe('img')
+    expect(plain.container.querySelector('[tabindex]')).toBeNull()
   })
 
   it('draws no line for a single value', () => {
