@@ -11,59 +11,71 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.7.0 — consoles at scale, on a phone too
+## 0.7.0 — the phone is the first screen
 
 Most people open the reference consumer on a phone: a shared link, the
-device at hand. So the band starts from touch, and the rest of it (lists,
-rows, recipes) is designed on the touch density from the first sketch.
-The package stays out of application layout: what it adds are shapes and
-tokens, and the app decides where they go.
+device at hand. The band is touch, plus the first two requests that came
+from adopting 0.6.0. The package stays out of application layout: what it
+adds are shapes and tokens, and the app decides where they go.
 
 1. **`touch` density** — a third `data-density`, applied by itself on
    `pointer: coarse` when the app sets none: rows of 44 px, taller
    buttons and toggles, 16 px text in inputs (so iOS does not zoom on
    focus). Control heights become tokens on the way, instead of numbers
-   written in the components.
+   written in the components. (#21)
 2. **Hover and tooltip on touch** — hover styles behind `hover: hover`
    everywhere, so a tap does not leave a stuck highlight; `Tooltip` stays
    silent on touch, where `InfoButton` is the way to explain something.
+   (#22)
 3. **`FloatingPanel` as a bottom sheet** under the phone breakpoint: the
    head fixed, the body scrolling, closed from the button; safe-area
    insets and dynamic viewport height. Drag gestures only if a consumer
-   asks.
+   asks. (#24)
 4. **One breakpoint, exported** — 700 px separates a phone from the rest
    and is exported from `plancia-ui/theme` as a constant, so the consumer
-   stops repeating the number. Components that reflow (`KeyValue`,
-   `Stat`, `MetaRow`) use container queries: a shape adapts to the space
-   it is in, not to the screen; only `FloatingPanel` looks at the screen,
-   because the screen is its container.
-5. **Showcase on a phone** — the density switch gains `touch`; every
-   change is looked at in Chrome's device emulation while working and on
-   a real phone before a release (the showcase on GitHub Pages, or
-   `npm run dev -- --host` on the same network).
-6. **`List` / `Row` vocabulary** — the dense list with label, value,
+   stops repeating the number. A component adapts to its content and to
+   the space it is in (`KeyValue` drops a long value to a full line,
+   `MetaRow` wraps), never to the screen: only `FloatingPanel` looks at
+   the screen, because the screen is its container. Container queries
+   were tried on paper and left out: `container-type` zeroes the
+   min-content width of a flex item, a trap for consumers. (#25)
+5. **Showcase on a phone** — fits 390 px, the density switch gains `auto`
+   and `touch`, `?density=` in the URL, a readout of the tokens the page
+   really got; every change is looked at in Chrome's device emulation
+   while working and on a real phone before a release. (#23)
+6. **From the adoption of 0.6.0** — `Section.summaryTitle` (#19);
+   `Sparkline` with gaps (`null` lifts the pen), a zero baseline, a marker
+   at an index, and a readout that follows the pointer and, on a phone,
+   the finger (#20).
+
+## 0.8.0 — consoles at scale
+
+Driven by the reference consumer adopting 0.7.0: what it finds missing or
+awkward while replacing its local lists and rows becomes an issue here,
+and the answers ship together.
+
+1. **`List` / `Row` vocabulary** — the dense list with label, value,
    controls and attribution row (raster layers, active regions, events in
    Sidereus). Designed first, on the real usages: an inventory of the
    consumer's list markup, a proposal in the showcase, then the component
    or components. It overlaps `SettingRow` and `KeyValue`: the design
    decides what is a new shape and what is a recipe.
-7. **`LayerRow`, or a recipe** — `SettingRow` + `Status` + a color sample.
+2. **`LayerRow`, or a recipe** — `SettingRow` + `Status` + a color sample.
    If the composition is enough, it is documented as a recipe rather than
    shipped as a component.
-8. **Recipes page in the showcase** — a full floating panel, a console
+3. **Recipes page in the showcase** — a full floating panel, a console
    section with rows and a chart, a list with states, a phone layout with
    a sheet: the compositions an app (or an agent) copies, built only from
    the package.
-9. **Fixes and small props** surfaced by the adoption of 0.6.0
-   (`FloatingPanel` in three panels, `Section` in eleven, `InfoCard` for
-   the data sheets, `Bars` for Kp, `Sparkline` for X-ray and wind).
+4. **Fixes and small props** surfaced by the adoption.
 
-## 0.8.0 — inputs
+## 0.9.0 — inputs
 
 A console design system needs form controls even if the reference
 consumer uses few: `Select`, `NumberField`, `Checkbox`, `Radio`, `Tabs`
 with panels and keyboard. Designed as one family (same heights as `Button`
-and `Toggle`, same focus ring, same tones), shipped together.
+and `Toggle`, same focus ring, same tones, touch density from the first
+sketch), shipped together.
 
 ## Later — waiting for a second use, or for a decision
 
