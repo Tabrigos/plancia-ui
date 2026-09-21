@@ -11,48 +11,11 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.7.0 — the phone is the first screen
-
-Most people open the reference consumer on a phone: a shared link, the
-device at hand. The band is touch, plus the first two requests that came
-from adopting 0.6.0. The package stays out of application layout: what it
-adds are shapes and tokens, and the app decides where they go.
-
-1. **`touch` density** — a third `data-density`, applied by itself on
-   `pointer: coarse` when the app sets none: rows of 44 px, taller
-   buttons and toggles, 16 px text in inputs (so iOS does not zoom on
-   focus). Control heights become tokens on the way, instead of numbers
-   written in the components. (#21)
-2. **Hover and tooltip on touch** — hover styles behind `hover: hover`
-   everywhere, so a tap does not leave a stuck highlight; `Tooltip` stays
-   silent on touch, where `InfoButton` is the way to explain something.
-   (#22)
-3. **`FloatingPanel` as a bottom sheet** under the phone breakpoint: the
-   head fixed, the body scrolling, closed from the button; safe-area
-   insets and dynamic viewport height. Drag gestures only if a consumer
-   asks. (#24)
-4. **One breakpoint, exported** — 700 px separates a phone from the rest
-   and is exported from `plancia-ui/theme` as a constant, so the consumer
-   stops repeating the number. A component adapts to its content and to
-   the space it is in (`KeyValue` drops a long value to a full line,
-   `MetaRow` wraps), never to the screen: only `FloatingPanel` looks at
-   the screen, because the screen is its container. Container queries
-   were tried on paper and left out: `container-type` zeroes the
-   min-content width of a flex item, a trap for consumers. (#25)
-5. **Showcase on a phone** — fits 390 px, the density switch gains `auto`
-   and `touch`, `?density=` in the URL, a readout of the tokens the page
-   really got; every change is looked at in Chrome's device emulation
-   while working and on a real phone before a release. (#23)
-6. **From the adoption of 0.6.0** — `Section.summaryTitle` (#19);
-   `Sparkline` with gaps (`null` lifts the pen), a zero baseline, a marker
-   at an index, and a readout that follows the pointer and, on a phone,
-   the finger (#20).
-
 ## 0.8.0 — consoles at scale
 
-Driven by the reference consumer adopting 0.7.0: what it finds missing or
-awkward while replacing its local lists and rows becomes an issue here,
-and the answers ship together.
+Driven by the reference consumer adopting 0.7.0 (touch, the sheet, the
+sparkline readout): what it finds missing or awkward while replacing its
+local lists and rows becomes an issue here, and the answers ship together.
 
 1. **`List` / `Row` vocabulary** — the dense list with label, value,
    controls and attribution row (raster layers, active regions, events in
