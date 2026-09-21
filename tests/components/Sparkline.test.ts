@@ -25,6 +25,26 @@ describe('Sparkline', () => {
     expect(container.querySelector('polyline')?.getAttribute('points')?.split(' ')[2]).toBe('117,16')
   })
 
+  it('lifts the pen at a null sample: one polyline per run, a dot for a lone sample, the end dot on the last real value', () => {
+    const { container } = render(Sparkline, { props: { values: [1, 2, null, 4, null, 6, 7], label: 'Bz' } })
+    expect(container.querySelectorAll('polyline.line').length).toBe(2)
+    expect(container.querySelectorAll('circle.lone').length).toBe(1)
+    expect(container.querySelector('circle.dot')?.getAttribute('cx')).toBe('117')
+  })
+
+  it('draws the zero line on a stretched scale and a dashed marker at an index', () => {
+    const { container } = render(Sparkline, { props: { values: [-2, -1, 1, 2, 1], zeroLine: true, markIndex: 2, label: 'Bz' } })
+    const zero = container.querySelector('line.zero') as SVGLineElement
+    expect(zero.getAttribute('y1')).toBe('16')
+    expect(zero.getAttribute('x2')).toBe('120')
+    const mark = container.querySelector('line.mark') as SVGLineElement
+    expect(mark.getAttribute('x1')).toBe('60')
+    expect(mark.getAttribute('y2')).toBe('32')
+    const out = render(Sparkline, { props: { values: [1, 2], markIndex: 5, label: 'Out of range' } })
+    expect(out.container.querySelector('line.mark')).toBeNull()
+    expect(out.container.querySelector('line.zero')).toBeNull()
+  })
+
   it('draws no line for a single value', () => {
     const { container } = render(Sparkline, { props: { values: [7], label: 'One' } })
     expect(container.querySelector('polyline')).toBeNull()

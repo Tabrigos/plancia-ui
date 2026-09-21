@@ -58,6 +58,8 @@
   const kpBars = kp.map((v, i) => ({ value: v, label: `${String(i * 3).padStart(2, '0')} UTC · Kp ${v}`, color: `var(--p-scale-${Math.min(5, Math.max(0, v - 4))})` }))
   const xray = [1.2, 1.4, 1.3, 2.8, 5.1, 3.2, 2.1, 1.9, 1.7, 1.6, 2.2, 1.8]
   const wind = [380, 392, 410, 405, 430, 455, 448, 470, 462, 440]
+  // Bz: signed, a missing sample in the middle, forecast after the marker
+  const bz = [-3, -4.5, -2, null, 1, 3.5, 2, -1, -2.5, -4]
 </script>
 
 <svelte:head><title>plancia-ui · showcase</title></svelte:head>
@@ -114,6 +116,7 @@
         <div class="chart-row"><Bars bars={kpBars} max={9} width={160} height={40} label="Kp, last 24 h" /><span class="p-t11 p-dim">Bars · Kp by 3 h, a status token per bar</span></div>
         <div class="chart-row"><Sparkline values={xray} label="X-ray flux, last 12 h" width={160} height={32} color="var(--p-viz-5)" /><span class="p-t11 p-dim">Sparkline · X-ray, viz-5</span></div>
         <div class="chart-row"><Sparkline values={wind} min={300} label="Solar wind speed" width={160} height={32} area /><span class="p-t11 p-dim">Sparkline · wind, area, scale pinned at 300</span></div>
+        <div class="chart-row"><Sparkline values={bz} zeroLine markIndex={6} label="Bz, observed then forecast" width={160} height={32} color="var(--p-viz-4)" /><span class="p-t11 p-dim">Sparkline · Bz: a gap, the zero line, a marker at "now"</span></div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-seq-{s})"></i>{/each}</div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-div-{s})"></i>{/each}</div>
       </div>

@@ -21,6 +21,10 @@ All notable changes to plancia-ui. The format follows
 - `Section`: `summaryTitle` puts a tooltip on the summary, with the help
   cursor, for the app to explain a compressed reading ("512 km/s · Bz −4").
   Requested by the reference consumer (#19).
+- `Sparkline`: a `null` value is a gap (the pen lifts, a lone sample is a
+  dot, the end dot sits on the last real value); `zeroLine` draws a thin
+  line at 0 with the scale stretched to hold it; `markIndex` draws a dashed
+  vertical marker at an index. Requested by the reference consumer (#20).
 - `plancia-ui/theme` exports the phone breakpoint: `PHONE_BREAKPOINT`
   (700), `PHONE_MEDIA` for `matchMedia` and `isPhone()`, so an app stops
   repeating the number the package's own rules use.

@@ -93,7 +93,7 @@ Tokens, themes, density and fonts are explained in
 | `InfoCard` | frame of an explanation: paragraph, `<dl>` of facts, link | `summary` (native details) or always open with `onclose`; the content is the body |
 | `Kbd` | a key in a hint ("Esc closes") | the key is the content |
 | `LiveRegion` | the polite live region `announce()` writes into, mounted once | |
-| `Sparkline` | a line in a box, no axes | `values`, `label`, `color`, `area`, `endDot`, `min`, `max`, `width`, `height` |
+| `Sparkline` | a line in a box, no axes; gaps, zero line, a marker | `values` (`null` is a gap), `label`, `color`, `area`, `endDot`, `min`, `max`, `zeroLine`, `markIndex`, `width`, `height` |
 | `Bars` | a short series of bars, zero baseline, no axes | `bars` `{ value, label?, color? }`, `label`, `color`, `max`, `width`, `height` |
 
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
