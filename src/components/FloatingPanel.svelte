@@ -7,9 +7,11 @@
    * a translucent backdrop, `PanelHead` touching the edges, the body
    * scrolling inside a bounded height, and the behavior three panels used
    * to repeat: Esc closes while focus is inside, focus returns to the
-   * opener on close, full width with side gutters under 700 px. The app
-   * positions it (a class with `position`, `top`, `right`, `width`) and
-   * decides when it exists: the package never keeps an open/closed state.
+   * opener on close. Under 700 px it is a bottom sheet: the stage stays
+   * visible above, the head is fixed, the body scrolls, the safe area of a
+   * phone is respected. The app positions it (a class with `position`,
+   * `top`, `right`, `width`) and decides when it exists, one at a time on a
+   * phone: the package never keeps an open/closed state.
    */
   let {
     title,
@@ -77,7 +79,7 @@
 <style>
   .p-floating {
     display: flex; flex-direction: column;
-    max-height: var(--p-floating-max-height, calc(100vh - 110px));
+    max-height: var(--p-floating-max-height, calc(100dvh - 110px));
     background: var(--p-s3a); backdrop-filter: blur(16px) saturate(1.3);
     border: 1px solid var(--p-border); border-radius: var(--p-r3); box-shadow: var(--p-sh2);
     color: var(--p-text); outline: none;
@@ -86,10 +88,20 @@
   @keyframes p-float-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   .p-floating:focus-visible { box-shadow: var(--p-sh2), var(--p-focus); }
   .body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--p-space-3) var(--p-space-4) var(--p-space-4); }
-  /* A phone has no room for a panel beside the stage: it takes the width, with
-     gutters. The doubled class outweighs the single class the app positions
-     with, without reaching an id: position with a class, not an id. */
+  /* A phone has no room for a panel beside the stage: the panel becomes a
+     sheet from the bottom, the stage stays visible above it. The doubled
+     class outweighs the single class the app positions with, without
+     reaching an id: position with a class, not an id. `dvh` follows the
+     address bar of a phone browser; the safe-area inset keeps the body off
+     the home indicator (the app's viewport meta needs `viewport-fit=cover`). */
   @media (max-width: 700px) {
-    .p-floating.p-floating { left: var(--p-space-2); right: var(--p-space-2); width: auto; }
+    .p-floating.p-floating {
+      top: auto; bottom: 0; left: 0; right: 0; width: auto;
+      max-height: var(--p-floating-max-height, 60dvh);
+      border-radius: var(--p-r3) var(--p-r3) 0 0; border-bottom: none;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      animation-name: p-sheet-in;
+    }
   }
+  @keyframes p-sheet-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 </style>
