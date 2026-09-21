@@ -391,5 +391,22 @@
   /* A single class, as an app should: the package rule under 700 px must win */
   :global(.demo-floating) { position: absolute; top: 16px; right: 16px; width: 300px; }
   .stage-note { position: absolute; left: 16px; bottom: 12px; }
-  @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  /* A phone: one column everywhere, a 16 px gutter, the header stacked, and
+     no grid track wider than the screen (minmax(0, 1fr), never a bare 1fr,
+     or a nowrap label pushes the whole page out) */
+  @media (max-width: 700px) {
+    main { padding: 24px 16px 48px; gap: 24px; }
+    .head { flex-direction: column; gap: 12px; }
+    .head-ctl { justify-content: flex-start; max-width: none; }
+    .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ramps { grid-template-columns: minmax(0, 1fr); }
+    .chart-demo { grid-row: auto; grid-column: auto; align-items: stretch; }
+    .cells { flex: 1; min-width: 0; }
+    .cells i { flex: 1; min-width: 0; width: auto; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .type-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    /* The touch panel is taller: the stage keeps its note out from under it */
+    .stage { min-height: 380px; }
+  }
 </style>
