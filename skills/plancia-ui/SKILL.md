@@ -170,10 +170,14 @@ of the user and cannot be seen on the stage (an object selected, a panel
 closed with Esc), never for telemetry. Empties after 5 s; the same text
 announced again is read again.
 
-**`Sparkline`** — `values: number[]`, `label: string` (accessible name,
-required), `width?` (`120`), `height?` (`32`), `color?` (`'var(--p-viz-1)'`),
-`area?: boolean` (15 % fill under the line), `endDot?: boolean` (`true`),
-`min?` / `max?` (pin an end of the scale, e.g. `min={0}`), `title?`. An
+**`Sparkline`** — `values: (number | null)[]` (`null` is a missing sample:
+the pen lifts, a lone sample between gaps is a dot), `label: string`
+(accessible name, required), `width?` (`120`), `height?` (`32`), `color?`
+(`'var(--p-viz-1)'`), `area?: boolean` (15 % fill under the line), `endDot?:
+boolean` (`true`, on the last real value), `min?` / `max?` (pin an end of
+the scale, e.g. `min={0}`), `zeroLine?: boolean` (a thin line at 0 with the
+scale stretched to hold it: Bz, a delta), `markIndex?: number` (a dashed
+vertical marker at that index: "now" before a forecast), `title?`. An
 `<svg role="img">`; text and axes stay outside, in the text tokens.
 
 **`Bars`** — `bars: Bar[]` where `Bar = { value: number; label?: string;

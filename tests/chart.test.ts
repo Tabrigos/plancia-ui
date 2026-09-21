@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { barPath, domainOf, linePoints, polyline } from '../src/chart'
+import { barPath, domainOf, linePoints, polyline, runsOf, xOf, yOf } from '../src/chart'
 
 describe('domainOf', () => {
   it('takes the data extent unless an end is pinned', () => {
@@ -11,13 +11,42 @@ describe('domainOf', () => {
   it('opens a flat series so nothing divides by zero', () => {
     expect(domainOf([5, 5])).toEqual({ min: 4, max: 6 })
   })
+
+  it('ignores gaps and stretches to hold zero when asked', () => {
+    expect(domainOf([3, null, 1])).toEqual({ min: 1, max: 3 })
+    expect(domainOf([3, null, 1], undefined, undefined, true)).toEqual({ min: 0, max: 3 })
+    expect(domainOf([-2, -1], undefined, undefined, true)).toEqual({ min: -2, max: 0 })
+    expect(domainOf([null, null])).toEqual({ min: -1, max: 1 })
+  })
+})
+
+describe('xOf and yOf', () => {
+  it('place a sample by index and a value on the domain', () => {
+    expect(xOf(0, 5, 120)).toBe(3)
+    expect(xOf(2, 5, 120)).toBe(60)
+    expect(xOf(4, 5, 120)).toBe(117)
+    expect(xOf(0, 1, 120)).toBe(60)
+    expect(yOf(0, 32, { min: -2, max: 2 })).toBe(16)
+    expect(yOf(2, 32, { min: -2, max: 2 })).toBe(3)
+  })
+})
+
+describe('runsOf', () => {
+  it('splits the points at every gap and drops empty runs', () => {
+    const points = linePoints([1, 2, null, 4, null, null, 6], 120, 32, { min: 0, max: 10 })
+    expect(points[2]).toBeNull()
+    const runs = runsOf(points)
+    expect(runs.map((run) => run.length)).toEqual([2, 1, 1])
+    expect(runsOf([])).toEqual([])
+    expect(runsOf([null])).toEqual([])
+  })
 })
 
 describe('linePoints', () => {
   it('spreads the values left to right inside the padding, high values up', () => {
     const points = linePoints([0, 10], 100, 20, { min: 0, max: 10 })
     expect(points).toEqual([[3, 17], [97, 3]])
-    expect(polyline(points)).toBe('3,17 97,3')
+    expect(polyline(points as Array<[number, number]>)).toBe('3,17 97,3')
   })
 
   it('centers a single value and handles an empty series', () => {
