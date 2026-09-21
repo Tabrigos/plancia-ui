@@ -99,7 +99,8 @@ Tokens, themes, density and fonts are explained in
 Plus `scaleTone(level)`, the semantic tone of NOAA scale levels 0–5, to pass
 to `Chip`; `setLabels()` for the default labels; the theme helpers
 `applyTheme`, `applyStoredTheme`, `readStoredTheme`, `rememberTheme`,
-`readRequestedTheme`, `parseTheme`; `announce(text)` from `plancia-ui/live`
+`readRequestedTheme`, `parseTheme`, and the phone breakpoint `PHONE_BREAKPOINT`
+(700), `PHONE_MEDIA`, `isPhone()`; `announce(text)` from `plancia-ui/live`
 for screen readers. The full reference of every prop, base class and token is in
 [`skills/plancia-ui/SKILL.md`](skills/plancia-ui/SKILL.md); the design rules
 the components embody are in [`docs/design-rules.md`](docs/design-rules.md).

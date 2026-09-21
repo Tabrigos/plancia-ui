@@ -257,6 +257,13 @@ returns a snapshot; `labels` is the `svelte/store` behind it. From
 removes it); `readStoredTheme(key)`, `rememberTheme(theme, key)` (dark is
 stored as nothing); `applyStoredTheme(key)` reads and applies in one call;
 `readRequestedTheme()` returns the theme in `?theme=` or `null`.
+`PHONE_BREAKPOINT` (`700`, CSS pixels: below it the screen is a phone and
+`FloatingPanel` is a sheet), `PHONE_MEDIA` (`'(max-width: 700px)'`, for
+`matchMedia`), `isPhone()` (`false` without a window). The app's own
+phone CSS writes the same number, `@media (max-width: 700px)`: a custom
+property cannot enter a media query. Components adapt to their content and
+to the space they are in (`KeyValue` drops the value to a full line,
+`MetaRow` wraps); only `FloatingPanel` looks at the screen.
 
 ## Base classes (`base.css`)
 

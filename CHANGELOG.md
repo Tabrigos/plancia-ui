@@ -18,6 +18,9 @@ All notable changes to plancia-ui. The format follows
   and the tap target of `InfoButton` read them instead of fixed sizes.
 - `base.css`: inputs, selects and textareas take their text size from
   `--p-input-size` (zero-specificity rule, any app rule wins).
+- `plancia-ui/theme` exports the phone breakpoint: `PHONE_BREAKPOINT`
+  (700), `PHONE_MEDIA` for `matchMedia` and `isPhone()`, so an app stops
+  repeating the number the package's own rules use.
 
 ### Changed
 - `FloatingPanel` under 700 px is a bottom sheet: anchored to the bottom

@@ -48,6 +48,9 @@ export {
   rememberTheme,
   DEFAULT_THEME,
   type Theme,
+  PHONE_BREAKPOINT,
+  PHONE_MEDIA,
+  isPhone,
 } from './theme.js'
 
 /** Semantic tone of the NOAA scale levels (R/S/G 0–5). */

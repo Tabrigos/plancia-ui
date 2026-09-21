@@ -1,5 +1,8 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { applyStoredTheme, applyTheme, parseTheme, readRequestedTheme, readStoredTheme, rememberTheme } from '../src/index'
+import { PHONE_BREAKPOINT, PHONE_MEDIA, applyStoredTheme, applyTheme, isPhone, parseTheme, readRequestedTheme, readStoredTheme, rememberTheme } from '../src/index'
+import { srcDir } from '../scripts/build-tokens.mjs'
 
 const KEY = 'test.theme'
 
@@ -36,6 +39,15 @@ describe('theme helpers', () => {
     localStorage.setItem(KEY, 'light')
     expect(applyStoredTheme(KEY)).toBe('light')
     expect(document.documentElement.dataset.theme).toBe('light')
+  })
+
+  it('exports the phone breakpoint, and FloatingPanel uses the same number', () => {
+    expect(PHONE_BREAKPOINT).toBe(700)
+    expect(PHONE_MEDIA).toBe('(max-width: 700px)')
+    const panel = readFileSync(join(srcDir, 'components', 'FloatingPanel.svelte'), 'utf8')
+    expect(panel).toContain(`@media (max-width: ${PHONE_BREAKPOINT}px)`)
+    // jsdom answers every media query with false: the helper must not throw
+    expect(isPhone()).toBe(false)
   })
 
   it('reads a theme requested in the URL, or nothing', () => {
