@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { barPath, domainOf, linePoints, polyline, runsOf, xOf, yOf } from '../src/chart'
+import { barPath, domainOf, linePoints, nearestSample, polyline, readoutLeft, runsOf, xOf, yOf } from '../src/chart'
 
 describe('domainOf', () => {
   it('takes the data extent unless an end is pinned', () => {
@@ -52,6 +52,26 @@ describe('linePoints', () => {
   it('centers a single value and handles an empty series', () => {
     expect(linePoints([4], 100, 20, { min: 0, max: 10 })).toEqual([[50, 11.4]])
     expect(linePoints([], 100, 20, { min: 0, max: 10 })).toEqual([])
+  })
+})
+
+describe('nearestSample', () => {
+  it('picks the sample nearest to an x, skips gaps to a neighbor, clamps to the ends', () => {
+    expect(nearestSample([1, 2, 3, 4, 5], 60, 120)).toBe(2)
+    expect(nearestSample([1, 2, 3, 4, 5], -50, 120)).toBe(0)
+    expect(nearestSample([1, 2, 3, 4, 5], 500, 120)).toBe(4)
+    expect(nearestSample([1, 2, null, 4, 5], 60, 120)).toBe(3)
+    expect(nearestSample([1, null, null, null, null], 117, 120)).toBe(0)
+    expect(nearestSample([null, null], 60, 120)).toBe(-1)
+    expect(nearestSample([], 60, 120)).toBe(-1)
+  })
+})
+
+describe('readoutLeft', () => {
+  it('centers the box on x and keeps it inside the width', () => {
+    expect(readoutLeft(60, 40, 120)).toBe(40)
+    expect(readoutLeft(3, 40, 120)).toBe(0)
+    expect(readoutLeft(117, 40, 120)).toBe(80)
   })
 })
 

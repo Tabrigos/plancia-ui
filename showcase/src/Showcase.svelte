@@ -115,7 +115,7 @@
       <div class="p-card chart-demo" aria-label="Chart preview on the dataviz tokens">
         <div class="chart-row"><Bars bars={kpBars} max={9} width={160} height={40} label="Kp, last 24 h" /><span class="p-t11 p-dim">Bars · Kp by 3 h, a status token per bar</span></div>
         <div class="chart-row"><Sparkline values={xray} label="X-ray flux, last 12 h" width={160} height={32} color="var(--p-viz-5)" /><span class="p-t11 p-dim">Sparkline · X-ray, viz-5</span></div>
-        <div class="chart-row"><Sparkline values={wind} min={300} label="Solar wind speed" width={160} height={32} area /><span class="p-t11 p-dim">Sparkline · wind, area, scale pinned at 300</span></div>
+        <div class="chart-row"><Sparkline values={wind} min={300} label="Solar wind speed" width={160} height={32} area readout={(i, v) => `${String(i * 2).padStart(2, '0')}:00 UTC · ${v} km/s`} /><span class="p-t11 p-dim">Sparkline · wind, area, scale pinned at 300, a readout under the pointer or the finger</span></div>
         <div class="chart-row"><Sparkline values={bz} zeroLine markIndex={6} label="Bz, observed then forecast" width={160} height={32} color="var(--p-viz-4)" /><span class="p-t11 p-dim">Sparkline · Bz: a gap, the zero line, a marker at "now"</span></div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-seq-{s})"></i>{/each}</div>
         <div class="cells">{#each [1, 2, 3, 4, 5, 6, 7] as s (s)}<i style="background:var(--p-div-{s})"></i>{/each}</div>

@@ -177,8 +177,14 @@ the pen lifts, a lone sample between gaps is a dot), `label: string`
 boolean` (`true`, on the last real value), `min?` / `max?` (pin an end of
 the scale, e.g. `min={0}`), `zeroLine?: boolean` (a thin line at 0 with the
 scale stretched to hold it: Bz, a delta), `markIndex?: number` (a dashed
-vertical marker at that index: "now" before a forecast), `title?`. An
-`<svg role="img">`; text and axes stay outside, in the text tokens.
+vertical marker at that index: "now" before a forecast), `readout?:
+(index, value) => string` (the text of the sample under the pointer: a
+mouse hovers, a finger drags along the line while the page still scrolls
+vertically, a focused sparkline takes the arrow keys, Esc hides; a dot on
+the line and a monospace box kept inside the width), `title?`. An `<svg
+role="img">`; with a readout, a focusable `role="slider"` over the samples
+whose `aria-valuetext` is the readout of the picked sample (the last one at
+rest). Text and axes stay outside, in the text tokens.
 
 **`Bars`** — `bars: Bar[]` where `Bar = { value: number; label?: string;
 color?: string }` (`label` is the bar's tooltip and accessible text; `color`

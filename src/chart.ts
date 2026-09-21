@@ -54,6 +54,24 @@ export function polyline(points: Point[]): string {
   return points.map(([x, y]) => `${x},${y}`).join(' ')
 }
 
+/** The index of the real sample nearest to an x inside the box (a gap yields its nearest neighbor); -1 when there is none. */
+export function nearestSample(values: Sample[], x: number, width: number, pad = 3): number {
+  const count = values.length
+  if (count === 0) return -1
+  const step = count > 1 ? (width - 2 * pad) / (count - 1) : 1
+  const guess = Math.max(0, Math.min(count - 1, Math.round((x - pad) / step)))
+  for (let d = 0; d < count; d++) {
+    if (values[guess + d] != null && guess + d < count) return guess + d
+    if (values[guess - d] != null && guess - d >= 0) return guess - d
+  }
+  return -1
+}
+
+/** The left of a readout box centered on `x` but kept inside the sparkline's width. */
+export function readoutLeft(x: number, boxWidth: number, width: number): number {
+  return round(Math.max(0, Math.min(x - boxWidth / 2, width - boxWidth)))
+}
+
 /** A bar anchored to the baseline with its two top corners rounded by `r`, never the bottom ones. */
 export function barPath(x: number, top: number, width: number, bottom: number, r: number): string {
   const rr = Math.min(r, width / 2, Math.max(0, bottom - top))

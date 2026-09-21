@@ -24,7 +24,10 @@ All notable changes to plancia-ui. The format follows
 - `Sparkline`: a `null` value is a gap (the pen lifts, a lone sample is a
   dot, the end dot sits on the last real value); `zeroLine` draws a thin
   line at 0 with the scale stretched to hold it; `markIndex` draws a dashed
-  vertical marker at an index. Requested by the reference consumer (#20).
+  vertical marker at an index; `readout` shows the sample under the pointer
+  (a mouse hovers, a finger drags along the line, the arrow keys move it on
+  a focused sparkline) as a dot on the line and a monospace box that stays
+  inside the width. Requested by the reference consumer (#20).
 - `plancia-ui/theme` exports the phone breakpoint: `PHONE_BREAKPOINT`
   (700), `PHONE_MEDIA` for `matchMedia` and `isPhone()`, so an app stops
   repeating the number the package's own rules use.
