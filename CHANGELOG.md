@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-09-21
+
 ### Added
 - `touch` density: `data-density="touch"` sizes rows, buttons, toggles and
   input text for a finger (44 px rows, 40 px buttons, 32 px small buttons,
