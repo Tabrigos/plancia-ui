@@ -39,7 +39,7 @@
 <style>
   .p-setting-row {
     display: flex; align-items: center; gap: 10px;
-    padding: 7px 14px 7px 16px;
+    min-height: var(--p-row-h); padding: 7px 14px 7px 16px;
     transition: background var(--p-motion-fast) var(--p-motion-ease);
   }
   .p-setting-row:hover { background: var(--p-hover); }

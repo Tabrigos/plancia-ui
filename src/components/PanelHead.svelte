@@ -53,7 +53,7 @@
   .sp { flex: 1; }
   .actions { display: flex; align-items: center; gap: 6px; }
   .close {
-    display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; margin: -3px -4px 0 0;
+    display: inline-flex; align-items: center; justify-content: center; width: var(--p-control-h-sm); height: var(--p-control-h-sm); margin: -3px -4px 0 0;
     border: none; border-radius: var(--p-r2); background: transparent; color: var(--p-text-dim); cursor: pointer;
   }
   .close:hover { background: var(--p-hover); color: var(--p-text-hi); }

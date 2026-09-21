@@ -34,6 +34,9 @@ a:hover { text-decoration: underline; }
 .p-nowrap { white-space: nowrap; }
 .p-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* Inputs read the density: 13 px, and 16 px on touch so iOS does not zoom on focus */
+:where(input, select, textarea) { font-size: var(--p-input-size); }
+
 /* Section title: the ONLY spaced uppercase in the system */
 .p-sec-title {
   font-size: var(--p-t11);

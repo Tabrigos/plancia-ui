@@ -54,10 +54,10 @@
   summary { padding: 6px 10px; font-size: var(--p-t11); color: var(--p-text-dim); cursor: pointer; user-select: none; }
   summary:hover { color: var(--p-text); }
   .body { display: flex; flex-direction: column; gap: 8px; padding: 8px 10px 10px; line-height: 1.45; }
-  .inline .body { padding-right: 32px; }
+  .inline .body { padding-right: calc(var(--p-control-h-sm) + 10px); }
   .close {
-    position: absolute; top: 6px; right: 6px; display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border: none; border-radius: var(--p-r1); background: transparent; color: var(--p-text-dim); cursor: pointer;
+    position: absolute; top: 4px; right: 4px; display: inline-flex; align-items: center; justify-content: center;
+    width: var(--p-control-h-sm); height: var(--p-control-h-sm); border: none; border-radius: var(--p-r1); background: transparent; color: var(--p-text-dim); cursor: pointer;
   }
   .close:hover { background: var(--p-hover); color: var(--p-text-hi); }
   .body :global(p) { margin: 0; }

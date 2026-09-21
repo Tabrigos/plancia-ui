@@ -6,6 +6,25 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `touch` density: `data-density="touch"` sizes rows, buttons, toggles and
+  input text for a finger (44 px rows, 40 px buttons, 32 px small buttons,
+  44×26 toggles, 16 px inputs so iOS does not zoom on focus). A coarse
+  pointer (phone, tablet) gets it by itself when the root element sets no
+  density; an app that sets one keeps it.
+- Density tokens `--p-control-h`, `--p-control-h-sm`, `--p-toggle-w`,
+  `--p-toggle-h`, `--p-input-size`, defined for the three densities:
+  `Button`, `Toggle`, `Segmented`, the close of `PanelHead` and `InfoCard`
+  and the tap target of `InfoButton` read them instead of fixed sizes.
+- `base.css`: inputs, selects and textareas take their text size from
+  `--p-input-size` (zero-specificity rule, any app rule wins).
+
+### Changed
+- `SettingRow` honors `--p-row-h` as its minimum height: 40 px in the
+  comfortable density (it stayed at 32), 44 on touch; compact is unchanged.
+- `InfoCard`: the close button of an inline card is 26 px like the close
+  of `PanelHead`, instead of 22.
+
 ## [0.6.0] — 2026-09-19
 
 ### Added

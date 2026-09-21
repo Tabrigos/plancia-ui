@@ -98,14 +98,59 @@
   --p-motion-ease: cubic-bezier(0.2, 0, 0, 1);
   --p-row: 8px;
   --p-row-h: 32px;
+  --p-control-h: 32px;
+  --p-control-h-sm: 26px;
+  --p-toggle-w: 34px;
+  --p-toggle-h: 20px;
+  --p-input-size: var(--p-t13);
   --p-focus: 0 0 0 2px var(--p-bg), 0 0 0 4px var(--p-accent);
   color-scheme: dark;
 }
 
-/* Density: the standard row is 32 px with 8 px padding; "comfortable" breathes */
+/* Density: the standard row is 32 px with 8 px padding; "comfortable"
+   breathes; "touch" makes rows, controls and toggles big enough for a finger
+   and input text large enough that iOS does not zoom on focus. Compact has
+   a block of its own so a container can ask for it inside a touch root */
+[data-density="compact"] {
+  --p-row: 8px;
+  --p-row-h: 32px;
+  --p-control-h: 32px;
+  --p-control-h-sm: 26px;
+  --p-toggle-w: 34px;
+  --p-toggle-h: 20px;
+  --p-input-size: var(--p-t13);
+}
 [data-density="comfortable"] {
   --p-row: 12px;
   --p-row-h: 40px;
+  --p-control-h: 32px;
+  --p-control-h-sm: 26px;
+  --p-toggle-w: 34px;
+  --p-toggle-h: 20px;
+  --p-input-size: var(--p-t13);
+}
+[data-density="touch"] {
+  --p-row: 12px;
+  --p-row-h: 44px;
+  --p-control-h: 40px;
+  --p-control-h-sm: 32px;
+  --p-toggle-w: 44px;
+  --p-toggle-h: 26px;
+  --p-input-size: 16px;
+}
+
+/* A coarse pointer (a phone, a tablet) gets the touch density by itself,
+   unless the app sets a density on the root element */
+@media (pointer: coarse) {
+  :root:not([data-density]) {
+  --p-row: 12px;
+  --p-row-h: 44px;
+  --p-control-h: 40px;
+  --p-control-h-sm: 32px;
+  --p-toggle-w: 44px;
+  --p-toggle-h: 26px;
+  --p-input-size: 16px;
+  }
 }
 
 /* Light theme: same variable contract, different color values */
