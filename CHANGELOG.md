@@ -39,6 +39,9 @@ All notable changes to plancia-ui. The format follows
   every `Age` (#32).
 
 ### Changed
+- `base.css`: links are underlined, with a soft line in the accent that
+  takes the full color under the pointer, so they are not told apart by
+  color alone (WCAG 1.4.1); they were plain until hovered.
 - `Age` and `formatAge` without a `locale` follow the page: the `locale` of
   `setLabels()`, then the `lang` of the root element, then the browser's.
   A page written in Italian no longer shows "3m ago" to a browser set to
@@ -50,6 +53,15 @@ All notable changes to plancia-ui. The format follows
   browser's outline, so the native `InfoCard` and any `<details>` of the
   app match the other controls; in `InfoCard` the ring follows the card's
   rounded corners (#30).
+- `Toggle`: the tap area is as tall as a small control, 32 px on touch,
+  while the track keeps its size; on a phone it was 26 px.
+- `PanelHead`: the close button no longer narrows when the actions are
+  wide; on a phone it went down to 29 px.
+- `InfoCard`: on touch the summary is 32 px tall, and a link on a line of
+  its own gets a 32 px tap area; nothing moves in the other densities.
+- `FloatingPanel`: a body that scrolls with nothing focusable in it becomes
+  a tab stop, so the keyboard can scroll it in Safari too (Chrome and
+  Firefox did it by themselves).
 
 ## [0.7.0] — 2026-09-21
 

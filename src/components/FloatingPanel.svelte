@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import PanelHead from './PanelHead.svelte'
+  import { keyboardScroll } from '../keyboard-scroll.js'
 
   /**
    * A floating panel over a stage (a globe, a map): the `p-panel` frame with
@@ -73,7 +74,7 @@
 
 <section {...rest} class="p-floating {consumerClass ?? ''}" role="dialog" aria-label={label ?? title} tabindex="-1" bind:this={panel} {onkeydown}>
   <PanelHead {title} {subtitle} {subtitleTitle} {chips} {actions} onclose={onclose ? close : undefined} {closeLabel} />
-  <div class="body">{@render children?.()}</div>
+  <div class="body" use:keyboardScroll>{@render children?.()}</div>
 </section>
 
 <style>

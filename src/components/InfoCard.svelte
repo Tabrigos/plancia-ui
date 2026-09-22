@@ -51,7 +51,8 @@
 
 <style>
   .p-info-card { position: relative; background: var(--p-inset); border: 1px solid var(--p-border); border-radius: var(--p-r2); font-size: var(--p-t12); color: var(--p-text); }
-  summary { padding: 6px 10px; border-radius: var(--p-r2); font-size: var(--p-t11); color: var(--p-text-dim); cursor: pointer; user-select: none; }
+  /* 28 px by default; on touch the summary grows to the small control height */
+  summary { padding: max(6px, calc((var(--p-control-h-sm) - 1lh) / 2)) 10px; border-radius: var(--p-r2); font-size: var(--p-t11); color: var(--p-text-dim); cursor: pointer; user-select: none; }
   .body { display: flex; flex-direction: column; gap: 8px; padding: 8px 10px 10px; line-height: 1.45; }
   .inline .body { padding-right: calc(var(--p-control-h-sm) + 10px); }
   .close {
@@ -64,6 +65,10 @@
   .body :global(dt) { color: var(--p-text-dim); font-size: var(--p-t11); }
   .body :global(dd) { margin: 0; font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text-hi); }
   .body :global(a) { font-size: var(--p-t11); }
+  /* A link on a line of its own is a tap target: its area grows to the small
+     control height without moving anything; a link inside a sentence does not */
+  .body > :global(a) { position: relative; align-self: flex-start; }
+  .body > :global(a)::after { content: ''; position: absolute; inset: calc((1lh - var(--p-control-h-sm)) / 2) 0; }
   /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
   @media (hover: hover) {
     summary:hover { color: var(--p-text); }
