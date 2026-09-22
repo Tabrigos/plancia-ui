@@ -23,6 +23,9 @@ what changed.
    import 'plancia-ui/base.css'
    import './styles/app.css'
    ```
+   `base.css` draws the focus ring (`--p-focus`, a `box-shadow`) on every
+   focusable element: remove the project's own `:focus` / `:focus-visible`
+   rules that set an `outline`, or the rings become two.
 3. Theme: dark is `:root`; light is enabled by putting `data-theme="light"`
    on the root element BEFORE mount (the package never decides it). The
    helpers do it with a storage key the app chooses, imported from

@@ -100,7 +100,7 @@ a { color: var(--p-accent); text-decoration: none; }
 @keyframes p-spin { to { transform: rotate(360deg); } }
 
 /* ── Focus and motion ───────────────────────────────────────────────────── */
-:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+:where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: none;
   box-shadow: var(--p-focus);
 }
