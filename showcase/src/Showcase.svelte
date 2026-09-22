@@ -252,7 +252,7 @@
           <Age updatedAt={now - 3 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
           <Age updatedAt={now - 25 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
           <Age updatedAt={now - 3 * 60 * MIN} staleAfter={10 * MIN} deadAfter={60 * MIN} />
-          <span class="p-t11 p-dim">Age: fresh · stale · dead, locale of the browser</span>
+          <span class="p-t11 p-dim">Age: fresh · stale · dead, in the language of the page (its lang)</span>
         </div>
         <Notice kind="empty" title="No relevant CME in flight" text="3 slow or not Earth-directed · data from 4 min ago" />
         <Notice kind="info" title="The Enlil run follows the Heliosphere frame" />
