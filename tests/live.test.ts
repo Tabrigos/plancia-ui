@@ -20,6 +20,15 @@ describe('announce and LiveRegion', () => {
     expect(region.textContent).toBe('')
   })
 
+  it('forwards attributes to the region, keeping its role and politeness', () => {
+    render(LiveRegion, { props: { id: 'live', 'data-check': 'announcements', role: 'alert', 'aria-live': 'off' } })
+    const region = document.getElementById('live') as HTMLElement
+    expect(region).toBe(screen.getByRole('status'))
+    expect(region.dataset.check).toBe('announcements')
+    expect(region.getAttribute('aria-live')).toBe('polite')
+    expect(region.getAttribute('aria-atomic')).toBe('true')
+  })
+
   it('shows the announced text and empties it after five seconds', async () => {
     render(LiveRegion)
     announce('Panel closed')

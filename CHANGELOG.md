@@ -6,6 +6,12 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `LiveRegion` forwards attributes to its region: an app gives it an `id`
+  (`<LiveRegion id="live" />`) and a smoke test finds what screen readers
+  would hear without guessing a selector. Role, politeness and class stay
+  the package's (#31).
+
 ### Fixed
 - `base.css`: a `<summary>` gets the themed focus ring instead of the
   browser's outline, so the native `InfoCard` and any `<details>` of the
