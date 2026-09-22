@@ -64,7 +64,8 @@ Light theme: put `data-theme="light"` on the root element, or call
 or `"touch"` (rows and controls sized for a finger); a phone or a tablet gets
 `touch` by itself when the root sets none. The package never decides the
 theme; the project does. In another language, set
-the default labels once, from `plancia-ui/labels`:
+the default labels once (the only texts the package speaks, listed in the
+skill), from `plancia-ui/labels`:
 `setLabels({ close: 'Chiudi', loading: 'Caricamento', info: "Cos'è questo dato" })`;
 ages and times follow the page's `lang`, or a `locale` in the same call. Both entries are
 plain JavaScript, usable from Node and in tests without the Svelte compiler.
