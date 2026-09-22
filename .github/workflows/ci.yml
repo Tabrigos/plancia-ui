@@ -45,3 +45,14 @@ jobs:
           npm ci
           npm run check
           npm run build
+
+      - name: Showcase at phone width — touch density, tap targets, axe, overflow
+        run: npm run check:phone
+
+      - name: Phone-width screenshots, to look at (never compared)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: phone-check
+          path: phone-check/
+          if-no-files-found: ignore

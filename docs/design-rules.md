@@ -79,6 +79,9 @@ project that uses the package follows the same rules in its own CSS.
   container.
 - The touch density is not a phone layout: it sizes controls for a finger
   and applies by itself on a coarse pointer, on a tablet too.
+- The showcase is checked at 390 px in CI, in both themes: the touch
+  density in effect, tap targets of at least 32 px, an axe audit, nothing
+  sticking out. A component that breaks one of these breaks the build.
 
 ## What does not belong in the package
 
