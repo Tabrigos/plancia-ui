@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import { get } from 'svelte/store'
+  import { labels } from '../labels.js'
+  import { resolveLocale } from '../locale.js'
+
   const UNITS: Array<[Intl.RelativeTimeFormatUnit, number]> = [
     ['day', 86_400_000],
     ['hour', 3_600_000],
@@ -6,9 +10,9 @@
     ['second', 1_000],
   ]
 
-  /** "3m ago" in the locale, from an age in milliseconds; whole units, the largest that fits. */
+  /** "3m ago" from an age in milliseconds, whole units, the largest that fits; without a locale, the one `Age` would use. */
   export function formatAge(ageMs: number, locale?: string): string {
-    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto', style: 'narrow' })
+    const rtf = new Intl.RelativeTimeFormat(resolveLocale(locale, get(labels).locale), { numeric: 'auto', style: 'narrow' })
     const age = Math.max(0, ageMs)
     for (const [unit, ms] of UNITS) {
       if (age >= ms) return rtf.format(-Math.floor(age / ms), unit)
@@ -22,9 +26,10 @@
   /**
    * Freshness of a datum as a chip: "3m ago", neutral while fresh, `warn`
    * past `staleAfter`, `danger` past `deadAfter`. The text comes from
-   * `Intl.RelativeTimeFormat` in the app's locale, so no label to
-   * translate; the tooltip is the absolute time. It re-renders by itself
-   * every thirty seconds, so a chip left on screen does not lie.
+   * `Intl.RelativeTimeFormat`, so no label to translate, in the language
+   * of the page: the prop, the `locale` of `setLabels()`, the root's
+   * `lang`, the browser's. The tooltip is the absolute time. It re-renders
+   * by itself every thirty seconds, so a chip left on screen does not lie.
    */
   let {
     updatedAt,
@@ -40,7 +45,7 @@
     staleAfter?: number
     /** Age in milliseconds past which the tone turns `danger` */
     deadAfter?: number
-    /** BCP 47 locale for the text; the browser's when absent */
+    /** BCP 47 locale for the text; when absent the one of `setLabels()`, then the page's `lang`, then the browser's */
     locale?: string
     /** Tooltip; the absolute time in the locale when absent */
     title?: string
@@ -55,10 +60,11 @@
     return () => clearInterval(timer)
   })
 
+  const language = $derived(resolveLocale(locale, $labels.locale))
   const at = $derived(new Date(updatedAt).getTime())
   const age = $derived((now ?? tick) - at)
   const tone = $derived(deadAfter !== undefined && age >= deadAfter ? 'danger' : staleAfter !== undefined && age >= staleAfter ? 'warn' : 'neutral')
-  const absolute = $derived(new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(at))
+  const absolute = $derived(new Intl.DateTimeFormat(language, { dateStyle: 'medium', timeStyle: 'short' }).format(at))
 </script>
 
-<Chip {tone} title={title ?? absolute}><time datetime={new Date(at).toISOString()}>{formatAge(age, locale)}</time></Chip>
+<Chip {tone} title={title ?? absolute}><time datetime={new Date(at).toISOString()}>{formatAge(age, language)}</time></Chip>
