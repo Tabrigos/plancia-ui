@@ -96,7 +96,7 @@ Tokens, themes, density and fonts are explained in
 | `InfoButton` | the (i) that opens an explanation | `active`, `onclick`, `controls`, `label` |
 | `InfoCard` | frame of an explanation: paragraph, `<dl>` of facts, link | `summary` (native details) or always open with `onclose`; the content is the body |
 | `Kbd` | a key in a hint ("Esc closes") | the key is the content |
-| `LiveRegion` | the polite live region `announce()` writes into, mounted once | |
+| `LiveRegion` | the polite live region `announce()` writes into, mounted once | attributes such as `id` go to the region |
 | `Sparkline` | a line in a box, no axes; gaps, zero line, a marker, a readout | `values` (`null` is a gap), `label`, `color`, `area`, `endDot`, `min`, `max`, `zeroLine`, `markIndex`, `readout`, `width`, `height` |
 | `Bars` | a short series of bars, zero baseline, no axes | `bars` `{ value, label?, color? }`, `label`, `color`, `max`, `width`, `height` |
 

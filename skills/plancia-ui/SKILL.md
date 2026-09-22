@@ -165,8 +165,10 @@ The text is the app's.
 **`Kbd`** — content is the key (`<Kbd>Esc</Kbd>`); a combination is several
 side by side with the app's "+".
 
-**`LiveRegion`** — mount `<LiveRegion />` once near the root; no props. A
-`p-sr-only` `role="status"` `aria-live="polite"` region.
+**`LiveRegion`** — mount `<LiveRegion />` once near the root. A
+`p-sr-only` `role="status"` `aria-live="polite"` region; attributes are
+forwarded to it (`<LiveRegion id="live" />`, so a test can read what a
+screen reader would hear), while role, politeness and class stay fixed.
 **`announce(text: string)`** (from `plancia-ui/live`, plain JavaScript, also
 re-exported by the index) writes into it: only for what follows an action
 of the user and cannot be seen on the stage (an object selected, a panel
