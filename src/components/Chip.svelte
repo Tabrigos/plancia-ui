@@ -8,7 +8,9 @@
    * semantic tone. `count` is the low (18 px) counter variant; `small`
    * the same low height but with the tone (scale levels in tables).
    * `color` overrides the tone with a free color (e.g. the color of a
-   * satellite group): background and border derive from it. `uppercase`
+   * satellite group): background and border derive from it; in the light
+   * theme the text leans toward the text color, since a free color is
+   * usually picked for a dark stage. `uppercase`
    * is a short label (LIVE, an alert type) in the spaced uppercase of
    * `p-sec-title`, the only other place the system allows it: the text
    * stays in normal case in the DOM, so a screen reader reads a word
@@ -60,5 +62,7 @@
   .p-chip.orange { background: var(--p-orange-soft); border-color: color-mix(in srgb, var(--p-orange) 35%, transparent); color: var(--p-orange); }
   .p-chip.danger { background: var(--p-danger-soft); border-color: color-mix(in srgb, var(--p-danger) 35%, transparent); color: var(--p-danger); }
   .p-chip.info { background: var(--p-info-soft); border-color: color-mix(in srgb, var(--p-info) 35%, transparent); color: var(--p-info); }
-  .p-chip.custom { background: var(--chip-bg); border-color: var(--chip-bd); color: var(--chip-fg); }
+  /* 45 % of the free color in OKLab keeps 4.5:1 in light even for white,
+     lime or yellow; `light-dark()` reads the `color-scheme` of the theme */
+  .p-chip.custom { background: var(--chip-bg); border-color: var(--chip-bd); color: light-dark(color-mix(in oklab, var(--chip-fg) 45%, var(--p-text-hi)), var(--chip-fg)); }
 </style>

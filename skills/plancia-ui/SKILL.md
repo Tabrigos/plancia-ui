@@ -105,7 +105,8 @@ in the spaced uppercase of `p-sec-title` and its ui font: write the text in
 normal case, `Live`, the style uppercases it and a screen reader reads a
 word instead of spelling it), `color?: string` (a free color, e.g. a
 satellite group's: background and border derive from it and override the
-tone). Content is the text, 22 px monospace. Accepts native `<span>`
+tone; in the light theme the text leans toward the text color, so a color
+picked for a dark stage stays readable). Content is the text, 22 px monospace. Accepts native `<span>`
 attributes (`title`).
 
 **`Toggle`** — `checked?: boolean` (bindable, `false`), `disabled?: boolean`,
