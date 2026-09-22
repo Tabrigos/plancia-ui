@@ -84,6 +84,11 @@ time, without tools. In practice:
   Node — a vitest run without the Svelte plugin, a script — fails on the
   first `.svelte` file. Found with the reference consumer on 2026-09-18: its
   pure theme module could not use the helpers of 0.5.0;
+- **no text in a component**: what the package says by itself (an
+  accessible name, a tooltip) is a key of `setLabels()` with an English
+  default, read from `$labels`, and a row in the labels table of the skill;
+  everything else comes from props. `tests/texts.test.ts` fails on a
+  literal text in the markup or on a key missing from the table;
 - **accessibility by default**: every interactive element is a native element
   (`button`, `input`), has the visible focus ring inherited from `base.css`
   and an accessible name; `aria-pressed` for toggling states; `role="alert"`

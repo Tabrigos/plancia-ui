@@ -274,6 +274,17 @@ mounted components. `getLabels()`
 returns a snapshot; `labels` is the `svelte/store` behind it. From
 `plancia-ui/labels` (also re-exported by the index).
 
+These are all the texts the package speaks: no component writes one of its
+own, and a test in the package keeps it so. Everything else on screen comes
+from the app's props and content.
+
+| Key | Default | Where it is used |
+|---|---|---|
+| `close` | `'Close'` | the close button of `PanelHead`, `FloatingPanel` and an always-open `InfoCard`: accessible name and tooltip |
+| `loading` | `'Loading'` | the `Skeleton` region: accessible name |
+| `info` | `'What is this'` | `InfoButton`: accessible name and tooltip |
+| `locale` | none: the page's `lang`, then the browser's | not a text: the language of what `Age` and `formatAge` format |
+
 **Theme helpers** (from `plancia-ui/theme`, also re-exported by the index) —
 `type Theme = 'dark' | 'light'`; `parseTheme(raw)`
 (unknown → `'dark'`); `applyTheme(theme)` (light sets `data-theme`, dark
