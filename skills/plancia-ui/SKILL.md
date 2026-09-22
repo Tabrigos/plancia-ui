@@ -59,7 +59,7 @@ Never alias the package sources: the contract is `dist`.
 |---|---|---|
 | an action | `Button` | one primary per panel |
 | status, scale level, band, counter | `Chip` | `scaleTone(level)` for NOAA levels 0–5 |
-| a switch | `Toggle` | a real checkbox, `bind:checked` |
+| a switch | `Toggle` | a real checkbox, `bind:checked`, `label` required |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
 | head of a floating panel | `PanelHead` | close button always last |
@@ -105,8 +105,9 @@ and border derive from it and override the tone). Content is the text, 22 px
 monospace. Accepts native `<span>` attributes (`title`).
 
 **`Toggle`** — `checked?: boolean` (bindable, `false`), `disabled?: boolean`,
-`label?: string` (accessible name: pass it, the visible text usually sits in
-the row next to it), `title?: string`, `onchange?: (checked: boolean) => void`.
+`label: string` (required: the accessible name, usually the text of the
+row; `ControlRow`, `SettingRow` and `ListItem` are `div`s and do not name
+the toggle), `title?: string`, `onchange?: (checked: boolean) => void`.
 Renders a real `<input type="checkbox">`.
 
 **`KeyValue`** — `label: string`, `sub?: string` (secondary second line),

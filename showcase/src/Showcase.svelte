@@ -329,20 +329,20 @@
       <div class="p-card demo">
         <ControlRow label="Auroral oval (OVATION)" help title="Probability of seeing the aurora, point by point on the globe">
           <Button variant="icon" size="sm" aria-label="What is this datum">i</Button>
-          <Toggle checked />
+          <Toggle checked label="Auroral oval" />
         </ControlRow>
         <ControlRow label="Thermospheric density at 400 km (WAM-IPE): a long name that does not fit" tone="dim">
-          <Toggle />
+          <Toggle label="Thermospheric density" />
         </ControlRow>
         <div class="p-inset rows">
           <SettingRow label="Orbit lines">
             {#snippet icon()}<span class="p-dot accent"></span>{/snippet}
-            <Toggle checked />
+            <Toggle checked label="Orbit lines" />
           </SettingRow>
           <SettingRow label="Starlink" help title="Constellation, 11 877 objects in the catalog">
             {#snippet icon()}<span class="p-dot"></span>{/snippet}
             <Chip count>1,000</Chip>
-            <Toggle />
+            <Toggle label="Starlink" />
           </SettingRow>
         </div>
       </div>
