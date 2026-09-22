@@ -79,6 +79,7 @@ Never alias the package sources: the contract is `dist`.
 | exclusive choice among a few options | `Segmented` | `size="sm"` inline |
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
+| a list of layers, sources, instruments, each with its controls and details | `List` + `ListItem` | framed items: a head (label + controls) and a body, often shown only while the item is on |
 | collapsible section of a console | `Section` | state owned by the app, summary readable while closed |
 | inline state of a datum or layer (spinner, dot) | `Status` | the glance inside a row; `Notice` is the block message |
 | freshness of a datum ("3m ago") | `Age` | a chip that turns warn/danger with age |
@@ -236,6 +237,22 @@ right (toggle, chip, counter, buttons). Forwards its own attributes
 (`data-*`, `id`, `title`); a `class` of the consumer is added next to its own. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
 
+**`List`** — `label?: string` (accessible name, when no heading next to it
+names it), snippet `footer` (a line under the list, 11 px dim: the
+attribution of the data). Content is the `ListItem`s. A `<ul role="list">`,
+items 10 px apart. With no items, render a `Notice kind="empty"` instead of
+the list.
+
+**`ListItem`** — only inside a `List`. An inset card: `label?: string` (the
+head; without it there is no head and the body is the whole card),
+`title?: string`, `help?: boolean`, snippet `controls` (right side of the
+head, in order: an `InfoButton`, a `Toggle` with its own `label`). Content
+is the body under the head: wrap it in `{#if on}` when it shows only while
+the item is on. The head is the `ControlRow` shape (`.p-ctl-label`, never
+wraps). The body spaces its blocks by itself: 8 px after the head and
+between blocks, 6 px before a `MetaRow` or `LegendDots`; add no margins.
+Forwards `id` and `data-*`; a `class` is added next to its own.
+
 **`Section`** — opens and closes with a height transition on the motion
 tokens; closed content stays mounted, `inert` and `aria-hidden`.
 `title: string` (rendered as `p-sec-title`), `summary?: string`
@@ -382,6 +399,27 @@ yellow, green readable on white).
     <Button variant="quiet" size="sm">retry</Button>
   </Notice>
 </section>
+```
+
+A list of layers inside a console section:
+
+```svelte
+<List label="Map layers">
+  {#each layers as layer (layer.id)}
+    <ListItem label={layer.name} help={Boolean(layer.note)} title={layer.note ?? layer.name} data-layer={layer.id}>
+      {#snippet controls()}
+        <InfoButton active={open[layer.id]} controls="{layer.id}-info" onclick={() => (open[layer.id] = !open[layer.id])} />
+        <Toggle bind:checked={on[layer.id]} label={layer.name} />
+      {/snippet}
+      {#if open[layer.id]}<InfoCard id="{layer.id}-info" label={layer.name} onclose={() => (open[layer.id] = false)}>…</InfoCard>{/if}
+      {#if on[layer.id]}
+        <Legend gradient={layer.gradient} min={layer.min} max={layer.max} unit={layer.unit} />
+        <MetaRow><span>data from {layer.age}</span></MetaRow>
+      {/if}
+    </ListItem>
+  {/each}
+  {#snippet footer()}Data: NOAA SWPC{/snippet}
+</List>
 ```
 
 ## Rules the project must follow

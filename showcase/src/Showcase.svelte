@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -39,6 +39,10 @@
   let kpOpen = $state(true)
   let panelOpen = $state(true)
   let kpInfo = $state(true)
+  // The list demo: which layers are on and which explanation is open is the page's state
+  let ovationOn = $state(true)
+  let ovationInfo = $state(false)
+  let tecOn = $state(false)
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -356,6 +360,75 @@
       </div>
     </div>
   </section>
+
+  <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">List · framed items</h2>
+      <div class="p-card demo">
+        <List label="Map layers">
+          <ListItem label="Auroral oval (OVATION)" help title="Probability of seeing the aurora, point by point on the globe" data-product="ovation">
+            {#snippet controls()}
+              <InfoButton active={ovationInfo} controls="ovation-info" onclick={() => { ovationInfo = !ovationInfo }} />
+              <Toggle bind:checked={ovationOn} label="Auroral oval" />
+            {/snippet}
+            {#if ovationInfo}
+              <InfoCard id="ovation-info" label="About the auroral oval" onclose={() => { ovationInfo = false }}>
+                <p>The <b>OVATION</b> model turns the solar wind into the probability of seeing the aurora overhead, on a 1° grid.</p>
+                <dl><dt>Source</dt><dd>NOAA SWPC</dd><dt>Cadence</dt><dd>5 min</dd></dl>
+              </InfoCard>
+            {/if}
+            {#if ovationOn}
+              <Legend gradient="linear-gradient(90deg,#0b1220,#15803d,#a3e635,#fde68a)" min="0" max="100" unit="%" />
+              <MetaRow>
+                <span title="Observation time at the source">data from 8 min ago</span>
+                <span title="Below this threshold the layer is transparent">transparent below 10 %</span>
+              </MetaRow>
+              <MetaRow>
+                <span>aurora down to <b>58° N</b></span>
+                <Segmented size="sm" label="Rendering of the oval" items={[{ id: 'ground', label: 'on ground' }, { id: 'lifted', label: 'lifted' }]} value="lifted" />
+              </MetaRow>
+            {/if}
+          </ListItem>
+          <ListItem label="Total electron content (TEC)">
+            {#snippet controls()}<Toggle bind:checked={tecOn} label="Total electron content" />{/snippet}
+            {#if tecOn}
+              <Legend gradient="linear-gradient(90deg,#1d4ed8,#0b1220,#dc2626)" min="−15" max="+15" unit="TECU" />
+              <MetaRow><span>data from 12 min ago</span><span>at the point <b>+4.2 TECU</b></span></MetaRow>
+            {/if}
+          </ListItem>
+          <ListItem label="Thermospheric density at 400 km (WAM-IPE): a long name that does not fit" title="Thermospheric density at 400 km (WAM-IPE)">
+            {#snippet controls()}<Toggle label="Thermospheric density" />{/snippet}
+          </ListItem>
+          {#snippet footer()}Space weather data: NOAA SWPC · WAM-IPE{/snippet}
+        </List>
+        <span class="p-t11 p-dim">The body shows while the layer is on: the page decides, with its own <span class="p-mono">if</span>.</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="p-sec-title">List · items without a head, states</h2>
+      <div class="p-card demo">
+        <List label="Particles">
+          <ListItem>
+            <div class="metric">
+              <span title="Protons of 10 MeV and more at geostationary orbit">protons ≥10 MeV <b class="p-mono p-hi">0.42</b> <span class="p-dim">pfu</span></span>
+              <Chip tone={scaleTone(0)}>S0</Chip>
+            </div>
+            <Sparkline values={xray} label="Protons of 10 MeV and more, last 24 h" width={220} height={30} color="var(--p-warn)" />
+            <MetaRow><Age updatedAt={now - 4 * MIN} staleAfter={10 * MIN} /><span>max 24 h <b>0.9 pfu</b></span></MetaRow>
+          </ListItem>
+          <ListItem label="Magnetosphere field lines">
+            {#snippet controls()}<Toggle checked label="Magnetosphere field lines" />{/snippet}
+            <Skeleton lines={2} compact label="Loading the field lines" />
+          </ListItem>
+          <ListItem label="Magnetic references">
+            {#snippet controls()}<Toggle checked label="Magnetic references" />{/snippet}
+            <MetaRow><Status kind="error" text="unavailable" title="The model manifest is missing" /></MetaRow>
+          </ListItem>
+        </List>
+        <Notice kind="empty" title="No layer available" text="An empty list gives way to a Notice" compact />
+      </div>
+    </div>
+  </section>
 </main>
 
 <style>
@@ -388,6 +461,7 @@
   .type-row + .type-row { border-top: 1px solid var(--p-border); }
   .demo { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
   .row-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .metric { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--p-t12); }
   .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
   .body { padding: 12px 14px; }
   .stage { position: relative; min-height: 280px; margin-bottom: 24px; background: radial-gradient(circle at 30% 40%, var(--p-s3) 0, var(--p-bg) 70%); }

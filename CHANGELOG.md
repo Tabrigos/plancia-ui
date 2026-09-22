@@ -7,6 +7,15 @@ All notable changes to plancia-ui. The format follows
 ## [Unreleased]
 
 ### Added
+- `List` and `ListItem`: the framed list of a console, for layers, sources
+  and instruments. `List` is a real list for screen readers, named by
+  `label`, items 10 px apart, with an optional `footer` line for the
+  attribution. `ListItem` is an inset card with a head (the `ControlRow`
+  shape: `label`, `title`, `help`, `controls` on the right) and the body
+  under it, often shown only while the item is on; without a label the
+  body is the whole card. The body spaces its blocks by itself: 8 px after
+  the head, `MetaRow` and `LegendDots` keep their 6 px. Designed on the
+  inventory of the reference consumer's lists (#29).
 - `LiveRegion` forwards attributes to its region: an app gives it an `id`
   (`<LiveRegion id="live" />`) and a smoke test finds what screen readers
   would hear without guessing a selector. Role, politeness and class stay

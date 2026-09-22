@@ -20,7 +20,7 @@ control panels.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Twenty-five small components**, each readable in a minute, accessible by
+- **Twenty-seven small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -90,6 +90,8 @@ Tokens, themes, density and fonts are explained in
 | `Segmented` | exclusive choice among a few options | `items` `{ id, label, title? }`, `value` (bindable), `onchange`, `label`, `size` |
 | `ControlRow` | head of a card: label left, controls right | `label`, `title`, `help`, `tone`; the controls are the content |
 | `SettingRow` | list row: icon, name, control | `label`, `title`, `help`, snippet `icon`; forwards `data-*` and `id` |
+| `List` | a list of framed items (layers, sources, instruments), a real list for screen readers | `label`, snippet `footer` (attribution); the items are the content |
+| `ListItem` | an item of a `List`: head with label and controls, body under it | `label`, `title`, `help`, snippet `controls`; the body is the content; forwards `data-*` and `id` |
 | `Section` | collapsible console section | `title`, `summary`, `summaryTitle`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
 | `Status` | inline state of a datum or a layer | `kind` loading · ok · stale · error · idle, `text`, `title`, `help` |
 | `Age` | freshness chip ("3m ago") | `updatedAt`, `staleAfter`, `deadAfter`, `locale`, `title` |
