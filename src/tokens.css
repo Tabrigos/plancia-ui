@@ -91,7 +91,7 @@
   --p-z-overlay: 10;
   --p-z-panel: 100;
   --p-z-popover: 200;
-  --p-z-tooltip: 300;
+  --p-z-tooltip: 500;
   --p-z-modal: 400;
   --p-motion-fast: 120ms;
   --p-motion-base: 200ms;

@@ -20,7 +20,7 @@ control panels.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Twenty-seven small components**, each readable in a minute, accessible by
+- **Twenty-eight small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -95,6 +95,7 @@ Tokens, themes, density and fonts are explained in
 | `Section` | collapsible console section | `title`, `summary`, `summaryTitle`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |
 | `Status` | inline state of a datum or a layer | `kind` loading · ok · stale · error · idle, `text`, `title`, `help` |
 | `Age` | freshness chip ("3m ago") | `updatedAt`, `staleAfter`, `deadAfter`, `locale`, `title` |
+| `Drawer` | a panel sliding in from a side: modal with a scrim on a phone, a retractable column otherwise | `open`, `onclose`, `label`, `modal`, `side`, `opener`; the content is the app's |
 | `FloatingPanel` | panel over a stage: frame, head, scrolling body, Esc, focus return; a bottom sheet on a phone | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `opener`, `autofocus`, `label`; the content is the body |
 | `Tooltip` | themed tooltip for every `title` on the page, mounted once; silent on touch | `delay`, `maxWidth`, `gap`, `avoid` |
 | `InfoButton` | the (i) that opens an explanation | `active`, `onclick`, `controls`, `label` |

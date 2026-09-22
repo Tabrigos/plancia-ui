@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Chip, ControlRow, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Chip, ControlRow, Drawer, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import { version } from '../../package.json'
 
@@ -43,6 +43,9 @@
   let ovationOn = $state(true)
   let ovationInfo = $state(false)
   let tecOn = $state(false)
+  // The drawer demo: open or closed, and modal or a column, are the page's state
+  let drawerOpen = $state(false)
+  let drawerMode = $state('modal')
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -432,6 +435,24 @@
         <Notice kind="empty" title="No layer available" text="An empty list gives way to a Notice" compact />
       </div>
     </div>
+    <div>
+      <h2 class="p-sec-title">Drawer</h2>
+      <div class="p-card demo stage drawer-stage">
+        <div class="row-wrap drawer-controls">
+          <Button id="open-demo-drawer" variant="secondary" size="sm" onclick={() => { drawerOpen = true }}>open the drawer</Button>
+          <Segmented size="sm" label="Drawer mode" items={[{ id: 'modal', label: 'modal', title: 'Over the stage with a scrim: a phone, a short screen' }, { id: 'column', label: 'column', title: 'A column beside the stage that the user retracts' }]} bind:value={drawerMode} />
+        </div>
+        <Drawer open={drawerOpen} modal={drawerMode === 'modal'} label="Console" opener="open-demo-drawer" onclose={() => { drawerOpen = false }} class="demo-drawer">
+          <PanelHead title="Console" subtitle="tracking" onclose={() => { drawerOpen = false }} />
+          <div class="drawer-body">
+            <SettingRow label="Orbit lines"><Toggle checked label="Orbit lines" /></SettingRow>
+            <SettingRow label="Labels"><Toggle label="Labels" /></SettingRow>
+            <SettingRow label="Starlink" help title="Constellation, 11 877 objects in the catalog"><Chip count>1,000</Chip><Toggle label="Starlink" /></SettingRow>
+          </div>
+        </Drawer>
+        <span class="p-t11 p-dim drawer-note">The page owns open and closed. Modal: the scrim and <Kbd>Esc</Kbd> close it, <Kbd>Tab</Kbd> stays inside, focus goes back to the button.</span>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -472,6 +493,11 @@
   /* A single class, as an app should: the package rule under 700 px must win */
   :global(.demo-floating) { position: absolute; top: 16px; right: 16px; width: 300px; }
   .stage-note { position: absolute; left: 16px; bottom: 12px; }
+  /* The drawer slides out of the stage: the stage clips it, as an app's container does */
+  .drawer-stage { overflow: hidden; }
+  .drawer-controls, .drawer-note { position: relative; max-width: 60ch; }
+  :global(.demo-drawer) { width: min(86%, 280px); }
+  .drawer-body { display: flex; flex-direction: column; padding: 4px 0; overflow-y: auto; }
   @media (max-width: 900px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   /* A phone: one column everywhere, a 16 px gutter, the header stacked, and
      no grid track wider than the screen (minmax(0, 1fr), never a bare 1fr,

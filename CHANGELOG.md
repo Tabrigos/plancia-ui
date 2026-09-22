@@ -21,6 +21,14 @@ All notable changes to plancia-ui. The format follows
   It is the shape a `Badge` would have had; the design rules now allow
   spaced uppercase in section titles and in the short label of a chip,
   never in running text.
+- `Drawer`: a panel that slides in from a side of the app's container.
+  `modal` (a phone, a short screen) puts it over the stage with a scrim
+  that closes it, Esc and focus trapped inside, as a dialog; otherwise it
+  is a column beside the stage that the user retracts. Focus moves in on
+  open and back to the `opener` on close; a closed drawer is `inert`; the
+  safe-area insets of the edges it touches are its own. The app owns
+  `open`, the `side`, the width (a class) and the content. Extracted from
+  the reference consumer's drawer, rebuilt for the phone.
 - `List` and `ListItem`: the framed list of a console, for layers, sources
   and instruments. `List` is a real list for screen readers, named by
   `label`, items 10 px apart, with an optional `footer` line for the
@@ -72,6 +80,8 @@ All notable changes to plancia-ui. The format follows
 - `Chip`: a free `color` stays readable in the light theme: the text leans
   toward the text color (45 % in OKLab), 4.5:1 even for white, lime or
   yellow. The dark theme keeps the pure color.
+- `--p-z-tooltip` is 500, above `--p-z-modal` (400): a tooltip inside a
+  modal (a modal `Drawer`, a dialog of the app) was hidden under it.
 - `FloatingPanel`: a body that scrolls with nothing focusable in it becomes
   a tab stop, so the keyboard can scroll it in Safari too (Chrome and
   Firefox did it by themselves).
