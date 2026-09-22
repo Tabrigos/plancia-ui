@@ -37,7 +37,8 @@ the `--p-*` ones and migrate at its own pace; that is what Sidereus does.
 
 A minimal reset, body typography and colors, links, the surface classes
 (`p-panel`, `p-card`, `p-inset`, `p-divider`), the section title
-(`p-sec-title`, the only spaced uppercase in the system), text utilities
+(`p-sec-title`, the only spaced uppercase in the system with `Chip
+uppercase`), text utilities
 (`p-mono`, `p-dim`, `p-hi`, `p-t11` … `p-t28`, `p-w500`, `p-w600`,
 `p-nowrap`, `p-ellipsis`), `p-help` (help cursor, goes with a `title`),
 `p-sr-only` (screen readers only), `p-dot` (status dot with its glow),

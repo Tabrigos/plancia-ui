@@ -8,7 +8,11 @@ project that uses the package follows the same rules in its own CSS.
 
 - The minimum text size is 11 px (`--p-t11`); the scale has seven sizes and
   every text on screen uses one of them.
-- Spaced uppercase only in section titles (`p-sec-title`).
+- Spaced uppercase only in section titles (`p-sec-title`) and in the short
+  label of a chip (`Chip uppercase`: LIVE, an alert type), never in running
+  text. One style for both: 11 px, 600, 0.08em, the ui font. The text is
+  written in normal case and the style uppercases it, so a screen reader
+  reads a word instead of spelling it.
 - No hand-written color in the CSS of a component or of the project: tokens
   only, so the two themes stay correct by themselves. A transparency is
   `color-mix(in srgb, var(--p-ok) 35%, transparent)`, not an `rgba()` copied

@@ -15,6 +15,12 @@ All notable changes to plancia-ui. The format follows
   TypeScript point at every toggle that has none.
 
 ### Added
+- `Chip`: `uppercase`, a short label (LIVE, an alert type) in the spaced
+  uppercase of `p-sec-title`, 11 px, 600, the ui font. The app writes the
+  text in normal case: a screen reader reads a word instead of spelling it.
+  It is the shape a `Badge` would have had; the design rules now allow
+  spaced uppercase in section titles and in the short label of a chip,
+  never in running text.
 - `List` and `ListItem`: the framed list of a console, for layers, sources
   and instruments. `List` is a real list for screen readers, named by
   `label`, items 10 px apart, with an optional `footer` line for the

@@ -77,7 +77,7 @@ Tokens, themes, density and fonts are explained in
 | Component | What it is for | Main props |
 |---|---|---|
 | `Button` | actions | `variant` primary · secondary · quiet · icon, `size` md · sm, `active`, native attributes |
-| `Chip` | status, scale level, band, counter | `tone`, `count`, `small`, `color` |
+| `Chip` | status, scale level, band, counter, a short uppercase label | `tone`, `count`, `small`, `uppercase`, `color` |
 | `Toggle` | accessible switch (a real checkbox) | `label` (required), `checked` (bindable), `disabled`, `onchange` |
 | `KeyValue` | label / value row | `label`, `sub`, `subTone`, `tone`, `title`; the value is the content |
 | `Stat` | big number with a label | `label`, `sub`, `tone`, `title`; the value is the content |
