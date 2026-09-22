@@ -90,7 +90,9 @@ time, without tools. In practice:
   only for errors;
 - **the package knows nothing about the domain**: no product copy, no data
   sources, no application layout. A component comes in when the same shape is
-  needed in more than one place.
+  needed in more than one place. Layout means page grids and page skeletons
+  (a console shell stays in the app); a panel laid over the page with its
+  own behavior — `FloatingPanel`, a drawer — is a shape, and can come in.
 
 ### Checklist for a new or changed component
 

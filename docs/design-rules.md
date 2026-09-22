@@ -74,4 +74,6 @@ Content: product copy, information sheets, source attributions, the layout
 of a cockpit. Anything that knows the domain (a satellite, a data source, a
 route) stays in the project. A component enters the package when the same
 shape is needed in more than one place and knows nothing about the domain;
-a new one starts as an issue.
+a new one starts as an issue. Layout is the grid and the skeleton of a
+page; a panel laid over the page with its own behavior (`FloatingPanel`, a
+drawer) is a shape, not layout.
