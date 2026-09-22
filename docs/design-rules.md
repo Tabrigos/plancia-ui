@@ -25,6 +25,11 @@ project that uses the package follows the same rules in its own CSS.
   does this by itself; custom rows follow the same rule.
 - Metadata under a card (data age, thresholds, notes, small actions) go in
   a `MetaRow`, 11 px, dim, wrapping by whole item.
+- Things the user turns on and reads (layers, sources, instruments) form a
+  `List` of framed `ListItem`s: the head is the label with its controls,
+  the body shows under it, often only while the item is on, and spaces its
+  blocks by itself. A list with no items is a `Notice`, never an empty
+  frame.
 
 ## Chips, buttons, heads
 
