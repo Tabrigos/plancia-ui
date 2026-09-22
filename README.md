@@ -39,6 +39,10 @@ import 'plancia-ui/base.css'
 import './styles/app.css'
 ```
 
+`base.css` draws the focus ring (`--p-focus`) on every focusable element:
+remove the project's own `:focus` / `:focus-visible` rules that set an
+`outline`, or the rings become two.
+
 Then use the components:
 
 ```svelte

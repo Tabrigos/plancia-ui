@@ -51,7 +51,7 @@
 
 <style>
   .p-info-card { position: relative; background: var(--p-inset); border: 1px solid var(--p-border); border-radius: var(--p-r2); font-size: var(--p-t12); color: var(--p-text); }
-  summary { padding: 6px 10px; font-size: var(--p-t11); color: var(--p-text-dim); cursor: pointer; user-select: none; }
+  summary { padding: 6px 10px; border-radius: var(--p-r2); font-size: var(--p-t11); color: var(--p-text-dim); cursor: pointer; user-select: none; }
   .body { display: flex; flex-direction: column; gap: 8px; padding: 8px 10px 10px; line-height: 1.45; }
   .inline .body { padding-right: calc(var(--p-control-h-sm) + 10px); }
   .close {

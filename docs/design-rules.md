@@ -46,7 +46,8 @@ project that uses the package follows the same rules in its own CSS.
 
 - Every interactive element is a native element (`button`, `input`) with an
   accessible name; the visible focus ring comes from `base.css` and is never
-  removed. Toggling states use `aria-pressed`.
+  removed, nor doubled by a project rule that adds an `outline` on focus.
+  Toggling states use `aria-pressed`.
 - No movement under `prefers-reduced-motion`.
 - Hover is a pointer thing: every `:hover` rule lives under
   `@media (hover: hover)`, so a tap on a phone does not leave the highlight

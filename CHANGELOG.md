@@ -6,6 +6,12 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `base.css`: a `<summary>` gets the themed focus ring instead of the
+  browser's outline, so the native `InfoCard` and any `<details>` of the
+  app match the other controls; in `InfoCard` the ring follows the card's
+  rounded corners (#30).
+
 ## [0.7.0] — 2026-09-21
 
 ### Added
