@@ -11,6 +11,16 @@ All notable changes to plancia-ui. The format follows
   (`<LiveRegion id="live" />`) and a smoke test finds what screen readers
   would hear without guessing a selector. Role, politeness and class stay
   the package's (#31).
+- `setLabels({ locale })`: the language of what the package formats with
+  `Intl` (`Age`, `formatAge`), set once with the labels instead of on
+  every `Age` (#32).
+
+### Changed
+- `Age` and `formatAge` without a `locale` follow the page: the `locale` of
+  `setLabels()`, then the `lang` of the root element, then the browser's.
+  A page written in Italian no longer shows "3m ago" to a browser set to
+  English. An app whose `lang` does not match its text sees the ages change
+  language: the fix is the `lang` (#32).
 
 ### Fixed
 - `base.css`: a `<summary>` gets the themed focus ring instead of the

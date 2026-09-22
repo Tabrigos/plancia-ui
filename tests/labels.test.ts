@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/svelte'
 import { flushSync } from 'svelte'
 import { PanelHead, Skeleton, getLabels, setLabels } from '../src/index'
 
-afterEach(() => setLabels({ close: 'Close', loading: 'Loading', info: 'What is this' }))
+afterEach(() => setLabels({ close: 'Close', loading: 'Loading', info: 'What is this', locale: undefined }))
 
 describe('setLabels', () => {
   it('getLabels returns a snapshot of the current defaults', () => {

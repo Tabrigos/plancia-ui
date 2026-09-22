@@ -47,7 +47,9 @@ what changed.
    once, before mount, `setLabels({ close: 'Chiudi', loading: 'Caricamento',
    info: "Cos'è questo dato" })` from
    `plancia-ui/labels` (plain JavaScript, like `plancia-ui/theme`); a prop
-   passed to a component still wins.
+   passed to a component still wins. Ages and times (`Age`) are formatted
+   in the page's language: `locale` in the same call if given, else the
+   `lang` of the root element, else the browser's. Set `<html lang>`.
 
 Never alias the package sources: the contract is `dist`.
 
@@ -254,17 +256,21 @@ Renders `role="status"`, `aria-busy` while loading, a `p-spinner` or a
 
 **`Age`** — `updatedAt: Date | number | string` (required),
 `staleAfter?: number` and `deadAfter?: number` (ages in milliseconds past
-which the chip turns `warn` and `danger`), `locale?: string` (BCP 47, the
-browser's when absent), `title?: string` (tooltip; the absolute time when
+which the chip turns `warn` and `danger`), `locale?: string` (BCP 47; when
+absent the `locale` of `setLabels()`, then the page's `lang`, then the
+browser's), `title?: string` (tooltip; the absolute time when
 absent), `now?: number` (a clock the app controls; otherwise a 30 s timer).
 Renders a `Chip` with a `<time datetime>`. `formatAge(ageMs, locale?)` is
-exported: the largest whole unit, narrow style ("3m ago", "2h ago").
+exported: the largest whole unit, narrow style ("3m ago", "2h ago"), with
+the same locale order when `locale` is absent.
 
 **`scaleTone(level: number): Tone`** — NOAA R/S/G levels: `0 → ok`,
 `1–2 → warn`, `3 → orange`, `4–5 → danger`. Pass the result to `Chip`.
 
-**`setLabels(partial: { close?: string; loading?: string; info?: string })`** — the default
-accessible names; a runtime change reaches mounted components. `getLabels()`
+**`setLabels(partial: { close?: string; loading?: string; info?: string; locale?: string })`** — the default
+accessible names, and the BCP 47 `locale` of what the package formats with
+`Intl` (`Age`; the page's `lang` when absent); a runtime change reaches
+mounted components. `getLabels()`
 returns a snapshot; `labels` is the `svelte/store` behind it. From
 `plancia-ui/labels` (also re-exported by the index).
 
