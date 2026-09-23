@@ -1,6 +1,6 @@
 ---
 name: Bug
-about: Something a user of the package sees that the README or the skill does not promise
+about: Something a user of the package sees that the reference does not promise
 title: ""
 labels: bug
 ---
@@ -12,7 +12,7 @@ if it is visual.
 
 ## What the package promises
 
-The line of the README, of `skills/plancia-ui/SKILL.md` or of
+The line of the reference, `skills/plancia-ui/SKILL.md`, or of
 `docs/design-rules.md` that says otherwise.
 
 ## Versions

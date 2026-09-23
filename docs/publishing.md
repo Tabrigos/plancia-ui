@@ -9,9 +9,10 @@ still missing.
 
 1. Version and changelog in the same commit, `Version X.Y.Z`, tag `vX.Y.Z`.
    A published version is never touched again: a mistake is a new patch.
-2. `README.md`, `skills/plancia-ui/SKILL.md` and `CHANGELOG.md` tell the
-   same story. The agent guide ships in the tarball: a prop added to the
-   code and missing there is a bug.
+2. `skills/plancia-ui/SKILL.md` and `CHANGELOG.md` tell the same story,
+   and the README still describes what the package can do. The reference
+   ships in the tarball: a prop added to the code and missing there is a
+   bug.
 3. `npm run build` and `npm pack --dry-run`. The tarball contains `dist/`
    (the `.svelte` files as they are, the compiled `.js`, the `.d.ts`,
    `tokens.css`, `base.css`, `tokens.json`), `skills/`, `README.md`,
@@ -40,7 +41,7 @@ still missing.
 Since 2026-09-16 the components have tests of their own (`npm test`: vitest in
 jsdom with `@testing-library/svelte`, one file per component in
 `tests/components/`, plus `tests/tokens.test.ts` and `tests/scaleTone.test.ts`),
-run by CI before the build. They check what the README promises: roles and
+run by CI before the build. They check what the reference promises: roles and
 accessible names, props, classes, the snippets, the default labels, that the
 committed `tokens.css` is what `tokens.json` generates and that the light
 theme mirrors every color key. Layout (a value dropping to its own line, a

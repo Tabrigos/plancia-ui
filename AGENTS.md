@@ -1,9 +1,11 @@
 # AGENTS.md — working on plancia-ui
 
-A guide for whoever works on plancia-ui, human or agent. `README.md` says
-what the package is and how to use it in a project; this file says how to
-change it, version it and publish it. If the two disagree, the code wins and
-the document gets fixed.
+A guide for whoever works on plancia-ui, human or agent. `README.md`
+presents the package: what it does, for whom, how it looks.
+`skills/plancia-ui/SKILL.md` is the reference for building with it, every
+component, prop, class and token, for developers and coding agents alike.
+This file says how to change it, version it and publish it. If a document
+and the code disagree, the code wins and the document gets fixed.
 
 ## 1. What you are touching
 
@@ -23,7 +25,7 @@ scripts/build-tokens.mjs  the generator; it stops if a token is missing in one t
 scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
 showcase/                 Vite showcase: every component in every state, and recipes.html (compositions, live
                           with their code: one file each in showcase/src/recipes/); reads ../src, not dist
-skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
+skills/plancia-ui/        the reference for using the package (SKILL.md), for developers and agents; in the npm package
 docs/                     tokens, design rules, publishing, roadmap + archivio/ (history, never updated)
 dist/                     output of `npm run build`, git-ignored: it is what goes to npm
 ```
@@ -54,7 +56,7 @@ npm pack --dry-run          # what would go to npm (about 40 files, under 100 kB
 
 The showcase is the test bench: **every change is looked at there, in both
 themes and both densities, before it counts as done.** The tests in `tests/`
-cover what the README promises for each component (roles, accessible names,
+cover what the reference promises for each component (roles, accessible names,
 props, classes) and that the committed `tokens.css` is what `tokens.json`
 generates; they run in jsdom, so layout is checked by eye in the showcase,
 not by a test.
@@ -67,7 +69,7 @@ time, without tools. In practice:
 - **one component, one file, under ~120 lines** including styles. If it
   grows, it is two components;
 - **full names**: `subtitle`, not `sub` (where `sub` exists today it means
-  "secondary line" and the README explains it: do not add more); no new
+  "secondary line" and the reference explains it: do not add more); no new
   abbreviations, no acronyms;
 - **props typed inline** in `$props()`, with one line of JSDoc on every prop
   that does not explain itself (see `SettingRow.svelte`);
@@ -106,10 +108,13 @@ time, without tools. In practice:
 
 1. the file in `src/components/`, exported from `src/index.ts` (with its types);
 2. a section in the showcase that shows it in every state;
-3. its test file in `tests/components/`, on what the README promises;
-4. the row in the `README.md` table (main props, what it is for);
-5. the row in `skills/plancia-ui/SKILL.md`, the guide an AI agent reads
-   instead of the code: same props, same rules, kept as complete as the code;
+3. its test file in `tests/components/`, on what the reference promises;
+4. its entry in `skills/plancia-ui/SKILL.md`, the reference developers and
+   agents read instead of the code: the which-component row and the full
+   entry, same props, same rules, kept as complete as the code;
+5. a new component only: its place in the README's "What is in the box",
+   with what it is for and no props. The README is the showcase of the
+   package, and changes when a capability does, not with every prop;
 6. the line in `CHANGELOG.md` under `[Unreleased]`;
 7. if it adds a token: in `tokens.json` in BOTH themes, then `npm run tokens`
    and commit the regenerated CSS;
@@ -195,9 +200,9 @@ Rules:
 
 1. `[Unreleased]` → `[X.Y.Z] — date` in the changelog, version in
    `package.json`, commit `Version X.Y.Z`, tag `vX.Y.Z`;
-2. check that `README.md`, `skills/plancia-ui/SKILL.md` and the changelog tell
-   the same story: the agent guide ships in the package and must not lag
-   behind the code;
+2. check that `skills/plancia-ui/SKILL.md` and the changelog tell the same
+   story, and that the README still describes what the package can do: the
+   reference ships in the package and must not lag behind the code;
 3. `npm run build` and `npm pack --dry-run`: the tarball contains only
    `dist/`, `skills/`, `README.md`, `AGENTS.md`, `CHANGELOG.md`, `LICENSE`
    (`files` in `package.json`); nothing from a consumer, no sources;
