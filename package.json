@@ -57,7 +57,8 @@
     "build": "npm run tokens && svelte-package -i src -o dist",
     "test": "vitest run",
     "prepublishOnly": "npm run build",
-    "skill:install": "node scripts/install-skill.mjs"
+    "skill:install": "node scripts/install-skill.mjs",
+    "check:phone": "node scripts/check-phone.mjs showcase/dist phone-check"
   },
   "publishConfig": {
     "access": "public"
@@ -69,6 +70,7 @@
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.3.0",
     "@testing-library/svelte": "^5.4.2",
+    "axe-core": "^4.13.0",
     "jsdom": "^30.0.1",
     "svelte": "^5.57.0",
     "typescript": "~7.0.2",

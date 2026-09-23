@@ -20,6 +20,7 @@ src/base.css              reset, typography, surfaces, p-* utilities, focus, red
 src/components/*.svelte   one component per file, scoped CSS, tokens only
 tests/                    vitest in jsdom: one file per component, tokens, scaleTone
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
+scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
 showcase/                 Vite showcase (every component in every state); reads ../src, not dist
 skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
 docs/                     tokens, design rules, publishing, roadmap + archivio/ (history, never updated)
@@ -46,6 +47,7 @@ npm test                    # vitest: one file per component in tests/, plus tok
 cd showcase && npm install  # once
 cd showcase && npm run dev  # http://localhost:5174, HMR on the package sources
 cd showcase && npm run check && npm run build   # svelte-check (covers ../src too) and build
+npm run check:phone         # after the showcase build: 390 px, both themes, in Chrome (CHROME_PATH if not found)
 npm pack --dry-run          # what would go to npm (about 40 files, under 100 kB)
 ```
 
@@ -175,7 +177,14 @@ Rules:
 - CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
   regenerated identical to the committed ones, `npm test`, `npm run build`, the
   subpath exports imported from plain Node, svelte-check and build of the
-  showcase, `npm pack --dry-run`. A red PR is not merged;
+  showcase, the showcase at phone width, `npm pack --dry-run`. A red PR is
+  not merged. The phone-width check runs the built showcase at 390 px in a
+  headless Chrome, in both themes: the touch density in effect on a coarse
+  pointer, no tap target under `--p-control-h-sm` (32 px) either way
+  (hit-tested, a link inside a sentence exempt), an axe audit for WCAG 2.2
+  A and AA, nothing sticking out. It measures the DOM and never compares
+  pixels, which differ between Windows and Linux; its screenshots are kept
+  as an artifact to look at;
 - no personal files in the repo: `CLAUDE.md` is in `.gitignore` on purpose
   (whoever works with Claude Code keeps their own, importing this file). The
   shared instructions live HERE.
