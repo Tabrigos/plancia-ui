@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { barPath, domainOf, linePoints, nearestSample, polyline, readoutLeft, runsOf, xOf, yOf } from '../src/chart'
+import { barAt, barPath, domainOf, linePoints, nearestSample, polyline, readoutLeft, runsOf, xOf, yOf } from '../src/chart'
 
 describe('domainOf', () => {
   it('takes the data extent unless an end is pinned', () => {
@@ -64,6 +64,18 @@ describe('nearestSample', () => {
     expect(nearestSample([1, null, null, null, null], 117, 120)).toBe(0)
     expect(nearestSample([null, null], 60, 120)).toBe(-1)
     expect(nearestSample([], 60, 120)).toBe(-1)
+  })
+})
+
+describe('barAt', () => {
+  it('finds the bar under an x, bars sharing the width in equal slots', () => {
+    expect(barAt(0, 8, 160)).toBe(0)
+    expect(barAt(19.9, 8, 160)).toBe(0)
+    expect(barAt(20, 8, 160)).toBe(1)
+    expect(barAt(159, 8, 160)).toBe(7)
+    expect(barAt(-10, 8, 160)).toBe(0)
+    expect(barAt(500, 8, 160)).toBe(7)
+    expect(barAt(10, 0, 160)).toBe(-1)
   })
 })
 

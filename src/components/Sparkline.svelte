@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { domainOf, linePoints, nearestSample, polyline, readoutLeft, runsOf, xOf, yOf, type Sample } from '../chart.js'
+  import { domainOf, linePoints, nearestSample, polyline, runsOf, xOf, yOf, type Sample } from '../chart.js'
+  import ChartReadout from './ChartReadout.svelte'
 
   /**
    * A line in a box, no axes: the shape of a series next to its value
@@ -61,33 +62,12 @@
   const markX = $derived(markIndex !== undefined && markIndex >= 0 && markIndex < values.length ? xOf(markIndex, values.length, width) : undefined)
   const areaOf = (run: (typeof runs)[number]) => `M${run[0][0]},${height - 3} L${polyline(run).replace(/ /g, ' L')} L${run.at(-1)![0]},${height - 3} Z`
 
-  // The readout: the picked index, its point, the box kept inside the width
+  // The readout (ChartReadout): the picked sample, or the last one at rest for assistive technology; a gap is never picked
   let picked = $state(-1)
-  let boxWidth = $state(0)
-  let box = $state<HTMLElement | null>(null)
   const pickedPoint = $derived(picked >= 0 ? points[picked] : null)
-  const text = $derived(pickedPoint && readout ? readout(picked, values[picked] as number) : '')
-  // For assistive technology the box is a slider over the samples: its value text is the readout of the picked sample, the last one at rest
   const current = $derived(picked >= 0 ? picked : nearestSample(values, width, width))
-  $effect(() => { void text; boxWidth = box?.offsetWidth ?? 0 })
-
-  // A mouse reads by hovering; a finger reads while it is down (the page still scrolls vertically) and keeps the reading when lifted
-  function pick(event: PointerEvent): void {
-    const target = event.currentTarget as HTMLElement
-    if (event.type === 'pointerdown') target.setPointerCapture(event.pointerId)
-    else if (event.pointerType === 'touch' && event.buttons === 0) return
-    picked = nearestSample(values, event.clientX - target.getBoundingClientRect().left, width)
-  }
-  function leave(event: PointerEvent): void {
-    if (event.pointerType !== 'touch') picked = -1
-  }
-  function onkeydown(event: KeyboardEvent): void {
-    const step = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0
-    if (step) picked = nearestSample(values, xOf((picked < 0 ? values.length - 1 : picked) + step, values.length, width), width)
-    else if (event.key === 'Escape') picked = -1
-    else return
-    event.preventDefault()
-  }
+  const read = (index: number) => (readout && index >= 0 ? readout(index, values[index] as number) : '')
+  const step = (by: -1 | 1) => { picked = nearestSample(values, xOf((picked < 0 ? values.length - 1 : picked) + by, values.length, width), width) }
 </script>
 
 {#snippet chart()}
@@ -109,10 +89,10 @@
 {/snippet}
 
 {#if readout}
-  <span class="p-spark-box" role="slider" aria-label={label} aria-orientation="horizontal" aria-valuemin="0" aria-valuemax={values.length - 1} aria-valuenow={current} aria-valuetext={current >= 0 ? readout(current, values[current] as number) : undefined} tabindex="0" onpointerdown={pick} onpointermove={pick} onpointerleave={leave} {onkeydown} onblur={() => { picked = -1 }}>
+  <ChartReadout class="p-spark-box" {label} {width} count={values.length} {current} valueText={read(current) || undefined} text={pickedPoint ? read(picked) : ''} x={pickedPoint?.[0] ?? 0}
+                onpoint={(x) => { picked = nearestSample(values, x, width) }} onstep={step} onclear={() => { picked = -1 }}>
     {@render chart()}
-    <span class="readout" aria-hidden="true" bind:this={box} style="left:{pickedPoint ? readoutLeft(pickedPoint[0], boxWidth, width) : 0}px" hidden={!pickedPoint}>{text}</span>
-  </span>
+  </ChartReadout>
 {:else}
   {@render chart()}
 {/if}
@@ -126,12 +106,4 @@
   .zero { stroke: var(--p-border-strong); stroke-width: 1; }
   .mark { stroke: var(--p-text-dim); stroke-width: 1; stroke-dasharray: 2 2; }
   .pick { fill: var(--p-text-hi); stroke: var(--p-s2); stroke-width: 2; }
-  /* pan-y: a finger dragging along the line reads it, the page still scrolls up and down */
-  .p-spark-box { position: relative; display: inline-block; touch-action: pan-y; }
-  .readout {
-    position: absolute; bottom: 100%; margin-bottom: 4px; padding: 2px 6px; z-index: var(--p-z-popover);
-    background: var(--p-s3a); border: 1px solid var(--p-border); border-radius: var(--p-r1); box-shadow: var(--p-sh1);
-    font-family: var(--p-font-mono); font-size: var(--p-t11); line-height: 1.4; color: var(--p-text-hi); white-space: nowrap; pointer-events: none;
-  }
-  .readout[hidden] { display: none; }
 </style>
