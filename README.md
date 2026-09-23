@@ -18,13 +18,14 @@ control panels.
 its [**recipes**](https://tabrigos.github.io/plancia-ui/recipes.html):
 compositions built only from the package, live and with their code — a
 phone layout with a drawer and one sheet at a time, a console section, a
-list of layers and its states, layer rows, a whole panel over a stage.
+list of layers and its states, rows that open their detail, layer rows, a
+whole panel over a stage.
 
 - **No runtime dependencies**: `svelte` ≥ 5 as the only peer dependency.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the
   light theme redefines the same variables, and the build refuses a token
   that exists in one theme only.
-- **Twenty-eight small components**, each readable in a minute, accessible by
+- **Twenty-nine small components**, each readable in a minute, accessible by
   default.
 - **Agent-ready**: a complete usage guide for AI coding agents ships inside
   the package (see below).
@@ -94,6 +95,7 @@ Tokens, themes, density and fonts are explained in
 | `Segmented` | exclusive choice among a few options | `items` `{ id, label, title? }`, `value` (bindable), `onchange`, `label`, `size` |
 | `ControlRow` | head of a card: label left, controls right | `label`, `title`, `help`, `tone`; the controls are the content |
 | `SettingRow` | list row: icon, name, control | `label`, `title`, `help`, snippet `icon`; forwards `data-*` and `id` |
+| `ExpandableRow` | a row that opens its detail below itself: what a tooltip says, for a finger | `open` (bindable), `onchange`, `title`, snippet `detail`; the row is the content, its layout the app's |
 | `List` | a list of framed items (layers, sources, instruments), a real list for screen readers | `label`, snippet `footer` (attribution); the items are the content |
 | `ListItem` | an item of a `List`: head with label and controls, body under it | `label`, `title`, `help`, snippet `controls`; the body is the content; forwards `data-*` and `id` |
 | `Section` | collapsible console section | `title`, `summary`, `summaryTitle`, `open` (bindable), `onchange`, snippet `actions`; the content is the body |

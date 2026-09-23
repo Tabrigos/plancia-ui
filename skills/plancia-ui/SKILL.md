@@ -80,6 +80,7 @@ Never alias the package sources: the contract is `dist`.
 | exclusive choice among a few options | `Segmented` | `size="sm"` inline |
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
+| a row whose detail (the full text, the end of a pass) must reach a finger | `ExpandableRow` | the whole row is the button, the detail a line under it; the tooltip stays for the mouse |
 | a list of layers, sources, instruments, each with its controls and details | `List` + `ListItem` | framed items: a head (label + controls) and a body, often shown only while the item is on |
 | collapsible section of a console | `Section` | state owned by the app, summary readable while closed |
 | inline state of a datum or layer (spinner, dot) | `Status` | the glance inside a row; `Notice` is the block message |
@@ -273,6 +274,26 @@ right (toggle, chip, counter, buttons). Forwards its own attributes
 (`data-*`, `id`, `title`); a `class` of the consumer is added next to its own. Touches the column edges
 (horizontal padding is its own) and highlights on hover.
 
+**`ExpandableRow`** — a row that opens its detail below itself: a native
+`<button aria-expanded aria-controls>` holding the row, then a full-width
+detail line (11 px, ui font, dim, wrapping). `open?: boolean` (bindable,
+`false`), `onchange?: (open: boolean) => void` (every tap; one row open at a
+time is the app's rule: `open={openId === item.id}` and
+`onchange={(o) => (openId = o ? item.id : null)}`), `title?: string` (the
+tooltip for the mouse, usually the same fact as the detail), `id?` (of the
+detail, generated when absent), snippet `detail` (required), content = the
+row (required), `class` added next to its own, other attributes on the
+button. Default layout: a flex row, baseline-aligned, 8 px gap; every
+default has zero specificity, so a class of the app lays it out. In a list
+with columns make the row a subgrid of the list:
+`.row { display: grid; grid-template-columns: subgrid; gap: normal }` (the
+`gap: normal` gives back the list's own gap); the detail spans all the
+columns by itself. On touch the row is as tall as `--p-tap-h` (32 px); in
+compact and comfortable it keeps the height of its text. Style the open row
+with `[aria-expanded='true']` (e.g. a truncated text that wraps when open).
+Put the rows in a flex column or a grid, not in a `List` (that is for
+framed items).
+
 **`List`** — `label?: string` (accessible name, when no heading next to it
 names it), snippet `footer` (a line under the list, 11 px dim: the
 attribution of the data). Content is the `ListItem`s. A `<ul role="list">`,
@@ -392,7 +413,9 @@ to the space they are in (`KeyValue` drops the value to a full line,
   `r-pill`;
 - density: `row` (row padding), `row-h` (row height), `control-h` (button
   height) and `control-h-sm` (small button), `toggle-w` / `toggle-h`,
-  `input-size` (input text), switched by `data-density`, three values:
+  `input-size` (input text), `tap-h` (the least height of a line of text
+  that is a tap target: 0, natural, in compact and comfortable, 32 px on
+  touch), switched by `data-density`, three values:
   compact (32 / 26 / 34×20 / 13 px), comfortable (rows 40, controls as
   compact), touch (44 / 40 / 32 / 44×26 / 16 px); z-index, bottom to top: `z-base` `z-overlay` `z-panel` `z-popover`
   `z-modal` `z-tooltip`; motion: `motion-fast`, `motion-base`, `motion-ease`;

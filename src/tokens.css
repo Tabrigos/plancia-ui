@@ -103,6 +103,7 @@
   --p-toggle-w: 34px;
   --p-toggle-h: 20px;
   --p-input-size: var(--p-t13);
+  --p-tap-h: 0px;
   --p-focus: 0 0 0 2px var(--p-bg), 0 0 0 4px var(--p-accent);
   color-scheme: dark;
 }
@@ -119,6 +120,7 @@
   --p-toggle-w: 34px;
   --p-toggle-h: 20px;
   --p-input-size: var(--p-t13);
+  --p-tap-h: 0px;
 }
 [data-density="comfortable"] {
   --p-row: 12px;
@@ -128,6 +130,7 @@
   --p-toggle-w: 34px;
   --p-toggle-h: 20px;
   --p-input-size: var(--p-t13);
+  --p-tap-h: 0px;
 }
 [data-density="touch"] {
   --p-row: 12px;
@@ -137,6 +140,7 @@
   --p-toggle-w: 44px;
   --p-toggle-h: 26px;
   --p-input-size: 16px;
+  --p-tap-h: var(--p-control-h-sm);
 }
 
 /* A coarse pointer (a phone, a tablet) gets the touch density by itself,
@@ -150,6 +154,7 @@
   --p-toggle-w: 44px;
   --p-toggle-h: 26px;
   --p-input-size: 16px;
+  --p-tap-h: var(--p-control-h-sm);
   }
 }
 

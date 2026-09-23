@@ -42,7 +42,7 @@ describe('tokens', () => {
 
   it('exposes the contract: the --p-* names the README and the skill promise', () => {
     const names = [...committed.matchAll(/--p-([a-z0-9-]+):/g)].map((m) => m[1])
-    for (const expected of ['bg', 's3a', 'text-dim', 'accent-ink', 'ok-soft', 'danger-glow', 'scale-5', 'sh2', 'font-mono', 't11', 't28', 'space-8', 'r-pill', 'z-modal', 'motion-ease', 'row-h', 'control-h', 'control-h-sm', 'toggle-w', 'toggle-h', 'input-size', 'focus', 'viz-1', 'viz-6', 'seq-1', 'seq-7', 'div-4']) {
+    for (const expected of ['bg', 's3a', 'text-dim', 'accent-ink', 'ok-soft', 'danger-glow', 'scale-5', 'sh2', 'font-mono', 't11', 't28', 'space-8', 'r-pill', 'z-modal', 'motion-ease', 'row-h', 'control-h', 'control-h-sm', 'toggle-w', 'toggle-h', 'input-size', 'tap-h', 'focus', 'viz-1', 'viz-6', 'seq-1', 'seq-7', 'div-4']) {
       expect(names).toContain(expected)
     }
     expect(committed).toContain('[data-theme="light"]')
