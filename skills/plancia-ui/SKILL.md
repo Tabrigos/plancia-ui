@@ -71,7 +71,7 @@ Never alias the package sources: the contract is `dist`.
 | a key in a hint ("Esc closes") | `Kbd` | |
 | telling screen readers what happened on the stage | `LiveRegion` + `announce()` | mount once; call from a store |
 | the shape of a series next to its value | `Sparkline` | no axes; numbers written by the app |
-| a short series of magnitudes (Kp over a day) | `Bars` | zero baseline; a status token per bar when it means a level |
+| a short series of magnitudes (Kp over a day) | `Bars` | zero baseline; a status token per bar when it means a level; `readout` for a finger |
 | loading | `Skeleton` | |
 | empty / info / warning / error state | `Notice` | the only vocabulary for states |
 | gradient legend of a layer | `Legend` | |
@@ -226,7 +226,15 @@ color?: string }` (`label` is the bar's tooltip and accessible text; `color`
 per bar, e.g. `var(--p-scale-3)` when the bar means a level), `label: string`
 (accessible name, required), `width?` (`120`), `height?` (`32`), `color?`
 (`'var(--p-viz-1)'`), `max?` (top of the scale; the bottom is always 0),
-`gap?` (`2` px surface gap). Rounded data-ends anchored to the baseline.
+`gap?` (`2` px surface gap), `readout?: (index: number, bar: Bar) => string`
+(the text of the bar under a hovering mouse, a dragging finger or the arrow
+keys on focus, e.g. `21–24 UTC · Kp 3.7`: the picked bar stays whole, the
+others fade, a small monospace box shows the text inside the width, the
+finger keeps the reading when lifted, Esc hides; the chart becomes a
+focusable `role="slider"` whose value text is the readout, the last bar at
+rest, and the per-bar tooltips give way to it). Rounded data-ends anchored
+to the baseline. On a phone a bar's value must not live only in its
+tooltip: give `Bars` a `readout`, as `Sparkline`.
 
 **`Skeleton`** — `lines?: number` (`3`), `label?: string` (accessible name; default
 from `setLabels()`, `'Loading'`), `compact?: boolean`.

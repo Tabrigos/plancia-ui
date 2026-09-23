@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/svelte'
+import { fireEvent, render, screen } from '@testing-library/svelte'
+import { flushSync } from 'svelte'
 import { Bars } from '../../src/index'
 
 describe('Bars', () => {
@@ -28,5 +29,43 @@ describe('Bars', () => {
     expect(a.startsWith('M2,10')).toBe(true)
     expect(b.startsWith('M12,10')).toBe(true)
     expect(a).toContain('H')
+  })
+
+  it('reads out the bar under a pointer, a finger or the arrow keys, and only with a readout', async () => {
+    const kp = [2, 3, 5, 4].map((value, i) => ({ value, label: `${String(i * 3).padStart(2, '0')} UTC · Kp ${value}` }))
+    const readout = (_: number, bar: { label?: string }) => bar.label ?? ''
+    const { container } = render(Bars, { props: { bars: kp, width: 80, height: 20, readout, label: 'Kp today' } })
+    const box = screen.getByRole('slider', { name: 'Kp today' })
+    expect(box.getAttribute('aria-valuenow')).toBe('3')
+    expect(box.getAttribute('aria-valuetext')).toBe('09 UTC · Kp 4')
+    // with a readout the box speaks: no tooltip per bar, the svg is hidden
+    expect(container.querySelector('title')).toBeNull()
+    expect(container.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
+    const status = container.querySelector('.readout') as HTMLElement
+    expect(status.hidden).toBe(true)
+    // a mouse over the second bar (slots of 20 px): it stays whole, the others fade
+    await fireEvent.pointerMove(box, { clientX: 25, pointerType: 'mouse', buttons: 0 })
+    flushSync()
+    expect(status.textContent).toBe('03 UTC · Kp 3')
+    expect([...container.querySelectorAll('path')].map((path) => path.classList.contains('faded'))).toEqual([true, false, true, true])
+    await fireEvent.pointerLeave(box, { pointerType: 'mouse' })
+    flushSync()
+    expect(status.hidden).toBe(true)
+    expect(container.querySelector('path.faded')).toBeNull()
+    // a finger drags to the third bar and lifts: the reading stays
+    box.setPointerCapture = () => {}
+    await fireEvent.pointerDown(box, { clientX: 5, pointerType: 'touch', pointerId: 1, buttons: 1 })
+    await fireEvent.pointerMove(box, { clientX: 45, pointerType: 'touch', pointerId: 1, buttons: 1 })
+    await fireEvent.pointerLeave(box, { pointerType: 'touch' })
+    flushSync()
+    expect(status.textContent).toBe('06 UTC · Kp 5')
+    // keys move it, and stop at the ends; Escape hides
+    await fireEvent.keyDown(box, { key: 'ArrowRight' })
+    await fireEvent.keyDown(box, { key: 'ArrowRight' })
+    flushSync()
+    expect(status.textContent).toBe('09 UTC · Kp 4')
+    await fireEvent.keyDown(box, { key: 'Escape' })
+    flushSync()
+    expect(status.hidden).toBe(true)
   })
 })

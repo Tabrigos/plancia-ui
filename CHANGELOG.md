@@ -21,6 +21,13 @@ All notable changes to plancia-ui. The format follows
   It is the shape a `Badge` would have had; the design rules now allow
   spaced uppercase in section titles and in the short label of a chip,
   never in running text.
+- `Bars`: `readout`, the reading of a bar as in `Sparkline`: a mouse
+  hovers, a finger drags across the bars and keeps the reading when
+  lifted, the arrow keys move it on the focused chart, Esc hides. The
+  picked bar stays whole and the others fade; the box shows the text the
+  app formats, kept inside the width. On touch the tooltip of a bar is
+  silent, so without it a finger could not read a single bar. Requested
+  by the reference consumer (#46).
 - `Drawer`: a panel that slides in from a side of the app's container.
   `modal` (a phone, a short screen) puts it over the stage with a scrim
   that closes it, Esc and focus trapped inside, as a dialog; otherwise it

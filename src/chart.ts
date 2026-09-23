@@ -67,7 +67,13 @@ export function nearestSample(values: Sample[], x: number, width: number, pad = 
   return -1
 }
 
-/** The left of a readout box centered on `x` but kept inside the sparkline's width. */
+/** The bar under an x inside the box: bars share the width in equal slots; -1 when there is none. */
+export function barAt(x: number, count: number, width: number): number {
+  if (count === 0) return -1
+  return Math.max(0, Math.min(count - 1, Math.floor(x / (width / count))))
+}
+
+/** The left of a readout box centered on `x` but kept inside the chart's width. */
 export function readoutLeft(x: number, boxWidth: number, width: number): number {
   return round(Math.max(0, Math.min(x - boxWidth / 2, width - boxWidth)))
 }
