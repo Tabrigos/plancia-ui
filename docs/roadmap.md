@@ -20,10 +20,10 @@ and `Toggle`, same focus ring, same tones, touch density from the first
 sketch), shipped together, each with its recipe and checked at phone
 width in CI from the start.
 
-Next to them, what the reference consumer finds while it makes every
-datum reachable by a finger (phase 2 of its phone work: facts that live
-only in a tooltip, controls of its own still sized for a mouse) becomes
-issues here, as `Bars.readout` did for 0.8.0.
+Next to them, what the reference consumer finds while it adopts 0.8.0
+(its lists on `List` and `ExpandableRow`, its drawer on `Drawer`) becomes
+issues here, as `Bars.readout` and `ExpandableRow` came from its phone work
+for 0.8.0.
 
 ## Later — waiting for a second use
 
