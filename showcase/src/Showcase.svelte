@@ -80,7 +80,7 @@
     <div>
       <h1>plancia-ui</h1>
       <p class="p-dim p-t13">Design system for dense consoles: tokens, base styles and Svelte 5 components. Version {version}, built from the main branch.</p>
-      <p class="p-dim p-t12 links"><a href="https://github.com/Tabrigos/plancia-ui">GitHub</a> · <a href="https://www.npmjs.com/package/plancia-ui">npm</a> · <span title="Every title on this page renders through the package Tooltip, mounted once at the root">hover me for the themed tooltip</span></p>
+      <p class="p-dim p-t12 links"><a href="recipes.html">Recipes</a> · <a href="https://github.com/Tabrigos/plancia-ui">GitHub</a> · <a href="https://www.npmjs.com/package/plancia-ui">npm</a> · <span title="Every title on this page renders through the package Tooltip, mounted once at the root">hover me for the themed tooltip</span></p>
     </div>
     <div class="head-ctl">
       <span class="p-t12 p-dim">theme</span>

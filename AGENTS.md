@@ -21,7 +21,8 @@ src/components/*.svelte   one component per file, scoped CSS, tokens only
 tests/                    vitest in jsdom: one file per component, tokens, scaleTone
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
-showcase/                 Vite showcase (every component in every state); reads ../src, not dist
+showcase/                 Vite showcase: every component in every state, and recipes.html (compositions, live
+                          with their code: one file each in showcase/src/recipes/); reads ../src, not dist
 skills/plancia-ui/        the usage guide for AI agents (SKILL.md), shipped in the npm package
 docs/                     tokens, design rules, publishing, roadmap + archivio/ (history, never updated)
 dist/                     output of `npm run build`, git-ignored: it is what goes to npm
@@ -178,8 +179,9 @@ Rules:
   regenerated identical to the committed ones, `npm test`, `npm run build`, the
   subpath exports imported from plain Node, svelte-check and build of the
   showcase, the showcase at phone width, `npm pack --dry-run`. A red PR is
-  not merged. The phone-width check runs the built showcase at 390 px in a
-  headless Chrome, in both themes: the touch density in effect on a coarse
+  not merged. The phone-width check runs the built showcase, the recipes
+  and the phone layout recipe (on load, with its drawer open, with a sheet
+  up) at 390 px in a headless Chrome, in both themes: the touch density in effect on a coarse
   pointer, no tap target under `--p-control-h-sm` (32 px) either way
   (hit-tested, a link inside a sentence exempt), an axe audit for WCAG 2.2
   A and AA, nothing sticking out. It measures the DOM and never compares

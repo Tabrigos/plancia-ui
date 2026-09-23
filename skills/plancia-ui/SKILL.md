@@ -449,6 +449,42 @@ A list of layers inside a console section:
 </List>
 ```
 
+A phone layout: the stage takes the screen, the navigation is a modal
+`Drawer`, the content comes up in bottom sheets, one at a time. The state
+and the one-sheet rule are the app's:
+
+```svelte
+<script lang="ts">
+  import { Drawer, FloatingPanel, PanelHead, PHONE_MEDIA, isPhone } from 'plancia-ui'
+  let sheet = $state<'sun' | 'station' | null>(null)
+  let navOpen = $state(false)
+  let phone = $state(isPhone())
+  $effect(() => {
+    const media = matchMedia(PHONE_MEDIA)
+    const update = () => { phone = media.matches }
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  })
+  // One sheet at a time; a choice that opens a sheet closes the drawer
+  const openSheet = (id: 'sun' | 'station') => { sheet = id; navOpen = false }
+</script>
+
+<div class="app"><!-- position: fixed; inset: 0; overflow: hidden -->
+  <!-- the stage, a pill of controls with a menu button id="open-nav" -->
+  <Drawer open={navOpen} modal={phone} label="Navigation" opener="open-nav" onclose={() => (navOpen = false)} class="nav">
+    <PanelHead title="Console" onclose={() => (navOpen = false)} />
+    <!-- a scrolling body: List, Section, buttons that call openSheet() -->
+  </Drawer>
+  {#if sheet === 'station'}
+    <FloatingPanel title="ISS" class="sheet" onclose={() => (sheet = null)}>…</FloatingPanel>
+  {/if}
+</div>
+```
+
+The whole recipe, and the others (a console section, a list of layers and
+its states, layer rows, a panel over a stage), run with their code at
+https://tabrigos.github.io/plancia-ui/recipes.html.
+
 ## Rules the project must follow
 
 - in the project CSS use tokens only: `var(--p-text-dim)`, `var(--p-accent)`,

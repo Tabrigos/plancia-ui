@@ -14,7 +14,11 @@ control panels.
 [![The plancia-ui showcase in the dark and light theme](https://raw.githubusercontent.com/Tabrigos/plancia-ui/main/docs/images/showcase.png)](https://tabrigos.github.io/plancia-ui/)
 
 **Live showcase**: [tabrigos.github.io/plancia-ui](https://tabrigos.github.io/plancia-ui/)
-(every component in every state; add `?theme=light` for the light theme).
+(every component in every state; add `?theme=light` for the light theme) and
+its [**recipes**](https://tabrigos.github.io/plancia-ui/recipes.html):
+compositions built only from the package, live and with their code — a
+phone layout with a drawer and one sheet at a time, a console section, a
+list of layers and its states, layer rows, a whole panel over a stage.
 
 - **No runtime dependencies**: `svelte` ≥ 5 as the only peer dependency.
 - **One tokens file, two themes**: every color lives in `tokens.json`; the

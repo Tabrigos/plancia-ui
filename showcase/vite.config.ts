@@ -7,12 +7,15 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 // through HMR without rebuilding the package. Same aliases in the `paths`
 // of tsconfig.json.
 const src = fileURLToPath(new URL('../src/', import.meta.url))
+const page = (name: string) => fileURLToPath(new URL(name, import.meta.url))
 
 export default defineConfig({
   // GitHub Pages serves the showcase under /plancia-ui/: the workflow sets
   // PAGES_BASE, locally the base stays "/".
   base: process.env.PAGES_BASE ?? '/',
   plugins: [svelte()],
+  // Two pages: every component in every state, and the recipes
+  build: { rollupOptions: { input: { main: page('index.html'), recipes: page('recipes.html') } } },
   resolve: {
     alias: [
       { find: /^plancia-ui$/, replacement: `${src}index.ts` },
