@@ -2,7 +2,9 @@
   /**
    * Accessible switch: a real <input type="checkbox"> with the look of the
    * system (34×20, sliding knob), visible focus, disabled state.
-   * `checked` is bindable; `onchange` receives the new value.
+   * `checked` is bindable; `onchange` receives the new value. `label` is
+   * required: the rows a toggle sits in are `div`s and do not name it, so
+   * without it a screen reader says "checkbox, checked" and nothing else.
    */
   let {
     checked = $bindable(false),
@@ -13,8 +15,8 @@
   }: {
     checked?: boolean
     disabled?: boolean
-    /** Accessible label (the visible text usually sits in the row next to it) */
-    label?: string
+    /** Accessible name, usually the text of the row it sits in */
+    label: string
     /** Native tooltip */
     title?: string
     onchange?: (checked: boolean) => void

@@ -6,6 +6,14 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Breaking
+- `Toggle`: `label` is required. The rows a toggle sits in (`ControlRow`,
+  `SettingRow`, `ListItem`) are `div`s and do not name it, so a toggle
+  without `label` was announced as "checkbox, checked" and nothing else.
+  **How to migrate**: pass the text of the row,
+  `<Toggle label="Orbit lines" bind:checked={orbits} />`; svelte-check and
+  TypeScript point at every toggle that has none.
+
 ### Added
 - `List` and `ListItem`: the framed list of a console, for layers, sources
   and instruments. `List` is a real list for screen readers, named by

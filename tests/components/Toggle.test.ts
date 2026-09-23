@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import { Toggle } from '../../src/index'
+// The component source as text (Vite `?raw`), to assert on its props type.
+import source from '../../src/components/Toggle.svelte?raw'
 
 describe('Toggle', () => {
   it('is a real checkbox with an accessible name', () => {
@@ -8,6 +10,11 @@ describe('Toggle', () => {
     const input = screen.getByRole('checkbox', { name: 'Orbit lines' }) as HTMLInputElement
     expect(input.type).toBe('checkbox')
     expect(input.checked).toBe(false)
+  })
+
+  it('requires the accessible name in its type', () => {
+    // Checked on the source: jsdom runs no type checker, svelte-check does
+    expect(source).toMatch(/^\s*label: string$/m)
   })
 
   it('reflects checked and disabled', () => {

@@ -78,7 +78,7 @@ Tokens, themes, density and fonts are explained in
 |---|---|---|
 | `Button` | actions | `variant` primary · secondary · quiet · icon, `size` md · sm, `active`, native attributes |
 | `Chip` | status, scale level, band, counter | `tone`, `count`, `small`, `color` |
-| `Toggle` | accessible switch (a real checkbox) | `checked` (bindable), `disabled`, `label`, `onchange` |
+| `Toggle` | accessible switch (a real checkbox) | `label` (required), `checked` (bindable), `disabled`, `onchange` |
 | `KeyValue` | label / value row | `label`, `sub`, `subTone`, `tone`, `title`; the value is the content |
 | `Stat` | big number with a label | `label`, `sub`, `tone`, `title`; the value is the content |
 | `PanelHead` | head of a floating panel | `title`, `subtitle`, snippets `chips` and `actions`, `onclose`, `closeLabel` |
