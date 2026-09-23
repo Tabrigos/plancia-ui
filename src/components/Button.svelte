@@ -10,13 +10,15 @@
   /**
    * Button in four variants (primary, secondary, quiet, icon) and two
    * sizes. One primary per panel. Accepts every native attribute
-   * (onclick, title, aria-*, type, disabled).
+   * (onclick, title, aria-*, type, disabled); a `class` of the app is added
+   * next to the component's own, never in its place.
    */
   let {
     variant = 'secondary',
     size = 'md',
     active = false,
     children,
+    class: consumerClass,
     ...rest
   }: HTMLButtonAttributes & {
     variant?: ButtonVariant
@@ -24,10 +26,12 @@
     /** "Pressed" state for the buttons that toggle a view */
     active?: boolean
     children?: Snippet
+    /** A class of the consumer (a position, a width), added next to the component's own */
+    class?: string
   } = $props()
 </script>
 
-<button type="button" class="p-btn {variant} {size}" class:active aria-pressed={active ? true : undefined} {...rest}>
+<button type="button" class="p-btn {variant} {size} {consumerClass ?? ''}" class:active aria-pressed={active ? true : undefined} {...rest}>
   {@render children?.()}
 </button>
 

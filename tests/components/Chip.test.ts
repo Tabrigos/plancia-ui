@@ -41,4 +41,10 @@ describe('Chip', () => {
     const { container } = render(Chip, { props: { title: 'NORAD id', children: html('<span>25544</span>') } })
     expect(container.querySelector('.p-chip')?.getAttribute('title')).toBe('NORAD id')
   })
+
+  it('adds a class of the app next to its own, never in its place', () => {
+    const { container } = render(Chip, { props: { class: 'mine', tone: 'warn' } })
+    const element = container.querySelector('.p-chip') as HTMLElement
+    for (const name of ['p-chip', 'warn', 'mine']) expect(element.classList.contains(name)).toBe(true)
+  })
 })
