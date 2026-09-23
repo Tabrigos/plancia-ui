@@ -65,6 +65,11 @@ All notable changes to plancia-ui. The format follows
   every `Age` (#32).
 
 ### Changed
+- Documentation: the README presents the package (what it does, how it
+  looks, what is in the box, a quick start); the reference for building
+  with it, every component, prop, class and token, is
+  `skills/plancia-ui/SKILL.md`, for developers and coding agents alike. The
+  table of props moved out of the README, where it repeated the reference.
 - `base.css`: links are underlined, with a soft line in the accent that
   takes the full color under the pointer, so they are not told apart by
   color alone (WCAG 1.4.1); they were plain until hovered.

@@ -6,8 +6,10 @@ description: Use the plancia-ui design system (CSS tokens, base styles and Svelt
 # plancia-ui — using it in a project
 
 npm package `plancia-ui` (MIT, Svelte 5, no runtime dependencies). This
-file is the complete reference of the public API: components and props, base
-classes, tokens, rules. It ships inside the package at
+file is the complete reference of the public API, for the developers and
+the coding agents who use the package alike: components and props, base
+classes, tokens, rules, examples. The README presents the package; this
+file is how to build with it. It ships inside the package at
 `node_modules/plancia-ui/skills/plancia-ui/SKILL.md`, so the copy next to the
 installed version is the one that matches it. `npm view plancia-ui version`
 tells the latest published version; `CHANGELOG.md` in the same folder says
