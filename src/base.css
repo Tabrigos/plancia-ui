@@ -15,12 +15,19 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a { color: var(--p-accent); text-decoration: none; }
+/* Underlined, not told apart by color alone (WCAG 1.4.1): a soft line that
+   takes the full color under the pointer */
+a {
+  color: var(--p-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--p-accent) 40%, transparent);
+  text-underline-offset: 2px;
+}
 
 /* Hover styles live under `hover: hover`, here and in every component: on a
    touch screen a tap would leave the hover state stuck on the element */
 @media (hover: hover) {
-  a:hover { text-decoration: underline; }
+  a:hover { text-decoration-color: currentColor; }
 }
 
 /* ── Typography ─────────────────────────────────────────────────────────── */

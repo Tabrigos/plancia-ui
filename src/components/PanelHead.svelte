@@ -53,7 +53,7 @@
   .sp { flex: 1; }
   .actions { display: flex; align-items: center; gap: 6px; }
   .close {
-    display: inline-flex; align-items: center; justify-content: center; width: var(--p-control-h-sm); height: var(--p-control-h-sm); margin: -3px -4px 0 0;
+    display: inline-flex; flex: none; align-items: center; justify-content: center; width: var(--p-control-h-sm); height: var(--p-control-h-sm); margin: -3px -4px 0 0;
     border: none; border-radius: var(--p-r2); background: transparent; color: var(--p-text-dim); cursor: pointer;
   }
   /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */

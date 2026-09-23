@@ -333,7 +333,7 @@ to the space they are in (`KeyValue` drops the value to a full line,
   only: live regions, off-screen labels);
 - `p-dot` status dot, with `ok` / `warn` / `danger` / `accent` for the color
   and its glow; `p-spinner`, the 12 px loading spinner;
-- inherited: body font and colors, links in accent, visible focus ring on
+- inherited: body font and colors, links in accent and underlined, visible focus ring on
   every focusable element, `prefers-reduced-motion`, thin scrollbars.
 
 ## Tokens (`tokens.css`, all `--p-*`)

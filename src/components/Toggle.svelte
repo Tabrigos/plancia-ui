@@ -32,6 +32,9 @@
 <style>
   .p-toggle { position: relative; display: inline-block; width: var(--p-toggle-w); height: var(--p-toggle-h); flex: none; cursor: pointer; }
   .p-toggle.disabled { opacity: 0.4; cursor: default; }
+  /* The track is lower than a finger: the tap area grows to the small
+     control height (32 px on touch), the look does not */
+  .p-toggle::before { content: ''; position: absolute; inset: calc((var(--p-toggle-h) - var(--p-control-h-sm)) / 2) 0; }
   .p-toggle input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: inherit; }
   .track {
     position: absolute; inset: 0; border-radius: var(--p-r-pill);
