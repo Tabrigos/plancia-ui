@@ -64,6 +64,9 @@ All notable changes to plancia-ui. The format follows
   language: the fix is the `lang` (#32).
 
 ### Fixed
+- `Button` and `Chip`: a `class` passed by the app is added next to the
+  component's own; it used to replace it and leave the button or the chip
+  without its style. Reported by the reference consumer.
 - `base.css`: a `<summary>` gets the themed focus ring instead of the
   browser's outline, so the native `InfoCard` and any `<details>` of the
   app match the other controls; in `InfoCard` the ring follows the card's

@@ -97,7 +97,7 @@ Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
 (default `secondary`), `size?: 'md' | 'sm'` (`md`), `active?: boolean`
 (pressed state for view toggles, sets `aria-pressed`). Content is the label.
 Accepts every native `<button>` attribute (`onclick`, `title`, `disabled`,
-`type`, `aria-*`). `icon` is square: give it a `title`.
+`type`, `aria-*`); a `class` is added next to the component's own. `icon` is square: give it a `title`.
 
 **`Chip`** — `tone?: Tone` (`neutral`), `count?: boolean` (low 18 px counter
 variant), `small?: boolean` (same low height but with the tone, for scales in
@@ -107,8 +107,9 @@ normal case, `Live`, the style uppercases it and a screen reader reads a
 word instead of spelling it), `color?: string` (a free color, e.g. a
 satellite group's: background and border derive from it and override the
 tone; in the light theme the text leans toward the text color, so a color
-picked for a dark stage stays readable). Content is the text, 22 px monospace. Accepts native `<span>`
-attributes (`title`).
+picked for a dark stage stays readable). Content is the text, 22 px
+monospace. Accepts native `<span>` attributes (`title`); a `class` is added
+next to the component's own.
 
 **`Toggle`** — `checked?: boolean` (bindable, `false`), `disabled?: boolean`,
 `label: string` (required: the accessible name, usually the text of the
