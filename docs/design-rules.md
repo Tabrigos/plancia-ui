@@ -77,6 +77,10 @@ project that uses the package follows the same rules in its own CSS.
   screen is looked at only by whoever decides the layout: the project, and
   `FloatingPanel`, which becomes a bottom sheet because the screen is its
   container.
+- On a phone the navigation lives in a modal `Drawer` and the content in
+  bottom sheets (`FloatingPanel`), one at a time; the drawer closes when a
+  choice made inside it opens a sheet. The package gives the shapes, the
+  project keeps the rule, since only it knows which panels exist.
 - The touch density is not a phone layout: it sizes controls for a finger
   and applies by itself on a coarse pointer, on a tablet too.
 - The showcase is checked at 390 px in CI, in both themes: the touch

@@ -64,6 +64,7 @@ Never alias the package sources: the contract is `dist`.
 | big number with a label | `Stat` | |
 | head of a floating panel | `PanelHead` | close button always last |
 | a whole panel floating over a stage (globe, map) | `FloatingPanel` | frame + head + scrolling body, Esc, focus return; the app positions it |
+| the navigation or a console sliding in from a side | `Drawer` | `modal` on a phone (scrim, Esc, focus trapped), a retractable column otherwise; the app owns open/closed |
 | themed tooltips instead of the native `title` ones | `Tooltip` | mount once at the root; keep writing `title` |
 | the (i) that opens an explanation | `InfoButton` | a disclosure button; the card is `InfoCard` |
 | the frame of an explanation ("what is this datum") | `InfoCard` | native `<details>` with `summary`, or always open with a close button |
@@ -129,6 +130,26 @@ never split, never truncated, never overlapping the label.
 the title), snippet `actions` (right side), `onclose?: () => void` (renders
 the close button, always last), `closeLabel?: string` (accessible name and tooltip
 of the close button; default from `setLabels()`, `'Close'`).
+
+**`Drawer`** — `open: boolean` (required: the state is the app's),
+`onclose: () => void` (required: the scrim and Esc call it when modal; the
+app then sets `open` to false), `label: string` (required, accessible name),
+`modal?: boolean` (`false`; over the stage with a scrim that closes it, Esc,
+focus trapped inside, `role="dialog"` with `aria-modal`: a phone or a short
+screen. Otherwise a column beside the stage the user retracts,
+`role="region"`), `side?: 'left' | 'right'` (`left`), `opener?: HTMLElement
+| string` (element or id that opens it: focus goes back to it on close if it
+was inside), `class` (the width: `class="nav"` with `.nav { width: … }`)
+and other attributes forwarded (`id`, `data-*`). Content is the app's (a
+`PanelHead`, a scrolling body, a footer), laid out in a full-height flex
+column. Focus moves into the drawer on open; a closed drawer is slid out
+and `inert`. It is placed against the app's container (its nearest
+positioned ancestor, which should clip it: `overflow: hidden`), full height,
+padded by the safe-area insets of the edges it touches, so the content
+needs none of its own. Layers: `--p-z-panel` as a column, `--p-z-modal`
+when modal, the scrim right under it. On a phone keep one sheet
+(`FloatingPanel`) open at a time and close the drawer when a choice made
+inside it opens a sheet: that rule is the app's.
 
 **`FloatingPanel`** — `title: string`, `subtitle?`, `subtitleTitle?`, snippets
 `chips` and `actions`, `onclose?: () => void` (the close button and Esc call
@@ -364,8 +385,8 @@ to the space they are in (`KeyValue` drops the value to a full line,
   height) and `control-h-sm` (small button), `toggle-w` / `toggle-h`,
   `input-size` (input text), switched by `data-density`, three values:
   compact (32 / 26 / 34×20 / 13 px), comfortable (rows 40, controls as
-  compact), touch (44 / 40 / 32 / 44×26 / 16 px); z-index: `z-base` `z-overlay` `z-panel` `z-popover`
-  `z-tooltip` `z-modal`; motion: `motion-fast`, `motion-base`, `motion-ease`;
+  compact), touch (44 / 40 / 32 / 44×26 / 16 px); z-index, bottom to top: `z-base` `z-overlay` `z-panel` `z-popover`
+  `z-modal` `z-tooltip`; motion: `motion-fast`, `motion-base`, `motion-ease`;
   `focus` (the focus ring shadow).
 
 The light theme redefines every color token (surfaces, text, semantic,

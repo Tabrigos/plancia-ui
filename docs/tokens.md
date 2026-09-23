@@ -26,7 +26,7 @@ written by hand anywhere else. Each group of the JSON becomes a prefix:
 | spacing | `space-1` (4 px) `space-2` (8) `space-3` (12) `space-4` (16) `space-6` (24) `space-8` (32) | a 4 px grid |
 | radii | `r1` (4 px) `r2` (8) `r3` (12) `r-pill` | |
 | density | `row`, `row-h`, `control-h`, `control-h-sm`, `toggle-w`, `toggle-h`, `input-size` | row padding and height, control sizes, input text: three densities, see below |
-| z-index | `z-base` `z-overlay` `z-panel` `z-popover` `z-tooltip` `z-modal` | named layers, never a number in a component |
+| z-index | `z-base` `z-overlay` `z-panel` `z-popover` `z-modal` `z-tooltip` | named layers, bottom to top, never a number in a component; a tooltip is above everything, a modal included |
 | motion | `motion-fast` (120 ms), `motion-base` (200 ms), `motion-ease` | |
 | focus | `focus` | the focus ring shadow used by `base.css` |
 
