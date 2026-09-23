@@ -59,6 +59,19 @@ All notable changes to plancia-ui. The format follows
   wide; on a phone it went down to 29 px.
 - `InfoCard`: on touch the summary is 32 px tall, and a link on a line of
   its own gets a 32 px tap area; nothing moves in the other densities.
+- Light theme: the text colors reach 4.5:1 on every surface and on their
+  own `-soft` background (chips, pressed buttons, the small `Segmented`);
+  they were between 3.6 and 4.5:1. Same hue and chroma, lower lightness in
+  OKLCH: `--p-accent` #0077b6 → #006399, `--p-ok` #047857 → #056c4e,
+  `--p-warn` #b45309 → #9b4603, `--p-yellow` #a16207 → #895201,
+  `--p-orange` #c2410c → #ab3500, `--p-info` #0369a1 → #026499;
+  `--p-danger`, `--p-neutral` and `--p-text-dim` darken by a hair. Their
+  `-soft` backgrounds, the four glows and the NOAA `--p-scale-*` ramp
+  follow, so a G2 bar and a G2 chip keep one color. The dark theme does
+  not change.
+- `Chip`: a free `color` stays readable in the light theme: the text leans
+  toward the text color (45 % in OKLab), 4.5:1 even for white, lime or
+  yellow. The dark theme keeps the pure color.
 - `FloatingPanel`: a body that scrolls with nothing focusable in it becomes
   a tab stop, so the keyboard can scroll it in Safari too (Chrome and
   Firefox did it by themselves).

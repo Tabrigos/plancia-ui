@@ -87,10 +87,11 @@ user switches, `readRequestedTheme()` for a `?theme=light` deep link,
 `parseTheme` and `applyTheme` for the pieces. The same entry exports the
 phone breakpoint, `PHONE_BREAKPOINT` (700 CSS pixels), `PHONE_MEDIA` for
 `matchMedia` and `isPhone()`: the project's own phone CSS writes the same
-number, since a custom property cannot enter a media query. In light the semantic colors are darker (amber, yellow and green
-readable on white): whatever draws with those colors on a `<canvas>` or in
-a 3D engine, which do not read custom properties, decides by itself whether
-to follow the theme. In Sidereus the globe, the Sun disk and the heliosphere
+number, since a custom property cannot enter a media query. In light the semantic colors are darker: every text color reaches 4.5:1
+on every surface and on its own `-soft` background (a chip, a pressed
+button), which the phone-width check in CI verifies with axe. Whatever
+draws with those colors on a `<canvas>` or in a 3D engine, which do not
+read custom properties, decides by itself whether to follow the theme. In Sidereus the globe, the Sun disk and the heliosphere
 stay dark because they are space.
 
 ## Density
