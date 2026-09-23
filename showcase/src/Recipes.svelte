@@ -10,11 +10,13 @@
   import { THEME_STORAGE_KEY } from './config'
   import RecipeCode from './RecipeCode.svelte'
   import ConsoleSection from './recipes/ConsoleSection.svelte'
+  import ExpandableRows from './recipes/ExpandableRows.svelte'
   import LayerList from './recipes/LayerList.svelte'
   import LayerRows from './recipes/LayerRows.svelte'
   import PanelOverStage from './recipes/PanelOverStage.svelte'
   import phoneLayoutSource from './recipes/PhoneLayout.svelte?raw'
   import consoleSectionSource from './recipes/ConsoleSection.svelte?raw'
+  import expandableRowsSource from './recipes/ExpandableRows.svelte?raw'
   import layerListSource from './recipes/LayerList.svelte?raw'
   import layerRowsSource from './recipes/LayerRows.svelte?raw'
   import panelOverStageSource from './recipes/PanelOverStage.svelte?raw'
@@ -61,6 +63,11 @@
       <h2 class="p-sec-title">Layers with details · a list and its states</h2>
       <div class="p-card demo"><LayerList /></div>
       <RecipeCode label="LayerList.svelte" source={layerListSource} />
+    </div>
+    <div>
+      <h2 class="p-sec-title">Rows that open · for a finger</h2>
+      <div class="p-card demo"><ExpandableRows /></div>
+      <RecipeCode label="ExpandableRows.svelte" source={expandableRowsSource} />
     </div>
     <div>
       <h2 class="p-sec-title">Layer rows · many layers, one line each</h2>

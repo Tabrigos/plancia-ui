@@ -63,8 +63,9 @@ project that uses the package follows the same rules in its own CSS.
 - Hover is a pointer thing: every `:hover` rule lives under
   `@media (hover: hover)`, so a tap on a phone does not leave the highlight
   stuck. Nothing is reachable only by hovering: `Tooltip` is silent on
-  touch, and what it would say has to exist elsewhere (`InfoButton`, a
-  visible label).
+  touch, and what it would say has to exist elsewhere: an `InfoButton` for
+  an explanation, an `ExpandableRow` for the detail of a row, a visible
+  label.
 
 ## Screens and touch
 

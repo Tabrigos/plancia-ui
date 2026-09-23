@@ -28,6 +28,17 @@ All notable changes to plancia-ui. The format follows
   app formats, kept inside the width. On touch the tooltip of a bar is
   silent, so without it a finger could not read a single bar. Requested
   by the reference consumer (#46).
+- `ExpandableRow`: a row that opens its detail below itself. The whole row
+  is a native button with `aria-expanded`, the detail a full-width line
+  under it; `open` is bindable and `onchange` reports every tap, so the
+  app keeps one row open at a time. The row's content and layout are the
+  app's (a flex row by default, a `subgrid` of a list with columns through
+  a class of its own). On touch the tooltip is silent, and several rows
+  carried their detail only in a `title`: this is where a finger reads it.
+  Requested by the reference consumer (#29).
+- Density token `--p-tap-h`: the least height of a line of text that is a
+  tap target, natural in compact and comfortable, `--p-control-h-sm`
+  (32 px) on touch. `ExpandableRow` reads it.
 - `Drawer`: a panel that slides in from a side of the app's container.
   `modal` (a phone, a short screen) puts it over the stage with a scrim
   that closes it, Esc and focus trapped inside, as a dialog; otherwise it

@@ -41,9 +41,12 @@ const DESCRIBE = `const describe = (element) => {
   return element.tagName.toLowerCase() + classes + (name ? ' "' + name + '"' : '')
 }`
 
+// A density value may name another token (`var(--p-control-h-sm)`): the page resolves both sides
 const DENSITY = `(() => {
   const style = getComputedStyle(document.documentElement)
-  return Object.fromEntries(${JSON.stringify(Object.keys(touch))}.map((key) => [key, style.getPropertyValue('--p-' + key).trim()]))
+  const read = (value) => (value.startsWith('var(') ? style.getPropertyValue(value.slice(4, -1)).trim() : value)
+  const expected = ${JSON.stringify(touch)}
+  return Object.fromEntries(Object.entries(expected).map(([key, value]) => [key, { got: style.getPropertyValue('--p-' + key).trim(), want: read(value) }]))
 })()`
 
 const TARGETS = `(() => { ${DESCRIBE}
@@ -78,7 +81,9 @@ const OVERFLOW = `(() => { ${DESCRIBE}
   const width = document.documentElement.clientWidth
   // A box that scrolls or clips its content keeps it inside: only what reaches the page counts
   const clipped = (element) => { for (let parent = element.parentElement; parent && parent !== document.body; parent = parent.parentElement) if (getComputedStyle(parent).overflowX !== 'visible') return true; return false }
-  const outside = [...document.querySelectorAll('body *')].filter((element) => element.getBoundingClientRect().right > width + 0.5 && !clipped(element))
+  // A box that sticks out, or text that spills out of its box (a nowrap title)
+  const spills = (element) => getComputedStyle(element).overflowX === 'visible' && element.getBoundingClientRect().left + element.scrollWidth > width + 0.5
+  const outside = [...document.querySelectorAll('body *')].filter((element) => (element.getBoundingClientRect().right > width + 0.5 || spills(element)) && !clipped(element))
   const outermost = outside.filter((element) => !outside.some((other) => other !== element && other.contains(element)))
   return { width, scrollWidth: document.documentElement.scrollWidth, outermost: outermost.slice(0, 10).map(describe) }
 })()`
@@ -107,7 +112,7 @@ try {
     writeFileSync(join(out, `${name}-${theme}-${WIDTH}.png`), await chrome.screenshot())
 
     const density = await chrome.evaluate(DENSITY)
-    const wrong = Object.entries(touch).filter(([key, value]) => density[key] !== value).map(([key, value]) => `--p-${key} is ${density[key] || 'unset'}, not ${value}`)
+    const wrong = Object.entries(density).filter(([, { got, want }]) => got !== want).map(([key, { got, want }]) => `--p-${key} is ${got || 'unset'}, not ${want}`)
     if (wrong.length) failures.push(`${where}: the touch density is not in effect on a phone: ${wrong.join('; ')}`)
 
     await chrome.evaluate(axe)

@@ -7,6 +7,7 @@
    */
   import { Age, Bars, Button, Chip, ControlRow, Drawer, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
+  import ExpandableRows from './recipes/ExpandableRows.svelte'
   import { version } from '../../package.json'
 
   import { applyTheme, readRequestedTheme, readStoredTheme, rememberTheme, type Theme } from 'plancia-ui'
@@ -451,6 +452,13 @@
           </div>
         </Drawer>
         <span class="p-t11 p-dim drawer-note">The page owns open and closed. Modal: the scrim and <Kbd>Esc</Kbd> close it, <Kbd>Tab</Kbd> stays inside, focus goes back to the button.</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="p-sec-title">Expandable rows</h2>
+      <div class="p-card demo">
+        <ExpandableRows />
+        <span class="p-t11 p-dim">A row that opens its detail below itself: the tooltip for the mouse, the detail for a finger. One open at a time is the page's rule; the recipe has the code.</span>
       </div>
     </div>
   </section>

@@ -31,6 +31,7 @@ export { default as Bars } from './components/Bars.svelte'
 export { default as List } from './components/List.svelte'
 export { default as ListItem } from './components/ListItem.svelte'
 export { default as Drawer } from './components/Drawer.svelte'
+export { default as ExpandableRow } from './components/ExpandableRow.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'
 export type { ButtonVariant, ButtonSize } from './components/Button.svelte'
