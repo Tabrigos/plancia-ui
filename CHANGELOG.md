@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-09-23
+
 ### Breaking
 - `Toggle`: `label` is required. The rows a toggle sits in (`ControlRow`,
   `SettingRow`, `ListItem`) are `div`s and do not name it, so a toggle
