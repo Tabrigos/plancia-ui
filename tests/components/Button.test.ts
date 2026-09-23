@@ -37,4 +37,12 @@ describe('Button', () => {
     button.click()
     expect(onclick).not.toHaveBeenCalled()
   })
+
+  it('adds a class of the app next to its own, never in its place', () => {
+    const { container } = render(Button, { props: { class: 'mine', variant: 'primary', type: 'submit' } })
+    const element = container.querySelector('button') as HTMLElement
+    for (const name of ['p-btn', 'primary', 'md', 'mine']) expect(element.classList.contains(name)).toBe(true)
+    // the app's native attributes still win over the defaults
+    expect(element.getAttribute('type')).toBe('submit')
+  })
 })

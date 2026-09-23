@@ -23,6 +23,7 @@
     uppercase = false,
     color,
     children,
+    class: consumerClass,
     ...rest
   }: HTMLAttributes<HTMLSpanElement> & {
     tone?: Tone
@@ -32,6 +33,8 @@
     uppercase?: boolean
     color?: string
     children?: Snippet
+    /** A class of the consumer, added next to the component's own */
+    class?: string
   } = $props()
 
   const custom = $derived(color
@@ -39,7 +42,7 @@
     : '')
 </script>
 
-<span class="p-chip {tone}" class:count class:small class:uppercase class:custom={Boolean(color)} style={custom} {...rest}>
+<span class="p-chip {tone} {consumerClass ?? ''}" class:count class:small class:uppercase class:custom={Boolean(color)} style={custom} {...rest}>
   {@render children?.()}
 </span>
 
