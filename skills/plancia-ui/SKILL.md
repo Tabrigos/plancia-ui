@@ -100,9 +100,13 @@ Accepts every native `<button>` attribute (`onclick`, `title`, `disabled`,
 
 **`Chip`** — `tone?: Tone` (`neutral`), `count?: boolean` (low 18 px counter
 variant), `small?: boolean` (same low height but with the tone, for scales in
-tables), `color?: string` (a free color, e.g. a satellite group's: background
-and border derive from it and override the tone). Content is the text, 22 px
-monospace. Accepts native `<span>` attributes (`title`).
+tables), `uppercase?: boolean` (a short label such as LIVE or an alert type,
+in the spaced uppercase of `p-sec-title` and its ui font: write the text in
+normal case, `Live`, the style uppercases it and a screen reader reads a
+word instead of spelling it), `color?: string` (a free color, e.g. a
+satellite group's: background and border derive from it and override the
+tone). Content is the text, 22 px monospace. Accepts native `<span>`
+attributes (`title`).
 
 **`Toggle`** — `checked?: boolean` (bindable, `false`), `disabled?: boolean`,
 `label: string` (required: the accessible name, usually the text of the
@@ -321,8 +325,8 @@ to the space they are in (`KeyValue` drops the value to a full line,
 
 - surfaces: `p-panel` (floating panel: s3a, border, r3, shadow), `p-card`
   (s2, border, r2), `p-inset` (inset, border, r2), `p-divider` (top border);
-- section title: `p-sec-title` (11 px, 600, uppercase spaced: the ONLY
-  spaced uppercase in the system);
+- section title: `p-sec-title` (11 px, 600, uppercase spaced: with
+  `Chip uppercase`, the only spaced uppercase in the system);
 - text: `p-mono`, `p-hi`, `p-dim`, `p-t11` `p-t12` `p-t13` `p-t14` `p-t16`
   `p-t20` `p-t28`, `p-w500`, `p-w600`, `p-nowrap`, `p-ellipsis`;
 - `p-help` (help cursor, goes with a `title`), `p-sr-only` (screen readers
@@ -432,7 +436,8 @@ A list of layers inside a console section:
   not an `rgba()` copied from the dark value (it breaks in light);
 - a project that already has tokens declares them as aliases of `--p-*` and
   migrates at its own pace;
-- spaced uppercase only with `p-sec-title`; one chip per status; one primary
+- spaced uppercase only with `p-sec-title` and in the short label of a
+  `Chip uppercase`, never in running text; one chip per status; one primary
   button per panel; one panel head only;
 - empty / error / warning states only with `Notice`; metadata with
   `MetaRow`; exclusive choices with `Segmented`;

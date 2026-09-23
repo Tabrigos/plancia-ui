@@ -171,6 +171,10 @@
           {#each [0, 1, 2, 3, 4, 5] as level (level)}<Chip tone={scaleTone(level)}>R{level}</Chip>{/each}
           <span class="p-t11 p-dim">scaleTone(level)</span>
         </div>
+        <div class="row-wrap">
+          <Chip uppercase tone="danger">Live</Chip><Chip uppercase tone="warn">Watch</Chip><Chip uppercase tone="orange">Warning</Chip><Chip uppercase tone="danger">Alert</Chip><Chip uppercase tone="info">Summary</Chip><Chip uppercase small>Forecast</Chip>
+          <span class="p-t11 p-dim">uppercase: a short label, written in normal case</span>
+        </div>
       </div>
     </div>
   </section>

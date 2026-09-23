@@ -8,12 +8,17 @@
    * semantic tone. `count` is the low (18 px) counter variant; `small`
    * the same low height but with the tone (scale levels in tables).
    * `color` overrides the tone with a free color (e.g. the color of a
-   * satellite group): background and border derive from it.
+   * satellite group): background and border derive from it. `uppercase`
+   * is a short label (LIVE, an alert type) in the spaced uppercase of
+   * `p-sec-title`, the only other place the system allows it: the text
+   * stays in normal case in the DOM, so a screen reader reads a word
+   * instead of spelling it.
    */
   let {
     tone = 'neutral',
     count = false,
     small = false,
+    uppercase = false,
     color,
     children,
     ...rest
@@ -21,6 +26,8 @@
     tone?: Tone
     count?: boolean
     small?: boolean
+    /** A short label in spaced uppercase, written in normal case by the app */
+    uppercase?: boolean
     color?: string
     children?: Snippet
   } = $props()
@@ -30,7 +37,7 @@
     : '')
 </script>
 
-<span class="p-chip {tone}" class:count class:small class:custom={Boolean(color)} style={custom} {...rest}>
+<span class="p-chip {tone}" class:count class:small class:uppercase class:custom={Boolean(color)} style={custom} {...rest}>
   {@render children?.()}
 </span>
 
@@ -44,6 +51,9 @@
   }
   .p-chip.count { height: 18px; padding: 0 6px; font-weight: 500; color: var(--p-text-dim); }
   .p-chip.small { height: 18px; padding: 0 6px; }
+  /* The spacing trails the last letter too: the right padding gives it back */
+  .p-chip.uppercase { padding-right: calc(8px - 0.08em); font-family: var(--p-font-ui); letter-spacing: 0.08em; text-transform: uppercase; }
+  .p-chip.small.uppercase { padding-right: calc(6px - 0.08em); }
   .p-chip.accent { background: var(--p-accent-soft); border-color: color-mix(in srgb, var(--p-accent) 35%, transparent); color: var(--p-accent); }
   .p-chip.ok { background: var(--p-ok-soft); border-color: color-mix(in srgb, var(--p-ok) 35%, transparent); color: var(--p-ok); }
   .p-chip.warn { background: var(--p-warn-soft); border-color: color-mix(in srgb, var(--p-warn) 35%, transparent); color: var(--p-warn); }
