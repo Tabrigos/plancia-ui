@@ -90,9 +90,11 @@ export async function launchChrome({ port = 9333 } = {}) {
     },
     async close() {
       socket.close()
+      const exited = new Promise((resolve) => chrome.once('exit', resolve))
       chrome.kill()
-      await sleep(200)
-      rmSync(profile, { recursive: true, force: true, maxRetries: 3 })
+      await Promise.race([exited, sleep(3000)])
+      // Windows may hold a profile file a moment longer: a temporary folder left behind is harmless
+      try { rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }) } catch {}
     },
   }
 }

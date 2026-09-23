@@ -1,6 +1,7 @@
 // The showcase at phone width, in CI: the rules of the touch density checked
 // in the DOM of a real Chrome, not as pixels, which differ between Windows
-// and Linux. For each theme, at 390 px:
+// and Linux. For each page (the components, the recipes, the phone layout
+// recipe full screen) and each theme, at 390 px:
 // - with a phone emulated (`pointer: coarse`), the density tokens of the
 //   root are the touch ones of tokens.json;
 // - every tap target is at least `--p-control-h-sm` (32 px on touch) both
@@ -9,7 +10,7 @@
 // - an axe audit (WCAG 2.2, A and AA) finds nothing;
 // - with the viewport held at 390 (phone emulation would widen it to fit
 //   the content) and the touch density, nothing sticks out.
-// A full-page screenshot per theme is saved to look at, never compared.
+// A full-page screenshot per page and theme is saved to look at, never compared.
 //
 //   node scripts/check-phone.mjs [showcase/dist] [phone-check]
 import { createServer } from 'node:http'
@@ -20,6 +21,15 @@ import { launchChrome } from './cdp.mjs'
 
 const [root = 'showcase/dist', out = 'phone-check'] = process.argv.slice(2).map((path) => resolve(path))
 const [WIDTH, HEIGHT] = [390, 844]
+const PAGES = [
+  { name: 'showcase', path: '' },
+  { name: 'recipes', path: 'recipes.html' },
+  // The phone layout is checked again with its drawer open, then with a sheet up
+  { name: 'phone-layout', path: 'recipes.html?only=phone', states: [
+    ['drawer open', `document.getElementById('open-nav').click()`],
+    ['a sheet up', `document.getElementById('pick-station').click()`],
+  ] },
+]
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' }
 const touch = JSON.parse(readFileSync(new URL('../src/tokens.json', import.meta.url), 'utf8')).density.touch
 const axe = readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'), 'utf8')
@@ -39,20 +49,24 @@ const DENSITY = `(() => {
 const TARGETS = `(() => { ${DESCRIBE}
   const minimum = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--p-control-h-sm'))
   const selector = 'button, a[href], input:not([type=hidden]), select, textarea, summary, [role=slider], [role=button], [tabindex]:not([tabindex="-1"])'
+  // Behind an open modal nothing is meant to be reached: only its own targets count
+  const modal = document.querySelector('[aria-modal="true"]')
   const seen = new Set()
   const small = []
   for (const element of document.querySelectorAll(selector)) {
     // A checkbox is tapped through its label, which is what a Toggle draws
     const target = element.matches('input[type=checkbox], input[type=radio]') ? (element.closest('label') ?? element) : element
-    if (seen.has(target) || element.disabled || target.closest('[inert], [hidden], [aria-hidden="true"]')) continue
+    if (seen.has(target) || element.disabled || target.closest('[inert], [hidden], [aria-hidden="true"]') || (modal && !modal.contains(target))) continue
     seen.add(target)
     if (element.matches('a') && getComputedStyle(element).display === 'inline') continue
-    if (!target.getBoundingClientRect().width || getComputedStyle(target).visibility === 'hidden') continue
+    // Not drawn: hidden, or in a closed <details>, whose content keeps a box
+    if (!target.getBoundingClientRect().width || !target.checkVisibility({ visibilityProperty: true })) continue
     target.scrollIntoView({ block: 'center', inline: 'center' })
     const box = target.getBoundingClientRect()
     const [x, y] = [box.left + box.width / 2, box.top + box.height / 2]
     const owns = (px, py) => { const hit = document.elementFromPoint(px, py); return hit !== null && target.contains(hit) }
-    if (!owns(x, y)) { small.push(describe(target) + ' covered by ' + describe(document.elementFromPoint(x, y))); continue }
+    const hit = document.elementFromPoint(x, y)
+    if (!hit || !target.contains(hit)) { small.push(describe(target) + (hit ? ' covered by ' + describe(hit) : ' out of reach at ' + Math.round(x) + ',' + Math.round(y))); continue }
     const reach = (dx, dy) => { let distance = 0; while (distance < 64 && owns(x + dx * (distance + 1), y + dy * (distance + 1))) distance++; return distance }
     const [width, height] = [reach(-1, 0) + reach(1, 0) + 1, reach(0, -1) + reach(0, 1) + 1]
     if (width < minimum || height < minimum) small.push(describe(target) + ' ' + width + '×' + height)
@@ -85,28 +99,38 @@ mkdirSync(out, { recursive: true })
 const failures = []
 const chrome = await launchChrome()
 try {
-  for (const theme of ['dark', 'light']) {
+  for (const { name, path, states = [] } of PAGES) for (const theme of ['dark', 'light']) {
+    const where = `${name}, ${theme}`
+    const url = (query) => `${origin}${path}${path.includes('?') ? '&' : '?'}${query}`
     await chrome.viewport(WIDTH, HEIGHT, { mobile: true })
-    await chrome.open(`${origin}?theme=${theme}`)
-    writeFileSync(join(out, `showcase-${theme}-${WIDTH}.png`), await chrome.screenshot())
+    await chrome.open(url(`theme=${theme}`))
+    writeFileSync(join(out, `${name}-${theme}-${WIDTH}.png`), await chrome.screenshot())
 
     const density = await chrome.evaluate(DENSITY)
     const wrong = Object.entries(touch).filter(([key, value]) => density[key] !== value).map(([key, value]) => `--p-${key} is ${density[key] || 'unset'}, not ${value}`)
-    if (wrong.length) failures.push(`${theme}: the touch density is not in effect on a phone: ${wrong.join('; ')}`)
-
-    const targets = await chrome.evaluate(TARGETS)
-    for (const target of targets.small) failures.push(`${theme}: tap target under ${targets.minimum} px: ${target}`)
+    if (wrong.length) failures.push(`${where}: the touch density is not in effect on a phone: ${wrong.join('; ')}`)
 
     await chrome.evaluate(axe)
-    for (const violation of await chrome.evaluate(AUDIT)) failures.push(`${theme}: axe ${violation}`)
+    let measured = 0
+    for (const [state, action] of [['on load', ''], ...states]) {
+      if (action) {
+        await chrome.evaluate(action)
+        await chrome.sleep(400)
+        writeFileSync(join(out, `${name}-${theme}-${WIDTH}-${state.replaceAll(' ', '-')}.png`), await chrome.screenshot())
+      }
+      const targets = await chrome.evaluate(TARGETS)
+      measured += targets.measured
+      for (const target of targets.small) failures.push(`${where}, ${state}: tap target under ${targets.minimum} px: ${target}`)
+      for (const violation of await chrome.evaluate(AUDIT)) failures.push(`${where}, ${state}: axe ${violation}`)
+    }
 
     await chrome.viewport(WIDTH, HEIGHT)
-    await chrome.open(`${origin}?theme=${theme}&density=touch`)
+    await chrome.open(url(`theme=${theme}&density=touch`))
     const overflow = await chrome.evaluate(OVERFLOW)
     if (overflow.scrollWidth > overflow.width || overflow.outermost.length) {
-      failures.push(`${theme}: the page is ${overflow.scrollWidth} px wide at ${overflow.width}: ${overflow.outermost.join(', ') || 'nothing found by box'}`)
+      failures.push(`${where}: the page is ${overflow.scrollWidth} px wide at ${overflow.width}: ${overflow.outermost.join(', ') || 'nothing found by box'}`)
     }
-    console.log(`${theme}: touch density on the root, ${targets.measured} tap targets measured, axe audit, overflow at ${WIDTH} px`)
+    console.log(`${where}: touch density on the root, ${measured} tap targets measured in ${1 + states.length} state(s), axe audit, overflow at ${WIDTH} px`)
   }
 } finally {
   await chrome.close()
@@ -117,4 +141,4 @@ if (failures.length) {
   console.error(`\n${failures.length} problem(s) at phone width:\n- ${failures.join('\n- ')}`)
   process.exit(1)
 }
-console.log(`the showcase holds at ${WIDTH} px in both themes; screenshots in ${out}`)
+console.log(`the showcase and the recipes hold at ${WIDTH} px in both themes; screenshots in ${out}`)
