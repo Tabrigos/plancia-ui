@@ -11,7 +11,7 @@ and the code disagree, the code wins and the document gets fixed.
 
 plancia-ui is a design system for dense consoles, dark by birth and light by
 choice: CSS **tokens** (`--p-*`), **base styles** (`p-*` classes) and
-**thirty-three Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
+**thirty-four Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
 and **no runtime dependency**: that is a rule, not an accident.
 
 ```
@@ -189,7 +189,7 @@ Rules:
   and the phone layout recipe (on load, with its drawer open, with a sheet
   up) at 390 px in a headless Chrome, in both themes: the touch density in effect on a coarse
   pointer, no tap target under `--p-control-h-sm` (32 px) either way
-  (hit-tested, a link inside a sentence exempt), an axe audit for WCAG 2.2
+  (hit-tested, a link inside a sentence and a tab panel exempt), an axe audit for WCAG 2.2
   A and AA, nothing sticking out. It measures the DOM and never compares
   pixels, which differ between Windows and Linux; its screenshots are kept
   as an artifact to look at;
