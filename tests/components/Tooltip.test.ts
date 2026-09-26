@@ -36,17 +36,33 @@ describe('Tooltip', () => {
     expect(el.getAttribute('aria-describedby')).toBe(tip.id)
   })
 
-  it('shows at once on focus and hides on Escape, restoring aria-describedby', async () => {
+  it('shows at once on focus next to the element\'s own descriptions, and hides on Escape', async () => {
     render(Tooltip)
     const el = button('Source unreachable')
-    el.setAttribute('aria-describedby', 'other')
+    el.setAttribute('aria-describedby', 'hint error')
     await fireEvent.focusIn(el)
     flushSync()
-    expect(screen.getByRole('tooltip').textContent).toBe('Source unreachable')
+    const tip = screen.getByRole('tooltip')
+    expect(tip.textContent).toBe('Source unreachable')
+    expect(el.getAttribute('aria-describedby')).toBe(`hint error ${tip.id}`)
     await fireEvent.keyDown(document, { key: 'Escape' })
     flushSync()
     expect(screen.queryByRole('tooltip')).toBeNull()
-    expect(el.getAttribute('aria-describedby')).toBe('other')
+    expect(el.getAttribute('aria-describedby')).toBe('hint error')
+  })
+
+  it('takes away only its own id, keeping a description the app changed while it showed', async () => {
+    render(Tooltip)
+    const el = button('Kp index')
+    el.setAttribute('aria-describedby', 'hint')
+    await fireEvent.focusIn(el)
+    flushSync()
+    const tip = screen.getByRole('tooltip')
+    // The app writes the whole attribute again, as Svelte does when an error appears
+    el.setAttribute('aria-describedby', `hint error ${tip.id}`)
+    await fireEvent.focusOut(el)
+    flushSync()
+    expect(el.getAttribute('aria-describedby')).toBe('hint error')
   })
 
   it('hides on pointerdown and on pointerout, and ignores elements without a title', async () => {
