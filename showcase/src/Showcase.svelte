@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Select, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import ExpandableRows from './recipes/ExpandableRows.svelte'
   import { version } from '../../package.json'
@@ -17,6 +17,14 @@
   let layers = $state([true, false, true])
   let units = $state('km')
   let clock = $state('utc')
+  const places = [
+    { id: 'rome', label: 'Rome' }, { id: 'kiruna', label: 'Kiruna' }, { id: 'svalbard', label: 'Svalbard' },
+    { id: 'mauna-kea', label: 'Mauna Kea' }, { id: 'atacama', label: 'Atacama' }, { id: 'baikonur', label: 'Baikonur', disabled: true },
+  ]
+  const longPlaces = [...places, { id: 'canberra', label: 'Canberra Deep Space Communication Complex' }]
+  let place = $state('kiruna')
+  // A point picked on the globe is none of the places: the row shows the placeholder
+  let rowPlace = $state('lat-41.9-lon-12.5')
   let on = $state(true)
   // 'auto' leaves the density to the root: touch by itself on a coarse pointer.
   // `?density=touch` picks one from the URL, for screenshots, like `?theme=`.
@@ -498,6 +506,36 @@
       </div>
     </div>
   </section>
+  <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">Select</h2>
+      <div class="p-card demo">
+        <div class="row-wrap">
+          <Select label="Observer" items={places} bind:value={place} />
+          <Select label="Observer, small" size="sm" items={places} bind:value={place} />
+          <span class="p-t12 p-dim">{place}</span>
+        </div>
+        <div class="row-wrap">
+          <Select label="Observer, not chosen" items={places} value="" placeholder="Choose a place" />
+          <Select label="Observer, disabled" items={places} value="rome" disabled />
+          <Select label="Observer, narrow" class="narrow-select" items={longPlaces} value="canberra" />
+        </div>
+        <span class="p-t11 p-dim">A native select: a phone opens its own picker, a typed letter jumps to the place. Baikonur is disabled; a long name ends in an ellipsis when the app narrows it.</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="p-sec-title">Select in a row</h2>
+      <div class="p-card">
+        <div class="rows">
+          <SettingRow label="Observer">
+            <Select label="Observer" size="sm" class="narrow-select" items={places} bind:value={rowPlace} placeholder="Choose a place" />
+          </SettingRow>
+          <SettingRow label="Orbit lines"><Toggle checked label="Orbit lines" /></SettingRow>
+        </div>
+      </div>
+      <p class="p-t11 p-dim after-card">The row names it, as it names a Toggle: <code>label</code> carries the same text. A point picked on the globe is none of the places, so the placeholder shows until one is chosen.</p>
+    </div>
+  </section>
 </main>
 
 <style>
@@ -528,6 +566,8 @@
   .type { padding: 4px 16px; }
   .type-row { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; padding: 8px 0; }
   .type-row + .type-row { border-top: 1px solid var(--p-border); }
+  :global(.narrow-select) { width: 130px; }
+  .after-card { margin-top: 8px; }
   .demo { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
   .row-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .metric { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--p-t12); }
