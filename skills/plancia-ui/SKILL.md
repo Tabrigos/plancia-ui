@@ -66,6 +66,9 @@ Never alias the package sources: the contract is `dist`.
 | an action | `Button` | one primary per panel |
 | status, scale level, band, counter | `Chip` | `scaleTone(level)` for NOAA levels 0–5 |
 | a switch | `Toggle` | a real checkbox, `bind:checked`, `label` required |
+| an option the user sets, with its text beside it | `Checkbox` | named by its own `label`; a setting that acts at once, in a row that names it, is a `Toggle` |
+| one choice among a few, each with words or a hint | `RadioGroup` | a legend names the group, the arrows move the choice |
+| the controls that answer one question | `Fieldset` | a legend read on entering the group: the checkboxes of a filter |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
 | head of a floating panel | `PanelHead` | close button always last |
@@ -83,7 +86,7 @@ Never alias the package sources: the contract is `dist`.
 | gradient legend of a layer | `Legend` | |
 | dot legend of what is drawn elsewhere | `LegendDots` | globe, canvas |
 | metadata under a card | `MetaRow` | data age, thresholds, notes, small actions |
-| exclusive choice among a few options | `Segmented` | `size="sm"` inline |
+| exclusive choice among two to four short words, in a row | `Segmented` | `size="sm"` inline; options that need words or a hint are a `RadioGroup` |
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
 | a row whose detail (the full text, the end of a pass) must reach a finger | `ExpandableRow` | the whole row is the button, the detail a line under it; the tooltip stays for the mouse |
@@ -96,7 +99,7 @@ Never alias the package sources: the contract is `dist`.
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`, `StatusKind`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -123,6 +126,43 @@ next to the component's own.
 row; `ControlRow`, `SettingRow` and `ListItem` are `div`s and do not name
 the toggle), `title?: string`, `onchange?: (checked: boolean) => void`.
 Renders a real `<input type="checkbox">`.
+
+**`Checkbox`** — a native `<input type="checkbox">` with its text beside it:
+`checked?: boolean` (bindable, `false`), `label: string` (required: the
+visible text and the accessible name), `hint?: string` (a dim second line,
+read as the description, not as part of the name), `indeterminate?:
+boolean` (bindable: neither on nor off, a "select all" over a partial
+selection; a tap clears it), `disabled?: boolean`, `name?`, `value?` (for a
+native form), `title?: string`, `onchange?: (checked: boolean) => void`. A
+tap on the text toggles it; on touch the row is as tall as `--p-tap-h`
+(32 px), in compact it keeps the height of its text. The box is 14 px, 20
+on touch, outlined at 3:1 on every surface. Use it for an option the user
+sets (a filter, a form); a setting that acts at once in a row that names it
+is a `Toggle`. The checkboxes of one question go in a `Fieldset`; a "select
+all" is `checked={all}` and `indeterminate={some && !all}`.
+
+**`RadioGroup`** — one choice among a few, each with its text: native radios
+sharing a name in a `<fieldset role="radiogroup">`. `legend: string`
+(required: the question, read on entering the group), `items: RadioItem[]`
+where `RadioItem = { id: string; label: string; hint?: string; disabled?:
+boolean }`, `value?: string` (bindable, the `id` of the checked item),
+`hint?: string` (under the legend, the group's description),
+`legendHidden?: boolean` (read but not shown, when a heading or a row
+beside it already says it), `inline?: boolean` (a wrapping row instead of a
+column), `disabled?: boolean`, `name?: string` (for a native form; generated
+when absent), `onchange?: (id: string) => void`. The browser does the
+keyboard: Tab enters on the checked option, the arrows move the choice and
+skip a disabled one. Two to four short words in a row are a `Segmented`; a
+long list is a select.
+
+**`Fieldset`** — the controls that answer one question: a native
+`<fieldset>` with its `<legend>`. `legend: string` (required), `hint?:
+string` (under the legend, the group's description), `legendHidden?:
+boolean`, `inline?: boolean` (a wrapping row, 16 px apart; the default is a
+column, 4 px apart), `disabled?: boolean` (disables every control inside,
+natively), content = the controls (required), `class` added next to its
+own, other attributes on the fieldset. Legend 12 px, 500, high text; hint
+11 px dim. `RadioGroup` is one already.
 
 **`KeyValue`** — `label: string`, `sub?: string` (secondary second line),
 `subTone?: Tone`, `tone?: Tone` (colors the value), `title?: string` (native

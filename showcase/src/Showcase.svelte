@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Chip, ControlRow, Drawer, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import ExpandableRows from './recipes/ExpandableRows.svelte'
   import { version } from '../../package.json'
@@ -14,6 +14,9 @@
   import { THEME_STORAGE_KEY } from './config'
 
   let mode = $state('tracking')
+  let layers = $state([true, false, true])
+  let units = $state('km')
+  let clock = $state('utc')
   let on = $state(true)
   // 'auto' leaves the density to the root: touch by itself on a coarse pointer.
   // `?density=touch` picks one from the URL, for screenshots, like `?theme=`.
@@ -459,6 +462,39 @@
       <div class="p-card demo">
         <ExpandableRows />
         <span class="p-t11 p-dim">A row that opens its detail below itself: the tooltip for the mouse, the detail for a finger. One open at a time is the page's rule; the recipe has the code.</span>
+      </div>
+    </div>
+  </section>
+  <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">Checkbox · Fieldset</h2>
+      <div class="p-card demo">
+        <Fieldset legend="Layers" hint="Shown on the globe">
+          <Checkbox label="All layers" checked={layers.every(Boolean)} indeterminate={layers.some(Boolean) && !layers.every(Boolean)}
+                    onchange={(all) => { layers = layers.map(() => all) }} />
+          <Checkbox label="Space stations" bind:checked={layers[0]} />
+          <Checkbox label="Starlink" hint="About 7,000 objects: the globe slows down on an old phone" bind:checked={layers[1]} />
+          <Checkbox label="Debris" bind:checked={layers[2]} />
+        </Fieldset>
+        <Fieldset legend="Disabled" inline>
+          <Checkbox label="Checked" checked disabled />
+          <Checkbox label="Not checked" disabled />
+          <Checkbox label="Neither" indeterminate disabled />
+        </Fieldset>
+        <span class="p-t11 p-dim">A checkbox is named by its own text; a Toggle, by the row it sits in. "All layers" is indeterminate while the selection is partial.</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="p-sec-title">Radio group</h2>
+      <div class="p-card demo">
+        <RadioGroup legend="Units" hint="For distances and altitudes" bind:value={units} items={[
+          { id: 'km', label: 'Kilometres' },
+          { id: 'mi', label: 'Miles', hint: 'Statute miles, 1,609 m' },
+          { id: 'nmi', label: 'Nautical miles', hint: 'Only at sea', disabled: true },
+        ]} />
+        <RadioGroup legend="Clock" inline bind:value={clock} items={[{ id: 'utc', label: 'UTC' }, { id: 'local', label: 'Local time' }]} />
+        <RadioGroup legend="Source, disabled" disabled value="noaa" items={[{ id: 'noaa', label: 'NOAA SWPC' }, { id: 'esa', label: 'ESA SWE' }]} />
+        <span class="p-t11 p-dim">units: {units} · clock: {clock}. Tab enters on the checked option, the arrows move it. Two to four short words in a row are a Segmented.</span>
       </div>
     </div>
   </section>

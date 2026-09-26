@@ -6,7 +6,7 @@
 
 A design system for dense consoles — mission control, monitoring,
 dashboards, control panels — in Svelte 5: CSS tokens, base styles and
-twenty-nine components, **dark by birth and light by choice**, sized for a
+thirty-two components, **dark by birth and light by choice**, sized for a
 mouse and for a finger. "Plancia" is the bridge of a ship. It was born in
 the cockpit of [Sidereus](https://github.com/Tabrigos/Sidereus), satellite
 tracking and space weather, and is made to be reused.
@@ -67,7 +67,8 @@ finger; `MetaRow` for the age and the fine print under a card.
 and `LegendDots`; `Sparkline` and `Bars`.
 
 **Controls** — `Button`, `Toggle`, `Segmented`, `InfoButton` with its
-`InfoCard`, `Kbd`.
+`InfoCard`, `Kbd`; `Checkbox` and `RadioGroup` with their text beside them,
+and `Fieldset` to put the controls of one question under a legend.
 
 **For the whole page** — `Tooltip`, one themed tooltip for every `title`,
 silent on touch; `LiveRegion` with `announce()` for screen readers; the
