@@ -13,43 +13,39 @@ small fix a consumer needs now.
 
 ## 0.9.0 — inputs
 
-A console design system needs form controls even if the reference
-consumer uses few: `Select`, `NumberField`, `Checkbox`, `Radio`, `Tabs`
-with panels and keyboard. Designed as one family (same heights as `Button`
-and `Toggle`, same focus ring, same tones, touch density from the first
-sketch), shipped together, each with its recipe and checked at phone
-width in CI from the start.
+The controls a console needs, designed as one family (same heights as
+`Button` and `Toggle`, same focus ring, same tones, touch density from the
+first sketch), each checked at phone width in CI from the start. The band
+was cut on 2026-09-26 by the inventory of the reference consumer's form
+controls (#59): one select, a mode switch that behaves like tabs, and no
+typed input besides a search.
 
-Decided on 2026-09-26, with the band:
+- **`Checkbox`, `RadioGroup`, `Fieldset`**: choices with their text beside
+  them, native, under a legend. Small and basic to any console, done first;
+- **`Select`**, native with the look of the theme, for a long list (short
+  ones go to radios). Its first use is a picker of 20 places inside a
+  `SettingRow`, so it is named by a `label` of its own, like `Toggle`;
+- **`Tabs`** with panels and keyboard (arrows, Home/End, one tab stop,
+  activation on focus when the panel shows at once): the reference
+  consumer's mode switch, a `Segmented` today that swaps the whole console
+  below it. Three tabs must fit a 280 px sidebar and a 390 px phone;
+- **`Tooltip` adds its id** to the anchor's `aria-describedby` instead of
+  replacing it while it shows;
+- a recipe with the new controls, in the phone-width check.
 
-- **`Field`**, the one way a control is named: a visible label bound
-  with `<label for>`, a hint and an error message tied to the control
-  with `aria-describedby`, hint first. It generates the ids, so no control
-  repeats `label`/`hint`/`error` props of its own. `SettingRow` stays the
-  label-left, control-right shape of a setting;
-- **an error state for a field**, set by the app after it validates (the
-  package never validates): `aria-invalid` and the message tied to the
-  control, not a `role="alert"` of its own; a border token for it in both
-  themes, 3:1 against the surface; the skill says to validate on submit,
-  not when the user leaves a field;
-- **`Tooltip` adds its id to the anchor's `aria-describedby`** instead of
-  replacing it while it shows, so a field's hint and error are still read
-  on focus;
-- the order: `Tooltip`, then `Checkbox` and `Radio` (short lists go to
-  radios, so `Select` is for long ones), `Field` and the error state,
-  `Select`, `NumberField` (`type="text"` with `inputmode`, none when a
-  negative value is allowed), `Tabs` last, then the recipes "a settings
-  form" and "a filter bar". The inventory of the reference consumer's
-  form controls, asked for as an issue, adjusts `Select`, `NumberField`
-  and `Field` when it comes.
-
-Next to them, what the reference consumer finds while it adopts 0.8.0
-(its lists on `List` and `ExpandableRow`, its drawer on `Drawer`) becomes
-issues here, as `Bars.readout` and `ExpandableRow` came from its phone work
-for 0.8.0.
+Next to them, what the reference consumer finds becomes issues here, as
+`ExpandableRow` under a universal reset (#56) did.
 
 ## Later — waiting for a second use
 
+- `Field`, the error state of a field and `NumberField`, waiting for a
+  first use: the reference consumer asks for no typed input (#59). Designed
+  on 2026-09-26 so they start from somewhere: `Field` binds a visible label
+  with `<label for>` and ties a hint and an error to the control with
+  `aria-describedby`, hint first; the error is set by the app after it
+  validates, with `aria-invalid` and a border token at 3:1 in both themes,
+  never a `role="alert"` of its own; `NumberField` is `type="text"` with
+  `inputmode`, none when a negative value is allowed.
 - `Combobox` (the satellite search), `Transport` (playback pill),
   `Scrubber` (frame slider), `DataTable` (passes list, system console):
   one use each in Sidereus today. When `DataTable` comes, its first column
