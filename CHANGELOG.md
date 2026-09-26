@@ -6,6 +6,19 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `Checkbox`: a native checkbox with its text beside it, named by its own
+  `label`, with a `hint` read as its description and an `indeterminate`
+  state for a "select all". The whole row is the tap target, 32 px on touch.
+  A `Toggle` stays the switch of a row that names it.
+- `RadioGroup`: one choice among a few options that need words or a hint,
+  as native radios under a legend (`role="radiogroup"`): the browser moves
+  the choice with the arrow keys. `value` is bindable; the `RadioItem` type
+  is exported.
+- `Fieldset`: the controls that answer one question, under a `legend` a
+  screen reader reads on entering the group, with an optional hint, a
+  hidden legend and a row layout.
+
 ### Fixed
 - `ExpandableRow`: on touch the row keeps its 32 px under a universal
   reset the app loads after the package (`* { margin: 0; padding: 0 }`),

@@ -11,7 +11,7 @@ and the code disagree, the code wins and the document gets fixed.
 
 plancia-ui is a design system for dense consoles, dark by birth and light by
 choice: CSS **tokens** (`--p-*`), **base styles** (`p-*` classes) and
-**twenty-nine Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
+**thirty-two Svelte 5 components**. It has one peer dependency (`svelte` ≥ 5)
 and **no runtime dependency**: that is a rule, not an accident.
 
 ```
