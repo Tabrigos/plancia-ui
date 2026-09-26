@@ -47,6 +47,12 @@ describe('ExpandableRow', () => {
     // Asserted on the scoped CSS: jsdom does not lay out
     expect(source).toContain(':where(.p-expandable) {')
     expect(source).toContain(':where(.p-expandable-detail) {')
-    expect(source).toContain('padding: max(0px, calc((var(--p-tap-h) - 1lh) / 2)) 0;')
+    expect(source).toContain('padding-block: max(0px, calc((var(--p-tap-h) - 1lh) / 2));')
+  })
+
+  it('keeps its touch height under a universal reset the app loads after it', () => {
+    // A type selector outside :where() weighs 0-0-1: more than `*`, less than a class
+    expect(source).toContain(':global(button):where(.p-expandable) { padding-block:')
+    expect(source).toContain(':global(div):where(.p-expandable-detail) { padding-bottom: 4px; }')
   })
 })

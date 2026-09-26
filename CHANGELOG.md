@@ -6,6 +6,13 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `ExpandableRow`: on touch the row keeps its 32 px under a universal
+  reset the app loads after the package (`* { margin: 0; padding: 0 }`),
+  which left it as tall as its text. The padding that gives the height now
+  weighs as much as an element: more than the reset, still less than a
+  class of the app (#56).
+
 ## [0.8.0] — 2026-09-23
 
 ### Breaking

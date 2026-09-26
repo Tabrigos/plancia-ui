@@ -12,7 +12,7 @@
    * text of a truncated message, the end of a pass) needs a place a finger
    * reaches: this is it; the tooltip stays for the mouse. The row's content
    * and its layout are the app's (a flex row, or `subgrid` in a list with
-   * columns: every default here has zero specificity, so a class of the
+   * columns: every default here weighs less than a class, so a class of the
    * app wins). On touch the row is as tall as a small control.
    */
   let {
@@ -59,13 +59,18 @@
   /* Zero specificity: the app lays the row out with a class of its own */
   :where(.p-expandable) {
     display: flex; align-items: baseline; gap: 8px; grid-column: 1 / -1; width: 100%; margin: 0;
-    padding: max(0px, calc((var(--p-tap-h) - 1lh) / 2)) 0; border: 0; border-radius: var(--p-r1);
+    padding-inline: 0; border: 0; border-radius: var(--p-r1);
     background: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
   }
   :where(.p-expandable-detail) {
-    grid-column: 1 / -1; padding-bottom: 4px;
+    grid-column: 1 / -1;
     font-family: var(--p-font-ui); font-size: var(--p-t11); line-height: 1.45; color: var(--p-text-dim); white-space: normal;
   }
+  /* The weight of an element, not zero: a universal reset loaded after the
+     package (`* { padding: 0 }`) would take the touch height away, while a
+     class of the app still wins */
+  :global(button):where(.p-expandable) { padding-block: max(0px, calc((var(--p-tap-h) - 1lh) / 2)); }
+  :global(div):where(.p-expandable-detail) { padding-bottom: 4px; }
   .p-expandable-detail[hidden] { display: none; }
   /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
   @media (hover: hover) {
