@@ -24,9 +24,11 @@ const [root = 'showcase/dist', out = 'phone-check'] = process.argv.slice(2).map(
 const [WIDTH, HEIGHT] = [390, 844]
 const PAGES = [
   { name: 'showcase', path: '' },
-  // The recipes are checked again under the reset many apps load after the
-  // package: a default of the package that loses to it is a target gone small
+  // The recipes are checked again with the settings on their second tab, then
+  // under the reset many apps load after the package: a default of the
+  // package that loses to it is a target gone small
   { name: 'recipes', path: 'recipes.html', states: [
+    ['settings on Filters', `[...document.querySelectorAll('[role=tab]')].find((tab) => tab.textContent === 'Filters').click()`],
     ['under a universal reset', `document.head.append(Object.assign(document.createElement('style'), { textContent: '* { margin: 0; padding: 0 }' }))`],
   ] },
   // The phone layout is checked again with its drawer open, then with a sheet up

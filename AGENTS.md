@@ -185,7 +185,8 @@ Rules:
   subpath exports imported from plain Node, svelte-check and build of the
   showcase, the showcase at phone width, `npm pack --dry-run`. A red PR is
   not merged. The phone-width check runs the built showcase, the recipes
-  (on load and under a universal reset, `* { margin: 0; padding: 0 }`)
+  (on load, with the settings recipe on its second tab, and under a universal
+  reset, `* { margin: 0; padding: 0 }`)
   and the phone layout recipe (on load, with its drawer open, with a sheet
   up) at 390 px in a headless Chrome, in both themes: the touch density in effect on a coarse
   pointer, no tap target under `--p-control-h-sm` (32 px) either way
