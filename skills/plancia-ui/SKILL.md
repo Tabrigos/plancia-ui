@@ -27,7 +27,11 @@ what changed.
    ```
    `base.css` draws the focus ring (`--p-focus`, a `box-shadow`) on every
    focusable element: remove the project's own `:focus` / `:focus-visible`
-   rules that set an `outline`, or the rings become two.
+   rules that set an `outline`, or the rings become two. A universal reset
+   of the project (`* { margin: 0; padding: 0 }`) goes in a cascade layer,
+   `@layer reset { … }`: the few defaults of the package meant to lose to a
+   class of the app weigh nothing (the spacing between the blocks of a
+   `ListItem` body), and an unlayered reset loaded after them wins too.
 3. Theme: dark is `:root`; light is enabled by putting `data-theme="light"`
    on the root element BEFORE mount (the package never decides it). The
    helpers do it with a storage key the app chooses, imported from
@@ -286,7 +290,9 @@ tooltip for the mouse, usually the same fact as the detail), `id?` (of the
 detail, generated when absent), snippet `detail` (required), content = the
 row (required), `class` added next to its own, other attributes on the
 button. Default layout: a flex row, baseline-aligned, 8 px gap; every
-default has zero specificity, so a class of the app lays it out. In a list
+default weighs less than a class, so a class of the app lays it out (the
+vertical padding that gives the touch height weighs as much as an element,
+so a universal reset loaded after the package does not take it away). In a list
 with columns make the row a subgrid of the list:
 `.row { display: grid; grid-template-columns: subgrid; gap: normal }` (the
 `gap: normal` gives back the list's own gap); the detail spans all the

@@ -1,7 +1,7 @@
 // The showcase at phone width, in CI: the rules of the touch density checked
 // in the DOM of a real Chrome, not as pixels, which differ between Windows
-// and Linux. For each page (the components, the recipes, the phone layout
-// recipe full screen) and each theme, at 390 px:
+// and Linux. For each page (the components, the recipes, also under a
+// universal reset, the phone layout recipe full screen) and each theme, at 390 px:
 // - with a phone emulated (`pointer: coarse`), the density tokens of the
 //   root are the touch ones of tokens.json;
 // - every tap target is at least `--p-control-h-sm` (32 px on touch) both
@@ -23,7 +23,11 @@ const [root = 'showcase/dist', out = 'phone-check'] = process.argv.slice(2).map(
 const [WIDTH, HEIGHT] = [390, 844]
 const PAGES = [
   { name: 'showcase', path: '' },
-  { name: 'recipes', path: 'recipes.html' },
+  // The recipes are checked again under the reset many apps load after the
+  // package: a default of the package that loses to it is a target gone small
+  { name: 'recipes', path: 'recipes.html', states: [
+    ['under a universal reset', `document.head.append(Object.assign(document.createElement('style'), { textContent: '* { margin: 0; padding: 0 }' }))`],
+  ] },
   // The phone layout is checked again with its drawer open, then with a sheet up
   { name: 'phone-layout', path: 'recipes.html?only=phone', states: [
     ['drawer open', `document.getElementById('open-nav').click()`],
