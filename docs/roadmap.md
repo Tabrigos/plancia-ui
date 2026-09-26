@@ -11,30 +11,12 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.9.0 — inputs
+## Next — not decided yet
 
-The controls a console needs, designed as one family (same heights as
-`Button` and `Toggle`, same focus ring, same tones, touch density from the
-first sketch), each checked at phone width in CI from the start. The band
-was cut on 2026-09-26 by the inventory of the reference consumer's form
-controls (#59): one select, a mode switch that behaves like tabs, and no
-typed input besides a search.
-
-- **`Checkbox`, `RadioGroup`, `Fieldset`**: choices with their text beside
-  them, native, under a legend. Small and basic to any console, done first;
-- **`Select`**, native with the look of the theme, for a long list (short
-  ones go to radios). Its first use is a picker of 20 places inside a
-  `SettingRow`, so it is named by a `label` of its own, like `Toggle`;
-- **`Tabs`** with panels and keyboard (arrows, Home/End, one tab stop,
-  activation on focus when the panel shows at once): the reference
-  consumer's mode switch, a `Segmented` today that swaps the whole console
-  below it. Three tabs must fit a 280 px sidebar and a 390 px phone;
-- **`Tooltip` adds its id** to the anchor's `aria-describedby` instead of
-  replacing it while it shows;
-- a recipe with the new controls, in the phone-width check.
-
-Next to them, what the reference consumer finds becomes issues here, as
-`ExpandableRow` under a universal reset (#56) did.
+0.9.0 shipped the inputs on 2026-09-26. The next band comes from what the
+reference consumer finds while it adopts `Select` (its place picker) and
+`Tabs` (its mode switch), as issues here, and from the road to 1.0 below;
+the maintainer picks it.
 
 ## Later — waiting for a second use
 
