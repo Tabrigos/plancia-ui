@@ -12,6 +12,11 @@ All notable changes to plancia-ui. The format follows
   which left it as tall as its text. The padding that gives the height now
   weighs as much as an element: more than the reset, still less than a
   class of the app (#56).
+- `Tooltip`: while it shows, its id is added after the element's own
+  `aria-describedby` instead of replacing it, so a description the element
+  already had (a hint, an error) is still read. On hiding it takes away
+  only its own id, where it used to put back the value it found, undoing a
+  description the app had changed in the meantime.
 
 ## [0.8.0] — 2026-09-23
 

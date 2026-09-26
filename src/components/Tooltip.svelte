@@ -12,7 +12,7 @@
    * nothing of its own) and renders in a glass box below — or above — the
    * element, inside the window, on the side that covers less of the
    * elements in `avoid` (the arithmetic is in `tooltip-placement.ts`). While
-   * visible the anchor gets `aria-describedby`.
+   * visible its id is added to the anchor's `aria-describedby`.
    * Silent on touch: a finger does not hover, and the focus a tap gives on
    * some phones is not a request to read; `InfoButton` explains things there.
    * Keep writing `title`: this is the only change.
@@ -42,7 +42,6 @@
 
   let timer: ReturnType<typeof setTimeout> | null = null
   let anchor: Element | null = null
-  let describedBefore: string | null = null
   /** When a finger last touched the page: the focus that follows a tap is not a hover */
   let lastTouch = -Infinity
   const TOUCH_FOCUS_WINDOW = 1000
@@ -77,23 +76,29 @@
     above = p.above
   }
 
+  // Next to the anchor's own descriptions, never in their place, and taken
+  // away alone: a field's hint and error are still read with the tooltip,
+  // and a description the app changes meanwhile is not rolled back
+  function describe(target: Element, withTip: boolean): void {
+    const ids = (target.getAttribute('aria-describedby') ?? '').split(/\s+/).filter((id) => id && id !== tipId)
+    if (withTip) ids.push(tipId)
+    if (ids.length) target.setAttribute('aria-describedby', ids.join(' '))
+    else target.removeAttribute('aria-describedby')
+  }
+
   function show(target: Element): void {
     const tip = target.getAttribute('data-tip')
     if (!tip) return
     anchor = target
     text = tip
     visible = true
-    describedBefore = target.getAttribute('aria-describedby')
-    target.setAttribute('aria-describedby', tipId)
+    describe(target, true)
     requestAnimationFrame(() => anchor && place(anchor))
   }
 
   function hide(): void {
     if (timer) { clearTimeout(timer); timer = null }
-    if (anchor) {
-      if (describedBefore === null) anchor.removeAttribute('aria-describedby')
-      else anchor.setAttribute('aria-describedby', describedBefore)
-    }
+    if (anchor) describe(anchor, false)
     visible = false
     anchor = null
   }
