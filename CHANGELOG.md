@@ -23,6 +23,11 @@ All notable changes to plancia-ui. The format follows
   `Toggle`; a `placeholder` shows while the value is none of the items;
   `size="sm"` for a row. Its text stays 16 px on touch, so iOS does not
   zoom. The `SelectItem` type is exported.
+- `Tabs`: tabs that swap the panel under them, with the ids and the roles
+  tied by the package and the keyboard of the WAI-ARIA tabs pattern: one tab stop,
+  the arrow keys choose, Home and End go to the ends. The panel is a
+  snippet that receives the chosen `id`; the tabs share the width and their
+  text wraps in a narrow sidebar. The `TabItem` type is exported.
 
 ### Fixed
 - `ExpandableRow`: on touch the row keeps its 32 px under a universal

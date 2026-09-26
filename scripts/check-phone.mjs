@@ -6,7 +6,8 @@
 //   root are the touch ones of tokens.json;
 // - every tap target is at least `--p-control-h-sm` (32 px on touch) both
 //   ways, measured by hit-testing, so an area a pseudo element enlarges
-//   counts; a link inside running text is exempt, as in WCAG 2.5.8;
+//   counts; a link inside running text is exempt, as in WCAG 2.5.8, and so
+//   is a tab panel, which takes the focus for the keyboard only;
 // - an axe audit (WCAG 2.2, A and AA) finds nothing;
 // - with the viewport held at 390 (phone emulation would widen it to fit
 //   the content) and the touch density, nothing sticks out.
@@ -55,7 +56,8 @@ const DENSITY = `(() => {
 
 const TARGETS = `(() => { ${DESCRIBE}
   const minimum = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--p-control-h-sm'))
-  const selector = 'button, a[href], input:not([type=hidden]), select, textarea, summary, [role=slider], [role=button], [tabindex]:not([tabindex="-1"])'
+  // A tab panel takes the focus for the keyboard only: nothing happens when it is tapped
+  const selector = 'button, a[href], input:not([type=hidden]), select, textarea, summary, [role=slider], [role=button], [tabindex]:not([tabindex="-1"]):not([role=tabpanel])'
   // Behind an open modal nothing is meant to be reached: only its own targets count
   const modal = document.querySelector('[aria-modal="true"]')
   const seen = new Set()

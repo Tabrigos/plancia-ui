@@ -69,6 +69,7 @@ Never alias the package sources: the contract is `dist`.
 | an option the user sets, with its text beside it | `Checkbox` | named by its own `label`; a setting that acts at once, in a row that names it, is a `Toggle` |
 | one choice among a few, each with words or a hint | `RadioGroup` | a legend names the group, the arrows move the choice |
 | one choice from a long list (places, sources) | `Select` | native: a phone opens its own picker; named by `label`, like `Toggle` |
+| a control that swaps a large panel under it (the modes of a console) | `Tabs` | the tabs and their panel tied by the package; the arrows choose; a view of the same data is a `Segmented` |
 | the controls that answer one question | `Fieldset` | a legend read on entering the group: the checkboxes of a filter |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
@@ -100,7 +101,7 @@ Never alias the package sources: the contract is `dist`.
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `SelectItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `SelectItem`, `TabItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -173,6 +174,34 @@ select. The text is `--p-input-size` at both sizes, 16 px on touch, so iOS
 does not zoom. In a `SettingRow`: `size="sm"` and the row's text as
 `label`. A short list with words is a `RadioGroup`; a list to search is a
 combobox, not in the package yet.
+
+**`Tabs`** — tabs that swap the panel under them: a `role="tablist"` of
+buttons and the `role="tabpanel"` of the chosen one, with the ids,
+`aria-controls`, `aria-labelledby` and tab stops handled by the package.
+`items: TabItem[]` where `TabItem = { id: string; label: string; title?:
+string; disabled?: boolean }`, `value?: string` (bindable, the `id` of the
+chosen tab; the first enabled one while it is none of them), `label?:
+string` (the name of the tab list, when no heading next to it names it),
+snippet `panel` (required: receives the `id` of the chosen tab),
+`onchange?: (id: string) => void`, `class` added next to its own, other
+attributes on the frame. Keyboard: one tab stop, Tab reaches the chosen tab
+and then the panel; ←/→ move and choose at once, skipping a disabled tab and
+wrapping; Home and End go to the ends. Only the chosen panel is mounted,
+afresh on every change: a panel keeps no state of its own across tabs, so
+state that must survive lives in the app. The tabs share the width and
+their text wraps, never scrolls (a scrolling row would clip the focus
+ring): up to four or five tabs; more is a `Select`. Tabs are as tall as
+`--p-control-h`; the chosen one is high text over a 2 px accent line; the
+panel starts 12 px below.
+```svelte
+<Tabs label="Console" bind:value={mode} items={[
+  { id: 'track', label: 'Tracking' }, { id: 'wx', label: 'Space weather' },
+]}>
+  {#snippet panel(id)}
+    {#if id === 'track'}<TrackingConsole />{:else}<WeatherConsole />{/if}
+  {/snippet}
+</Tabs>
+```
 
 **`Fieldset`** — the controls that answer one question: a native
 `<fieldset>` with its `<legend>`. `legend: string` (required), `hint?:
