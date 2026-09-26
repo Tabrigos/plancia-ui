@@ -68,6 +68,7 @@ Never alias the package sources: the contract is `dist`.
 | a switch | `Toggle` | a real checkbox, `bind:checked`, `label` required |
 | an option the user sets, with its text beside it | `Checkbox` | named by its own `label`; a setting that acts at once, in a row that names it, is a `Toggle` |
 | one choice among a few, each with words or a hint | `RadioGroup` | a legend names the group, the arrows move the choice |
+| one choice from a long list (places, sources) | `Select` | native: a phone opens its own picker; named by `label`, like `Toggle` |
 | the controls that answer one question | `Fieldset` | a legend read on entering the group: the checkboxes of a filter |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
@@ -99,7 +100,7 @@ Never alias the package sources: the contract is `dist`.
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `SelectItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -153,7 +154,25 @@ column), `disabled?: boolean`, `name?: string` (for a native form; generated
 when absent), `onchange?: (id: string) => void`. The browser does the
 keyboard: Tab enters on the checked option, the arrows move the choice and
 skip a disabled one. Two to four short words in a row are a `Segmented`; a
-long list is a select.
+long list is a `Select`.
+
+**`Select`** — one choice from a long list: a native `<select>` with the look
+of the theme, so a phone opens its own picker and a typed letter jumps to
+the item. `items: SelectItem[]` where `SelectItem = { id: string; label:
+string; disabled?: boolean }`, `value?: string` (bindable, the `id` of the
+chosen item), `label: string` (required: the accessible name, usually the
+text of the row it sits in, which does not name it, as for `Toggle`),
+`placeholder?: string` (shown, and not choosable, while `value` is none of
+the items: "Choose a place" when the point came from the globe),
+`size?: 'md' | 'sm'` (`md`: `--p-control-h`, 32 px, 40 on touch; `sm`:
+`--p-control-h-sm`, 26 px, 32 on touch, for a row), `disabled?: boolean`,
+`title?: string`, `onchange?: (id: string) => void`, `class` on its frame
+(a width: it is as wide as its longest item, and a narrowed one ends the
+text in an ellipsis), other attributes (`id`, `name`, `required`) on the
+select. The text is `--p-input-size` at both sizes, 16 px on touch, so iOS
+does not zoom. In a `SettingRow`: `size="sm"` and the row's text as
+`label`. A short list with words is a `RadioGroup`; a list to search is a
+combobox, not in the package yet.
 
 **`Fieldset`** — the controls that answer one question: a native
 `<fieldset>` with its `<legend>`. `legend: string` (required), `hint?:

@@ -18,6 +18,11 @@ All notable changes to plancia-ui. The format follows
 - `Fieldset`: the controls that answer one question, under a `legend` a
   screen reader reads on entering the group, with an optional hint, a
   hidden legend and a row layout.
+- `Select`: one choice from a long list, as a native select with the look
+  of the theme, so a phone opens its own picker. Named by `label`, like
+  `Toggle`; a `placeholder` shows while the value is none of the items;
+  `size="sm"` for a row. Its text stays 16 px on touch, so iOS does not
+  zoom. The `SelectItem` type is exported.
 
 ### Fixed
 - `ExpandableRow`: on touch the row keeps its 32 px under a universal
