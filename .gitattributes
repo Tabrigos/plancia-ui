@@ -1,0 +1,3 @@
+# The generator writes LF: on a checkout with CRLF line endings every
+# `npm run tokens` would mark the file as changed with an empty diff.
+src/tokens.css text eol=lf
