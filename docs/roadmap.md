@@ -20,6 +20,29 @@ and `Toggle`, same focus ring, same tones, touch density from the first
 sketch), shipped together, each with its recipe and checked at phone
 width in CI from the start.
 
+Decided on 2026-09-26, with the band:
+
+- **`Field`**, the one way a control is named: a visible label bound
+  with `<label for>`, a hint and an error message tied to the control
+  with `aria-describedby`, hint first. It generates the ids, so no control
+  repeats `label`/`hint`/`error` props of its own. `SettingRow` stays the
+  label-left, control-right shape of a setting;
+- **an error state for a field**, set by the app after it validates (the
+  package never validates): `aria-invalid` and the message tied to the
+  control, not a `role="alert"` of its own; a border token for it in both
+  themes, 3:1 against the surface; the skill says to validate on submit,
+  not when the user leaves a field;
+- **`Tooltip` adds its id to the anchor's `aria-describedby`** instead of
+  replacing it while it shows, so a field's hint and error are still read
+  on focus;
+- the order: `Tooltip`, then `Checkbox` and `Radio` (short lists go to
+  radios, so `Select` is for long ones), `Field` and the error state,
+  `Select`, `NumberField` (`type="text"` with `inputmode`, none when a
+  negative value is allowed), `Tabs` last, then the recipes "a settings
+  form" and "a filter bar". The inventory of the reference consumer's
+  form controls, asked for as an issue, adjusts `Select`, `NumberField`
+  and `Field` when it comes.
+
 Next to them, what the reference consumer finds while it adopts 0.8.0
 (its lists on `List` and `ExpandableRow`, its drawer on `Drawer`) becomes
 issues here, as `Bars.readout` and `ExpandableRow` came from its phone work
