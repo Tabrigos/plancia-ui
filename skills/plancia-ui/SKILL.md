@@ -612,8 +612,9 @@ and the one-sheet rule are the app's:
 ```
 
 The whole recipe, and the others (a console section, a list of layers and
-its states, layer rows, a panel over a stage), run with their code at
-https://tabrigos.github.io/plancia-ui/recipes.html.
+its states, rows that open for a finger, layer rows, a panel over a stage,
+the settings of a console in two tabs with a select and choices), run with
+their code at https://tabrigos.github.io/plancia-ui/recipes.html.
 
 ## Rules the project must follow
 
