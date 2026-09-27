@@ -11,12 +11,14 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## Next — not decided yet
+## 0.10.0 — not decided yet
 
-0.9.0 shipped the inputs on 2026-09-26. The next band comes from what the
-reference consumer finds while it adopts `Select` (its place picker) and
-`Tabs` (its mode switch), as issues here, and from the road to 1.0 below;
-the maintainer picks it.
+0.9.0 shipped the inputs on 2026-09-26, and the reference consumer adopted
+it on 2026-09-27. The next minor is 0.10.0; its band comes from what the
+consumers find, as issues here, and from the road to 1.0 below, and the
+maintainer picks it. The first candidate is #64: an opt-in layout for
+`Tabs` where the panel fills the remaining height and scrolls under tabs
+that stay put, for a full-height sidebar.
 
 ## Later — waiting for a second use
 
@@ -52,12 +54,15 @@ the maintainer picks it.
 
 ## Toward 1.0.0
 
-The major freezes the contract. Before it: every component with tests and
-a visual-regression baseline (pixel comparison of the showcase in both
-themes, on one operating system, since pixels differ between Windows and
-Linux); the reference consumer using the package for every shape it
-ships; the skill and the docs complete for an agent to build a console
-without reading the code; no open question left.
+The major freezes the contract, and it is not the next step after 0.9: the
+package goes on by minors (0.10.0, 0.11.0, …) until it has several
+consumers, not only the reference one, and a feature set that has stopped
+moving (decided on 2026-09-27). Before it, besides: every component with
+tests and a visual-regression baseline (pixel comparison of the showcase in
+both themes, on one operating system, since pixels differ between Windows
+and Linux); every shape it ships used by at least one consumer; the skill
+and the docs complete for an agent to build a console without reading the
+code; no open question left.
 
 ## Decided
 
