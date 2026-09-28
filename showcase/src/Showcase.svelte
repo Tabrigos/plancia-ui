@@ -554,13 +554,19 @@
       </div>
     </div>
     <div>
-      <h2 class="p-sec-title">Tabs in a 280 px sidebar</h2>
-      <div class="p-card demo narrow-tabs">
-        <Tabs label="Sidebar" items={consoleTabs} bind:value={sidebarMode}>
-          {#snippet panel(id)}<span class="p-t12 p-dim">The {consoleTabs.find((tab) => tab.id === id)?.label} console goes here.</span>{/snippet}
+      <h2 class="p-sec-title">Tabs that fill a 280 px sidebar</h2>
+      <div class="p-card sidebar-demo">
+        <Tabs fill class="sidebar-tabs" label="Sidebar" items={consoleTabs} bind:value={sidebarMode}>
+          {#snippet panel(id)}
+            <div class="rows">
+              {#each Array.from({ length: 14 }, (_, row) => row + 1) as row (row)}
+                <KeyValue label="{consoleTabs.find((tab) => tab.id === id)?.label} {row}">{(row * 7.3).toFixed(1)}</KeyValue>
+              {/each}
+            </div>
+          {/snippet}
         </Tabs>
-        <span class="p-t11 p-dim">The tabs share the width and their text wraps: a row that scrolled would clip the focus ring.</span>
       </div>
+      <p class="p-t11 p-dim after-card">With <code>fill</code> the frame is a column the app sizes: the tabs stay put and the panel scrolls under them, starting at the top on every change. The tabs share the width and their text wraps, since a row that scrolled would clip the focus ring.</p>
     </div>
   </section>
 </main>
@@ -595,7 +601,9 @@
   .type-row + .type-row { border-top: 1px solid var(--p-border); }
   :global(.narrow-select) { width: 130px; }
   .after-card { margin-top: 8px; }
-  .narrow-tabs { max-width: 280px; }
+  /* A sidebar as the app would make it: a column of a fixed height, the tabs its only child that grows */
+  .sidebar-demo { display: flex; flex-direction: column; max-width: 280px; height: 320px; padding: 12px 16px; }
+  :global(.sidebar-tabs) { flex: 1; }
   .demo { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
   .row-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .metric { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--p-t12); }

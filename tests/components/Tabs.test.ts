@@ -2,6 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import { createRawSnippet } from 'svelte'
 import { Tabs, type TabItem } from '../../src/index'
+// The component source as text (Vite `?raw`), to assert on its scoped CSS rules.
+import source from '../../src/components/Tabs.svelte?raw'
 
 const items: TabItem[] = [
   { id: 'track', label: 'Tracking' },
@@ -65,6 +67,24 @@ describe('Tabs', () => {
     render(Tabs, { props: { items: [{ id: 'a', label: 'A', disabled: true }, ...items], panel } })
     expect(screen.getByRole('tab', { selected: true }).textContent).toBe('Tracking')
     expect(screen.getByRole('tabpanel').textContent?.trim()).toBe('Panel track')
+  })
+
+  it('mounts a new panel on every change, so a panel that scrolls starts at the top', async () => {
+    render(Tabs, { props: { items, value: 'track', panel } })
+    const before = screen.getByRole('tabpanel')
+    await fireEvent.click(screen.getByRole('tab', { name: 'Space weather' }))
+    const after = screen.getByRole('tabpanel')
+    expect(after).not.toBe(before)
+    expect(after.textContent?.trim()).toBe('Panel wx')
+  })
+
+  it('fills a column on request: the tabs stay put and the panel scrolls, its ring inside', () => {
+    const { container } = render(Tabs, { props: { items, panel, fill: true } })
+    expect(container.querySelector('.p-tabs')?.classList.contains('fill')).toBe(true)
+    // Asserted on the scoped CSS: jsdom does not lay out
+    expect(source).toContain('.p-tabs.fill { display: flex; flex-direction: column; min-height: 0; }')
+    expect(source).toContain('.fill .p-tabpanel { flex: 1; min-height: 0; overflow: auto;')
+    expect(source).toContain('outline-offset: -2px;')
   })
 
   it('takes a class and attributes of the app on its frame', () => {

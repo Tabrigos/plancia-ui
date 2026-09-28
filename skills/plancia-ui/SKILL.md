@@ -182,7 +182,7 @@ buttons and the `role="tabpanel"` of the chosen one, with the ids,
 string; disabled?: boolean }`, `value?: string` (bindable, the `id` of the
 chosen tab; the first enabled one while it is none of them), `label?:
 string` (the name of the tab list, when no heading next to it names it),
-snippet `panel` (required: receives the `id` of the chosen tab),
+`fill?: boolean` (see below), snippet `panel` (required: receives the `id` of the chosen tab),
 `onchange?: (id: string) => void`, `class` added next to its own, other
 attributes on the frame. Keyboard: one tab stop, Tab reaches the chosen tab
 and then the panel; ←/→ move and choose at once, skipping a disabled tab and
@@ -192,7 +192,13 @@ state that must survive lives in the app. The tabs share the width and
 their text wraps, never scrolls (a scrolling row would clip the focus
 ring): up to four or five tabs; more is a `Select`. Tabs are as tall as
 `--p-control-h`; the chosen one is high text over a 2 px accent line; the
-panel starts 12 px below.
+panel starts 12 px below. `fill`: the frame is a column and the tabs stay
+put while the panel takes the height left and scrolls under them, starting
+at the top on every change — for a sidebar as tall as the screen. The app
+sizes the frame with a class of its own (`flex: 1` in a column, or a
+height); the scrolling panel draws its focus ring inside itself, over the
+outermost 2 px of its content, so give the content its own inline padding
+if it wants air around the ring.
 ```svelte
 <Tabs label="Console" bind:value={mode} items={[
   { id: 'track', label: 'Tracking' }, { id: 'wx', label: 'Space weather' },
