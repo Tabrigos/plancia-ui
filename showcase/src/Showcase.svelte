@@ -151,6 +151,13 @@
       {#each sizes as [name, px] (name)}
         <div class="type-row"><span class="p-mono p-t11 p-dim">{name} · {px}</span><span class="p-hi" style="font-size:{px}">Space stations · 2026-09-10 21:26 UTC</span></div>
       {/each}
+      <div class="type-row">
+        <span class="p-mono p-t11 p-dim">p-detail</span>
+        <div>
+          <span class="p-hi p-t13">CME, M2.2 flare</span>
+          <div class="p-detail">838 km/s · left the Sun at 14:05 · toward the Earth. The fact a title would hold, in the open, under what it explains: a finger never sees a tooltip.</div>
+        </div>
+      </div>
     </div>
   </section>
 

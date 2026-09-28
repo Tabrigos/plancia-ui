@@ -59,6 +59,17 @@ a {
   white-space: nowrap;
 }
 
+/* A detail in the open, under what it explains: the fact that would otherwise
+   live only in a `title`, which a touch screen never shows. The look of the
+   detail of ExpandableRow, for when there is nothing to open */
+.p-detail {
+  font-family: var(--p-font-ui);
+  font-size: var(--p-t11);
+  line-height: 1.45;
+  color: var(--p-text-dim);
+  white-space: normal;
+}
+
 /* ── Surfaces ───────────────────────────────────────────────────────────── */
 .p-panel {
   background: var(--p-s3a);

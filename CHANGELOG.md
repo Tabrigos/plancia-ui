@@ -11,6 +11,10 @@ All notable changes to plancia-ui. The format follows
   column the app sizes, the tabs stay put and the panel takes the height
   left and scrolls under them, starting at the top on every change. Its
   focus ring is drawn inside, where the column cannot clip it (#64).
+- `p-detail`: a class for a detail in the open, under what it explains —
+  the fact that would otherwise live only in a `title`, which a touch
+  screen never shows. 11 px, the ui font, dim, wrapping: the look of the
+  detail of `ExpandableRow`, for when there is nothing to open.
 
 ## [0.9.0] — 2026-09-26
 

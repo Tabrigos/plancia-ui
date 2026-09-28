@@ -91,6 +91,7 @@ Never alias the package sources: the contract is `dist`.
 | exclusive choice among two to four short words, in a row | `Segmented` | `size="sm"` inline; options that need words or a hint are a `RadioGroup` |
 | head of a card: label + controls | `ControlRow` | |
 | list row of a console: icon, name, control | `SettingRow` | layers, settings |
+| a detail a finger must reach, with nothing to open (the error of a layer, the pause of a source) | class `p-detail` | a dim line under the element, in the open; the `title` can stay for the mouse |
 | a row whose detail (the full text, the end of a pass) must reach a finger | `ExpandableRow` | the whole row is the button, the detail a line under it; the tooltip stays for the mouse |
 | a list of layers, sources, instruments, each with its controls and details | `List` + `ListItem` | framed items: a head (label + controls) and a body, often shown only while the item is on |
 | collapsible section of a console | `Section` | state owned by the app, summary readable while closed |
@@ -483,6 +484,10 @@ to the space they are in (`KeyValue` drops the value to a full line,
   (s2, border, r2), `p-inset` (inset, border, r2), `p-divider` (top border);
 - section title: `p-sec-title` (11 px, 600, uppercase spaced: with
   `Chip uppercase`, the only spaced uppercase in the system);
+- detail line: `p-detail` (11 px, ui font, dim, 1.45, wraps), under the
+  element it explains: the fact that would otherwise live only in a `title`,
+  which a touch screen never shows. The look of the detail of
+  `ExpandableRow`, for when there is nothing to open;
 - text: `p-mono`, `p-hi`, `p-dim`, `p-t11` `p-t12` `p-t13` `p-t14` `p-t16`
   `p-t20` `p-t28`, `p-w500`, `p-w600`, `p-nowrap`, `p-ellipsis`;
 - `p-help` (help cursor, goes with a `title`), `p-sr-only` (screen readers
