@@ -32,7 +32,7 @@
 
 <!-- A list with columns: each row is a subgrid of the list, the detail spans it -->
 <div class="passes">
-  <span class="head">start</span><span class="head num">max</span><span class="head">from → to</span><span class="head num">min</span>
+  <span class="p-sec-title">Start</span><span class="p-sec-title num">Max</span><span class="p-sec-title">From → to</span><span class="p-sec-title num">Min</span>
   {#each passes as pass (pass.id)}
     <ExpandableRow class="pass-row" title={pass.detail} open={openPass === pass.id} onchange={(open) => { openPass = open ? pass.id : null }}>
       <span class="hi">{pass.start}</span><span class="num hi">{pass.max}°</span><span class="dim">{pass.from} → {pass.to}</span><span class="num dim">{pass.minutes}′</span>
@@ -51,7 +51,6 @@
   .passes { display: grid; grid-template-columns: auto auto 1fr auto; gap: 2px 12px; margin-top: 16px; font-family: var(--p-font-mono); font-size: var(--p-t11); color: var(--p-text); }
   /* gap: normal, the list's own column gap, or the row's default would shift the cells */
   :global(.pass-row) { display: grid; grid-template-columns: subgrid; gap: normal; }
-  .head { color: var(--p-text-dim); font-family: var(--p-font-ui); }
   .num { text-align: right; }
   .hi { color: var(--p-text-hi); }
   .dim { color: var(--p-text-dim); }

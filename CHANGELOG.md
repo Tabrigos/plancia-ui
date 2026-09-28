@@ -21,6 +21,12 @@ All notable changes to plancia-ui. The format follows
   not drawn and does not widen it: thresholds that span decades would
   flatten the series. The `ReferenceLine` type is exported.
 
+### Changed
+- `p-sec-title`: also the header of a table column, which the design rules
+  now allow in spaced uppercase for the same reason as a chip's short
+  label; the package still has no table. The class sets the ui font
+  itself, as the rules say, so a header in a monospace table keeps it.
+
 ## [0.9.0] — 2026-09-26
 
 ### Added
