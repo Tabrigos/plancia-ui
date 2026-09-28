@@ -11,14 +11,32 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.10.0 — not decided yet
+## 0.10.0 — what the reference consumer found after 0.9.0
 
-0.9.0 shipped the inputs on 2026-09-26, and the reference consumer adopted
-it on 2026-09-27. The next minor is 0.10.0; its band comes from what the
-consumers find, as issues here, and from the road to 1.0 below, and the
-maintainer picks it. The first candidate is #64: an opt-in layout for
-`Tabs` where the panel fills the remaining height and scrolls under tabs
-that stay put, for a full-height sidebar.
+0.9.0 shipped the inputs on 2026-09-26 and the reference consumer adopted
+it on 2026-09-27. The band was decided on 2026-09-28 from what it found
+then, adopting `Tabs` and building a new page:
+
+- **`Tabs` that fill** (#64): an opt-in layout where the frame is a
+  column, the tabs stay put and the panel takes the remaining height and
+  scrolls, for a full-height sidebar. The app sizes the frame with a class
+  of its own; the focus ring of the scrolling panel must stay whole;
+- **a detail line** in `base.css` (`p-detail`): the text that would
+  otherwise live only in a `title`, which a finger never sees, under the
+  element it explains: 11 px, the ui font, dim, wrapping, the look of the
+  detail of `ExpandableRow` when there is nothing to open. Seven uses in
+  five places of the reference consumer;
+- **reference lines on `Sparkline`**: horizontal lines at given values
+  with a short label, in the space of `values` (so a logarithmic scale the
+  app makes works too), in a quiet tone. A line outside `min`/`max` is
+  not drawn and does not widen the scale: thresholds that span decades
+  would flatten the curve;
+- **the header of a table column** gets a rule in `design-rules.md`. The
+  package has no table (a data table waits in Later, and the reference
+  consumer's tables sit in pages meant for reading), but how a column
+  header is written is a question of the system.
+
+Not in this band: the infrastructure toward 1.0.
 
 ## Later — waiting for a second use
 
