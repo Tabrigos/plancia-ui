@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { domainOf, linePoints, nearestSample, polyline, runsOf, xOf, yOf, type Sample } from '../chart.js'
+  import { domainOf, linePoints, nearestSample, polyline, referenceYs, runsOf, xOf, yOf, type ReferenceLine, type Sample } from '../chart.js'
   import ChartReadout from './ChartReadout.svelte'
 
   /**
@@ -8,7 +8,8 @@
    * area under it, an end dot for the last value. A `null` sample is a gap:
    * the pen lifts, a lone sample between gaps is a dot. For a signed series
    * a thin zero line; a dashed marker at an index separates observed from
-   * predicted. With `readout`, a pointer, a finger or the arrow keys pick a
+   * predicted. Reference lines mark thresholds at given values, with a short
+   * label drawn at the left. With `readout`, a pointer, a finger or the arrow keys pick a
    * sample: a dot on the line and a small monospace box with the text the
    * app formats. Otherwise text and axes stay outside: the label names it
    * for assistive technology, the app writes the numbers with the text tokens.
@@ -24,6 +25,7 @@
     max,
     zeroLine = false,
     markIndex,
+    lines = [],
     readout,
     label,
     title,
@@ -46,6 +48,8 @@
     zeroLine?: boolean
     /** A dashed vertical marker at this index ("now" in a series that continues with a forecast) */
     markIndex?: number
+    /** Thresholds at given values, in the space of `values`; one outside the scale is not drawn and does not widen it */
+    lines?: ReferenceLine[]
     /** Text of the sample under the pointer (or the finger, or the focused arrow keys), e.g. `12:40 UTC · 512 km/s`; none without it */
     readout?: (index: number, value: number) => string
     /** Accessible name: what the series is */
@@ -59,6 +63,7 @@
   const runs = $derived(runsOf(points))
   const last = $derived(runs.at(-1)?.at(-1))
   const zeroY = $derived(yOf(0, height, domain))
+  const refs = $derived(referenceYs(lines, height, domain))
   const markX = $derived(markIndex !== undefined && markIndex >= 0 && markIndex < values.length ? xOf(markIndex, values.length, width) : undefined)
   const areaOf = (run: (typeof runs)[number]) => `M${run[0][0]},${height - 3} L${polyline(run).replace(/ /g, ' L')} L${run.at(-1)![0]},${height - 3} Z`
 
@@ -74,6 +79,7 @@
 <svg class="p-spark" viewBox="0 0 {width} {height}" {width} {height} role={readout ? undefined : 'img'} aria-label={readout ? undefined : label} aria-hidden={readout ? true : undefined} style="--spark-color:{color}">
   {#if title}<title>{title}</title>{/if}
   {#if zeroLine}<line class="zero" x1="0" x2={width} y1={zeroY} y2={zeroY} />{/if}
+  {#each refs as ref}<line class="ref" x1="0" x2={width} y1={ref.y} y2={ref.y} />{/each}
   {#if markX !== undefined}<line class="mark" x1={markX} x2={markX} y1="0" y2={height} />{/if}
   {#each runs as run}
     {#if run.length > 1}
@@ -84,6 +90,8 @@
     {/if}
   {/each}
   {#if endDot && last}<circle class="dot" cx={last[0]} cy={last[1]} r="2.5" />{/if}
+  <!-- Labels on top of the series, centered on their line and kept inside the box: they cover the oldest samples, never the last -->
+  {#each refs as ref}{#if ref.label}<text class="ref-label" x="2" y={Math.min(Math.max(ref.y, 6), height - 6)} dominant-baseline="central">{ref.label}</text>{/if}{/each}
   {#if pickedPoint}<circle class="pick" cx={pickedPoint[0]} cy={pickedPoint[1]} r="3" />{/if}
 </svg>
 {/snippet}
@@ -105,5 +113,8 @@
   .lone { fill: var(--spark-color); }
   .zero { stroke: var(--p-border-strong); stroke-width: 1; }
   .mark { stroke: var(--p-text-dim); stroke-width: 1; stroke-dasharray: 2 2; }
+  .ref { stroke: var(--p-border-strong); stroke-width: 1; stroke-dasharray: 4 3; }
+  /* A halo in the color of the card keeps the label readable over a line */
+  .ref-label { font-family: var(--p-font-ui); font-size: var(--p-t11); font-weight: 600; fill: var(--p-text-dim); paint-order: stroke; stroke: var(--p-s2); stroke-width: 3; }
   .pick { fill: var(--p-text-hi); stroke: var(--p-s2); stroke-width: 2; }
 </style>

@@ -15,6 +15,11 @@ All notable changes to plancia-ui. The format follows
   the fact that would otherwise live only in a `title`, which a touch
   screen never shows. 11 px, the ui font, dim, wrapping: the look of the
   detail of `ExpandableRow`, for when there is nothing to open.
+- `Sparkline`: `lines`, thresholds drawn across the chart at given values,
+  each with a short label at the left, in the space of `values`, so a
+  logarithmic scale made by the app works too. A line outside the scale is
+  not drawn and does not widen it: thresholds that span decades would
+  flatten the series. The `ReferenceLine` type is exported.
 
 ## [0.9.0] — 2026-09-26
 

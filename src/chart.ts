@@ -33,6 +33,14 @@ export function yOf(value: number, height: number, domain: Domain, pad = 3): num
   return round(pad + innerH - t * innerH)
 }
 
+/** A threshold drawn across a chart, at a value in the space of its series, with a short label. */
+export interface ReferenceLine { value: number; label?: string }
+
+/** The y of each line inside the domain: a line outside it is left out, since thresholds that span decades would flatten the series. */
+export function referenceYs(lines: ReferenceLine[], height: number, domain: Domain): Array<{ y: number; label?: string }> {
+  return lines.filter((line) => line.value >= domain.min && line.value <= domain.max).map((line) => ({ y: yOf(line.value, height, domain), label: line.label }))
+}
+
 /** Points of a line, left to right, inside the box minus a padding for the stroke and the end dot; a gap stays `null`. */
 export function linePoints(values: Sample[], width: number, height: number, domain: Domain, pad = 3): Array<Point | null> {
   return values.map((v, i) => (v === null ? null : [xOf(i, values.length, width, pad), yOf(v, height, domain, pad)]))
