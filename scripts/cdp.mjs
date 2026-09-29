@@ -23,8 +23,9 @@ export async function launchChrome({ port = 9333 } = {}) {
   const profile = mkdtempSync(join(tmpdir(), 'plancia-chrome-'))
   const chrome = spawn(binary, ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' })
 
+  // Up to 30 s: a cold runner once needed more than 10 for Chrome to open its port
   let targets
-  for (let attempt = 0; attempt < 100 && !targets; attempt++) {
+  for (let attempt = 0; attempt < 300 && !targets; attempt++) {
     try { targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json() } catch { await sleep(100) }
   }
   if (!targets) throw new Error('Chrome did not open its debugging port')
