@@ -49,8 +49,10 @@ a {
 /* Inputs read the density: 13 px, and 16 px on touch so iOS does not zoom on focus */
 :where(input, select, textarea) { font-size: var(--p-input-size); }
 
-/* Section title: the ONLY spaced uppercase in the system */
+/* Section title, and the header of a table column: with Chip uppercase, the
+   only spaced uppercase in the system. The ui font even in a monospace table */
 .p-sec-title {
+  font-family: var(--p-font-ui);
   font-size: var(--p-t11);
   font-weight: 600;
   letter-spacing: 0.08em;

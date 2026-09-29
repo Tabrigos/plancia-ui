@@ -491,8 +491,10 @@ to the space they are in (`KeyValue` drops the value to a full line,
 
 - surfaces: `p-panel` (floating panel: s3a, border, r3, shadow), `p-card`
   (s2, border, r2), `p-inset` (inset, border, r2), `p-divider` (top border);
-- section title: `p-sec-title` (11 px, 600, uppercase spaced: with
-  `Chip uppercase`, the only spaced uppercase in the system);
+- section title: `p-sec-title` (11 px, 600, uppercase spaced, the ui font:
+  with `Chip uppercase`, the only spaced uppercase in the system); also the
+  header of a table column, on the header cell, text written in normal case
+  (the package has no table component);
 - detail line: `p-detail` (11 px, ui font, dim, 1.45, wraps), under the
   element it explains: the fact that would otherwise live only in a `title`,
   which a touch screen never shows. The look of the detail of
@@ -645,8 +647,9 @@ their code at https://tabrigos.github.io/plancia-ui/recipes.html.
   not an `rgba()` copied from the dark value (it breaks in light);
 - a project that already has tokens declares them as aliases of `--p-*` and
   migrates at its own pace;
-- spaced uppercase only with `p-sec-title` and in the short label of a
-  `Chip uppercase`, never in running text; one chip per status; one primary
+- spaced uppercase only with `p-sec-title` (section titles, column
+  headers) and in the short label of a `Chip uppercase`, never in running
+  text; one chip per status; one primary
   button per panel; one panel head only;
 - empty / error / warning states only with `Notice`; metadata with
   `MetaRow`; exclusive choices with `Segmented`;
