@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { barAt, barPath, domainOf, linePoints, nearestSample, polyline, readoutLeft, runsOf, xOf, yOf } from '../src/chart'
+import { barAt, barPath, domainOf, linePoints, nearestSample, polyline, readoutLeft, referenceYs, runsOf, xOf, yOf } from '../src/chart'
 
 describe('domainOf', () => {
   it('takes the data extent unless an end is pinned', () => {
@@ -94,5 +94,12 @@ describe('barPath', () => {
 
   it('shrinks the radius for a bar shorter than it', () => {
     expect(barPath(0, 29, 10, 30, 2)).toBe('M0,30 V30 Q0,29 1,29 H9 Q10,29 10,30 V30 Z')
+  })
+
+  it('places reference lines inside the domain and leaves out the ones outside it', () => {
+    const domain = { min: -6, max: -4 }
+    expect(referenceYs([{ value: -6, label: 'C' }, { value: -5, label: 'M' }, { value: -4 }, { value: -3, label: 'X' }], 64, domain))
+      .toEqual([{ y: yOf(-6, 64, domain), label: 'C' }, { y: yOf(-5, 64, domain), label: 'M' }, { y: yOf(-4, 64, domain), label: undefined }])
+    expect(referenceYs([], 64, domain)).toEqual([])
   })
 })

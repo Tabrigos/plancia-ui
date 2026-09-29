@@ -102,7 +102,7 @@ Never alias the package sources: the contract is `dist`.
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`, `StatusKind`, `Bar`, `RadioItem`, `SelectItem`, `TabItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Bar`, `ReferenceLine`, `RadioItem`, `SelectItem`, `TabItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -317,7 +317,16 @@ the pen lifts, a lone sample between gaps is a dot), `label: string`
 boolean` (`true`, on the last real value), `min?` / `max?` (pin an end of
 the scale, e.g. `min={0}`), `zeroLine?: boolean` (a thin line at 0 with the
 scale stretched to hold it: Bz, a delta), `markIndex?: number` (a dashed
-vertical marker at that index: "now" before a forecast), `readout?:
+vertical marker at that index: "now" before a forecast), `lines?:
+ReferenceLine[]` where `ReferenceLine = { value: number; label?: string }`
+(thresholds across the chart, dashed in `--p-border-strong`, in the space of
+`values`: for a logarithmic scale the app passes the logarithms in `values`
+and in `lines` and gives the true value back in `readout`; a line outside
+the scale is not drawn and does not widen it, so pin `min`/`max` to show
+them all; the label, a letter or two, sits at the left over the oldest
+samples, centered on its line, 11 px dim with a halo in `--p-s2`: give each
+labelled line about 12 px of height; the labels are drawn, not read, so name
+the thresholds in `label` when they matter), `readout?:
 (index, value) => string` (the text of the sample under the pointer: a
 mouse hovers, a finger drags along the line while the page still scrolls
 vertically, a focused sparkline takes the arrow keys, Esc hides; a dot on

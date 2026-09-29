@@ -88,6 +88,15 @@ describe('Sparkline', () => {
     expect(plain.container.querySelector('[tabindex]')).toBeNull()
   })
 
+  it('draws reference lines with their labels, and leaves out a line outside the scale without widening it', () => {
+    const values = [-5.8, -5.2, -4.6, -5.1]
+    const plain = render(Sparkline, { props: { values, label: 'X-ray flux, log' } }).container.querySelector('polyline')?.getAttribute('points')
+    const { container } = render(Sparkline, { props: { values, label: 'X-ray flux, log', lines: [{ value: -5, label: 'M' }, { value: -4, label: 'X' }, { value: -5.5 }] } })
+    expect(container.querySelectorAll('line.ref').length).toBe(2)
+    expect([...container.querySelectorAll('text.ref-label')].map((text) => text.textContent)).toEqual(['M'])
+    expect(container.querySelector('polyline')?.getAttribute('points')).toBe(plain)
+  })
+
   it('draws no line for a single value', () => {
     const { container } = render(Sparkline, { props: { values: [7], label: 'One' } })
     expect(container.querySelector('polyline')).toBeNull()
