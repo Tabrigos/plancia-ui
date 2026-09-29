@@ -14,13 +14,16 @@
    * ends. Only the chosen panel is mounted, afresh on every change, so a
    * panel keeps no state of its own across tabs. The tabs share the width and
    * their text wraps rather than scroll: a scrolling row would clip the
-   * focus ring. For a control that swaps a large part of the page; a view
-   * of the same data is a `Segmented`, more than four or five tabs a `Select`.
+   * focus ring. With `fill` the frame is a column: the tabs stay put and
+   * the panel scrolls under them, for a sidebar as tall as the screen. For a
+   * control that swaps a large part of the page; a view of the same data is
+   * a `Segmented`, more than four or five tabs a `Select`.
    */
   let {
     items,
     value = $bindable(),
     label,
+    fill = false,
     panel,
     onchange,
     class: consumerClass,
@@ -31,6 +34,8 @@
     value?: string
     /** Accessible name of the tab list, when no heading next to it names it */
     label?: string
+    /** The frame is a column the app sizes: the tabs stay put, the panel takes the height left and scrolls */
+    fill?: boolean
     /** The panel of the chosen tab, given its `id` */
     panel: Snippet<[string]>
     onchange?: (id: string) => void
@@ -62,7 +67,7 @@
   }
 </script>
 
-<div {...rest} class="p-tabs {consumerClass ?? ''}">
+<div {...rest} class="p-tabs {consumerClass ?? ''}" class:fill>
   <div class="p-tablist" role="tablist" aria-label={label} bind:this={list}>
     {#each items as item, index (item.id)}
       {@const on = item.id === chosen?.id}
@@ -71,9 +76,12 @@
     {/each}
   </div>
   {#if chosen}
-    <div class="p-tabpanel" role="tabpanel" id="{base}-panel" aria-labelledby="{base}-tab-{items.indexOf(chosen)}" tabindex="0">
-      {#key chosen.id}{@render panel(chosen.id)}{/key}
-    </div>
+    <!-- The whole panel is new on every change: a panel that scrolls starts at the top -->
+    {#key chosen.id}
+      <div class="p-tabpanel" role="tabpanel" id="{base}-panel" aria-labelledby="{base}-tab-{items.indexOf(chosen)}" tabindex="0">
+        {@render panel(chosen.id)}
+      </div>
+    {/key}
   {/if}
 </div>
 
@@ -91,6 +99,12 @@
   .p-tablist button[aria-selected='true'] { color: var(--p-text-hi); border-bottom-color: var(--p-accent); }
   .p-tablist button:disabled { opacity: 0.4; cursor: default; }
   .p-tabpanel { min-width: 0; padding-top: 12px; }
+  .p-tabs.fill { display: flex; flex-direction: column; min-height: 0; }
+  .fill .p-tablist { flex: none; }
+  .fill .p-tabpanel { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+  /* A panel that fills its column draws its focus ring inside itself: outside,
+     the column that holds it would clip it; an outline is painted over the content */
+  .fill .p-tabpanel:focus-visible { box-shadow: none; outline: 2px solid var(--p-accent); outline-offset: -2px; }
   /* Hover only for a pointer that hovers: on touch a tap would leave it stuck */
   @media (hover: hover) {
     .p-tablist button:enabled:hover { color: var(--p-text-hi); background: var(--p-hover); }

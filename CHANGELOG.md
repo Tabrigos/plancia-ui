@@ -6,6 +6,12 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `Tabs`: `fill`, for a sidebar as tall as the screen: the frame is a
+  column the app sizes, the tabs stay put and the panel takes the height
+  left and scrolls under them, starting at the top on every change. Its
+  focus ring is drawn inside, where the column cannot clip it (#64).
+
 ## [0.9.0] — 2026-09-26
 
 ### Added
