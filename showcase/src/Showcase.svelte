@@ -61,6 +61,13 @@
   // The drawer demo: open or closed, and modal or a column, are the page's state
   let drawerOpen = $state(false)
   let drawerMode = $state('modal')
+  // The fullscreen demo: a card of the page alone on the screen, as a viewer goes
+  let viewer = $state<HTMLElement | null>(null)
+  let fullscreen = $state(false)
+  function toggleFullscreen(): void {
+    if (document.fullscreenElement) void document.exitFullscreen()
+    else void viewer?.requestFullscreen()
+  }
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -92,6 +99,7 @@
 <!-- One themed tooltip for the page: every `title` below goes through it -->
 <Tooltip avoid=".p-floating" />
 <LiveRegion />
+<svelte:document onfullscreenchange={() => { fullscreen = document.fullscreenElement === viewer }} />
 
 <main data-density={density === 'auto' ? undefined : density} bind:this={main}>
   <header class="head">
@@ -580,6 +588,19 @@
       <p class="p-t11 p-dim after-card">With <code>fill</code> the frame is a column the app sizes: the tabs stay put and the panel scrolls under them, starting at the top on every change. The tabs share the width and their text wraps, since a row that scrolled would clip the focus ring.</p>
     </div>
   </section>
+  <section class="grid2">
+    <div>
+      <h2 class="p-sec-title">Tooltip in fullscreen</h2>
+      <div class="p-card demo viewer" bind:this={viewer}>
+        <div class="row-wrap">
+          <Button variant="secondary" size="sm" title="Closer on the disc, up to 8×">zoom in</Button>
+          <Button variant="secondary" size="sm" title="Back to the whole disc">zoom out</Button>
+          <Button id="viewer-fullscreen" size="sm" title={fullscreen ? 'Back to the page, or Esc' : 'This card alone on the screen'} onclick={toggleFullscreen}>{fullscreen ? 'leave fullscreen' : 'fullscreen'}</Button>
+        </div>
+        <span class="p-t11 p-dim">An element in fullscreen is drawn alone, without the rest of the page: the tooltip, mounted once at the root, shows over it from the top layer.</span>
+      </div>
+    </div>
+  </section>
 </main>
 
 <style>
@@ -628,6 +649,7 @@
   .drawer-stage { overflow: hidden; }
   .drawer-controls, .drawer-note { position: relative; max-width: 60ch; }
   :global(.demo-drawer) { width: min(86%, 280px); }
+  .viewer:fullscreen { justify-content: center; align-items: center; }
   .drawer-body { display: flex; flex-direction: column; padding: 4px 0; overflow-y: auto; }
   @media (max-width: 900px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   /* A phone: one column everywhere, a 16 px gutter, the header stacked, and

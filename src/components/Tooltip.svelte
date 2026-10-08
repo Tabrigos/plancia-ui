@@ -12,7 +12,8 @@
    * nothing of its own) and renders in a glass box below — or above — the
    * element, inside the window, on the side that covers less of the
    * elements in `avoid` (the arithmetic is in `tooltip-placement.ts`). While
-   * visible its id is added to the anchor's `aria-describedby`.
+   * visible its id is added to the anchor's `aria-describedby`. The box is a
+   * popover in the top layer, so it shows over an element in fullscreen.
    * Silent on touch: a finger does not hover, and the focus a tap gives on
    * some phones is not a request to read; `InfoButton` explains things there.
    * Keep writing `title`: this is the only change.
@@ -86,6 +87,15 @@
     else target.removeAttribute('aria-describedby')
   }
 
+  // An element in fullscreen is drawn alone with its subtree, and the box,
+  // at the root, would stay behind it: the top layer is above, and free of
+  // the overflow and z-index of any ancestor too. Without the Popover API the
+  // box gets no `popover` (a closed one is hidden) and stays fixed, as before
+  const topLayer = typeof HTMLElement !== 'undefined' && typeof HTMLElement.prototype.showPopover === 'function'
+  $effect(() => {
+    if (box && topLayer) box.showPopover()
+  })
+
   function show(target: Element): void {
     const tip = target.getAttribute('data-tip')
     if (!tip) return
@@ -141,6 +151,8 @@
     document.addEventListener('focusout', hide, opts)
     document.addEventListener('scroll', hide, opts)
     document.addEventListener('keydown', onKeydown)
+    // A box shown before an element went fullscreen would stay under it
+    document.addEventListener('fullscreenchange', hide)
     return () => {
       document.removeEventListener('pointerover', onOver, opts)
       document.removeEventListener('pointerout', onOut, opts)
@@ -149,18 +161,20 @@
       document.removeEventListener('focusout', hide, opts)
       document.removeEventListener('scroll', hide, opts)
       document.removeEventListener('keydown', onKeydown)
+      document.removeEventListener('fullscreenchange', hide)
       hide()
     }
   })
 </script>
 
 {#if visible}
-  <div class="p-tip" class:above bind:this={box} role="tooltip" id={tipId} style="left:{x}px; top:{y}px; max-width:{maxWidth}px">{text}</div>
+  <div class="p-tip" class:above bind:this={box} popover={topLayer ? 'manual' : undefined} role="tooltip" id={tipId} style="left:{x}px; top:{y}px; max-width:{maxWidth}px">{text}</div>
 {/if}
 
 <style>
   .p-tip {
-    position: fixed; z-index: var(--p-z-tooltip);
+    /* inset and margin undo the centering a popover gets from the browser */
+    position: fixed; z-index: var(--p-z-tooltip); inset: auto; margin: 0;
     padding: 7px 10px;
     background: var(--p-s3a); backdrop-filter: blur(12px) saturate(1.2);
     border: 1px solid var(--p-border-strong); border-radius: var(--p-r2); box-shadow: var(--p-sh1);

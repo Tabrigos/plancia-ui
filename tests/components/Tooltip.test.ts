@@ -34,6 +34,8 @@ describe('Tooltip', () => {
     const tip = screen.getByRole('tooltip')
     expect(tip.textContent).toBe('What is Kp')
     expect(el.getAttribute('aria-describedby')).toBe(tip.id)
+    // jsdom has no Popover API: no `popover`, so the box shows as it always did
+    expect(tip.hasAttribute('popover')).toBe(false)
   })
 
   it('shows at once on focus next to the element\'s own descriptions, and hides on Escape', async () => {
@@ -100,6 +102,38 @@ describe('Tooltip', () => {
     await fireEvent.focusIn(el)
     flushSync()
     expect(screen.getByRole('tooltip').textContent).toBe('Only for a pointer that hovers')
+  })
+
+  it('shows its box as a manual popover, in the top layer, where the browser has the Popover API', async () => {
+    // jsdom has no Popover API: the method is given here, and since it opens
+    // nothing, jsdom keeps the closed popover hidden (`hidden: true` finds it)
+    const showPopover = vi.fn()
+    const own = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'showPopover')
+    Object.defineProperty(HTMLElement.prototype, 'showPopover', { value: showPopover, configurable: true, writable: true })
+    try {
+      render(Tooltip)
+      await fireEvent.focusIn(button('Zoom in'))
+      flushSync()
+      const tip = screen.getByRole('tooltip', { hidden: true })
+      expect(tip.getAttribute('popover')).toBe('manual')
+      expect(showPopover).toHaveBeenCalledOnce()
+      expect(showPopover.mock.contexts[0]).toBe(tip)
+    } finally {
+      if (own) Object.defineProperty(HTMLElement.prototype, 'showPopover', own)
+      else delete (HTMLElement.prototype as Partial<HTMLElement>).showPopover
+    }
+  })
+
+  it('hides when an element enters or leaves fullscreen, since a box shown before would stay under it', async () => {
+    render(Tooltip)
+    const el = button('Back to the whole disc')
+    await fireEvent.focusIn(el)
+    flushSync()
+    expect(screen.getByRole('tooltip')).not.toBeNull()
+    document.dispatchEvent(new Event('fullscreenchange'))
+    flushSync()
+    expect(screen.queryByRole('tooltip')).toBeNull()
+    expect(el.hasAttribute('aria-describedby')).toBe(false)
   })
 
   it('finds the title on an ancestor of the hovered node', async () => {

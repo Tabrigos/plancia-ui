@@ -279,8 +279,12 @@ does not count). Delegated: any element with `title` gets the themed tooltip,
 the text moves to `data-tip` so the browser shows nothing of its own; while
 visible its id is added after the anchor's own `aria-describedby` (a
 field's hint and error are still read) and taken away alone when it hides,
-so a description the app changes meanwhile stays. Esc, pointerdown, scroll and
-blur hide it. Silent on touch: a finger shows no tooltip, nor does the
+so a description the app changes meanwhile stays. The box is a manual
+popover in the top layer: it shows over an element the app puts in
+fullscreen (a viewer, a map) and is never clipped by the `overflow` or
+covered by the `z-index` of an ancestor; a browser without the Popover API
+gets a fixed box at `--p-z-tooltip`. Esc, pointerdown, scroll, blur and
+entering or leaving fullscreen hide it. Silent on touch: a finger shows no tooltip, nor does the
 focus that follows a tap, so a `title` must never be the only place a
 fact lives (use `InfoButton` for a phone). Write `title` as before;
 nothing else changes.
