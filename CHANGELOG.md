@@ -6,6 +6,16 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `Slider`: a value scrubbed along a range (a moment of a year, a frame of
+  an animation), a native `<input type="range">` with the look of the
+  theme, the same in Chromium, Firefox and Safari: a required `label`,
+  `min`, `max`, `step`, a bindable `value`, `valueText` read in place of
+  the number, and a few `marks` ticked under the track with an optional
+  short label. The track fills in the accent up to the thumb; on touch the
+  thumb is as large as a finger and a drag along the track never scrolls
+  the page (#77).
+
 ### Fixed
 - `Tooltip`: shows inside an element in fullscreen. An element in
   fullscreen is drawn alone, and the box, mounted at the root, stayed

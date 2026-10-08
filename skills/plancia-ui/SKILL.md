@@ -69,6 +69,7 @@ Never alias the package sources: the contract is `dist`.
 | an option the user sets, with its text beside it | `Checkbox` | named by its own `label`; a setting that acts at once, in a row that names it, is a `Toggle` |
 | one choice among a few, each with words or a hint | `RadioGroup` | a legend names the group, the arrows move the choice |
 | one choice from a long list (places, sources) | `Select` | native: a phone opens its own picker; named by `label`, like `Toggle` |
+| a value scrubbed along a range (a moment, a frame of an animation, a level) | `Slider` | native range named by `label`; `valueText` says the value in words; `marks` tick the few positions that matter |
 | a control that swaps a large panel under it (the modes of a console) | `Tabs` | the tabs and their panel tied by the package; the arrows choose; a view of the same data is a `Segmented` |
 | the controls that answer one question | `Fieldset` | a legend read on entering the group: the checkboxes of a filter |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
@@ -102,7 +103,7 @@ Never alias the package sources: the contract is `dist`.
 
 Import: `import { Button, Chip, … , scaleTone } from 'plancia-ui'`.
 Types: `Tone`, `ButtonVariant`, `ButtonSize`, `NoticeKind`, `SegmentedItem`,
-`LegendDot`, `StatusKind`, `Bar`, `ReferenceLine`, `RadioItem`, `SelectItem`, `TabItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
+`LegendDot`, `StatusKind`, `Bar`, `ReferenceLine`, `RadioItem`, `SelectItem`, `SliderMark`, `TabItem`, `Labels`, `Theme`. `Tone` = `neutral | accent | ok | warn | orange | danger | info`.
 "Content" means the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component.
 
@@ -175,6 +176,33 @@ select. The text is `--p-input-size` at both sizes, 16 px on touch, so iOS
 does not zoom. In a `SettingRow`: `size="sm"` and the row's text as
 `label`. A short list with words is a `RadioGroup`; a list to search is a
 combobox, not in the package yet.
+
+**`Slider`** — a value scrubbed along a range (a moment of a day or a year,
+a frame of an animation, a level): a native `<input type="range">` with the
+look of the theme, the same in Chromium, Firefox and Safari, so the arrow
+keys, Page Up and Down, Home, End and a screen reader work as everywhere.
+`label: string` (required: the accessible name, as for `Toggle`), `min?:
+number` (`0`), `max?: number` (`100`), `step?: number | 'any'` (`1`),
+`value?: number` (bindable; `min` when absent), `valueText?: string`
+(`aria-valuetext`: the value as words, read in place of the number, "14
+March, 12:00" rather than "72"; give it whenever the number alone means
+nothing), `marks?: SliderMark[]` where `SliderMark = { value: number;
+label?: string }` (a few positions that matter, ticked under the track; a
+short label is centered on its tick and moves in at the ends, so it never
+sticks out; drawn only and hidden from a screen reader, so `valueText`
+names the mark the value sits on), `disabled?: boolean`, `oninput?:
+(value: number) => void` (while the thumb moves), `onchange?: (value:
+number) => void` (when it is let go), `class` on its frame (a width), other
+attributes (`id`, `name`, `title`) on the input. The track fills in the
+accent up to the center of the thumb, the rest is `--p-border-strong`; the
+thumb is a disc of `--p-s3` ringed in the accent, and carries the focus
+ring. The range is `--p-control-h-sm` tall (26 px, 32 on touch), the thumb
+16 px and on touch `--p-tap-h` (32 px), since iOS moves it only when the
+finger starts on it; the track is a quarter of the thumb. A horizontal drag
+along it is the slider's (`touch-action: pan-y`): only a vertical one
+scrolls the page. It takes the width it is given, `flex: 1` in a row, and
+draws no number: the value written beside it, and play/pause or "now"
+around it, are the app's (`Button`).
 
 **`Tabs`** — tabs that swap the panel under them: a `role="tablist"` of
 buttons and the `role="tabpanel"` of the chosen one, with the ids,
