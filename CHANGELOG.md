@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-10-08
+
 ### Added
 - `Slider`: a value scrubbed along a range (a moment of a year, a frame of
   an animation), a native `<input type="range">` with the look of the
