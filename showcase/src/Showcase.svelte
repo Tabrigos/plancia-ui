@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Select, Tabs, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Select, Slider, Tabs, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import ExpandableRows from './recipes/ExpandableRows.svelte'
   import { version } from '../../package.json'
@@ -68,6 +68,13 @@
     if (document.fullscreenElement) void document.exitFullscreen()
     else void viewer?.requestFullscreen()
   }
+  // The slider demo: a day of a year with the seasons marked, and a level
+  let day = $state(171)
+  const dayText = (offset: number) => new Date(Date.UTC(2026, 0, 1 + offset)).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' })
+  const seasons = [{ value: 78, label: 'Mar', name: 'equinox' }, { value: 171, label: 'Jun', name: 'solstice' }, { value: 264, label: 'Sep', name: 'equinox' }, { value: 354, label: 'Dec', name: 'solstice' }]
+  // The marks are drawn only: the words read for the value name the one it sits on
+  const dayWords = (offset: number) => [dayText(offset), seasons.find((mark) => mark.value === offset)?.name].filter(Boolean).join(', ')
+  let opacity = $state(60)
   const now = Date.now()
   const MIN = 60_000
   // The showcase is where the theme gets tried: the URL wins on load, the
@@ -598,6 +605,19 @@
           <Button id="viewer-fullscreen" size="sm" title={fullscreen ? 'Back to the page, or Esc' : 'This card alone on the screen'} onclick={toggleFullscreen}>{fullscreen ? 'leave fullscreen' : 'fullscreen'}</Button>
         </div>
         <span class="p-t11 p-dim">An element in fullscreen is drawn alone, without the rest of the page: the tooltip, mounted once at the root, shows over it from the top layer.</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="p-sec-title">Slider</h2>
+      <div class="p-card demo">
+        <span class="p-t12 p-dim">view on <span class="p-hi">{dayWords(day)}</span></span>
+        <Slider label="Time of the view" max={364} bind:value={day} valueText={dayWords(day)} marks={seasons} />
+        <div class="row-wrap">
+          <Slider label="Opacity of the layer" step={5} bind:value={opacity} valueText="{opacity} percent" />
+          <span class="p-t12 p-mono p-hi">{opacity} %</span>
+        </div>
+        <Slider label="Frame, disabled" max={6} value={2} disabled />
+        <span class="p-t11 p-dim">A native range: arrows, Page Up and Down, Home and End move it, and a screen reader says the date rather than the number. The marks are drawn only, so the date names the solstice or equinox it sits on. On touch the thumb grows to a finger.</span>
       </div>
     </div>
   </section>
