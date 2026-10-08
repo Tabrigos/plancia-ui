@@ -11,11 +11,33 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.11.0 — not decided yet
+## 0.11.0 — fullscreen, and a range for scrubbing a value
 
-0.10.0 shipped on 2026-09-29 what the reference consumer found after 0.9.0.
-The next band comes from what the consumers find, as issues here, and from
-the road to 1.0 below; the maintainer picks it.
+0.10.0 shipped on 2026-09-29 and the reference consumer adopted it on
+2026-09-30. The band was decided on 2026-10-08 from the two issues it
+opened since, building a viewer that goes fullscreen and three controls
+that scrub through time:
+
+- **`Tooltip` in fullscreen** (#76): an element in fullscreen is drawn
+  alone with its subtree, so the tooltip, mounted at the root, is built and
+  placed but stays behind it, and the native one is gone too because
+  `title` has moved to `data-tip`. The box goes to the top layer with the
+  Popover API (`popover="manual"`, `showPopover()`), which also frees it
+  from the `overflow` and `z-index` of its ancestors;
+- **`Slider`** (#77): a native `<input type="range">` with the look of the
+  package, the same in Chromium, Firefox and Safari: a required `label`,
+  `min`/`max`/`step`, a bindable `value`, `valueText` for
+  `aria-valuetext`, a few `marks` with an optional short label; the track
+  filled up to the thumb in the accent; on touch a thumb and a hit area of
+  at least `--p-tap-h`, and dragging along the track never scrolls the
+  page. It is the `Scrubber` of Later, now with two uses in the reference
+  consumer and a third coming;
+- **a playback recipe**: play/pause and "now" as `Button`s around a
+  `Slider`, the shape the reference consumer draws twice. The buttons stay
+  the app's, so the recipe takes the place of a `Transport` component.
+
+Not in this band: the section of the skill on dressing the theme in
+another brand (Later), the infrastructure toward 1.0.
 
 ## Later — waiting for a second use
 
@@ -27,11 +49,17 @@ the road to 1.0 below; the maintainer picks it.
   validates, with `aria-invalid` and a border token at 3:1 in both themes,
   never a `role="alert"` of its own; `NumberField` is `type="text"` with
   `inputmode`, none when a negative value is allowed.
-- `Combobox` (the satellite search), `Transport` (playback pill),
-  `Scrubber` (frame slider), `DataTable` (passes list, system console):
-  one use each in Sidereus today. When `DataTable` comes, its first column
-  must be able to wrap on request: with `nowrap`, a long first column
-  squeezes every other one.
+- `Combobox` (the satellite search), `DataTable` (passes list, system
+  console), `Steps` (the steps of a lesson: "step 4 of 10" read by screen
+  readers too, back and next, an index, the keys of a presentation remote,
+  the buttons always in view on a phone): one use each in Sidereus today.
+  When `DataTable` comes, its first column must be able to wrap on
+  request: with `nowrap`, a long first column squeezes every other one.
+- A section of the skill on dressing the theme in another brand: the app
+  overrides the tokens from a sheet of its own switched on by
+  `data-brand`, rebuilds `soft` and `glow` with `color-mix` and checks the
+  contrast again; `base.css` is global, so a console embedded in a portal
+  goes in an `<iframe>`.
 - Icon set (close, info, sun/moon, locate, play/pause, expand).
 - A high-contrast third theme (`forced-colors`) as a block in `tokens.json`.
 - A documented CSS-only path for non-Svelte consumers; a web-components
