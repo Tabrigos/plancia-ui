@@ -6,6 +6,14 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `Tooltip`: shows inside an element in fullscreen. An element in
+  fullscreen is drawn alone, and the box, mounted at the root, stayed
+  behind it while the native tooltip was gone too; the box is now a
+  popover in the top layer, above a fullscreen element and out of reach of
+  the `overflow` and `z-index` of its ancestors. A browser without the
+  Popover API keeps the fixed box as before (#76).
+
 ## [0.10.0] — 2026-09-29
 
 ### Added
