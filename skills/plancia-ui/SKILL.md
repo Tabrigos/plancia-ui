@@ -665,10 +665,40 @@ and the one-sheet rule are the app's:
 </div>
 ```
 
-The whole recipe, and the others (a console section, a list of layers and
-its states, rows that open for a finger, layer rows, a panel over a stage,
-the settings of a console in two tabs with a select and choices), run with
-their code at https://tabrigos.github.io/plancia-ui/recipes.html.
+The playback of an animation over days (a model run, the Sun over a week):
+play/pause and "now" are `Button`s around a `Slider`. The frame, the timer
+and the present are the app's; grabbing the slider stops the playback, so
+the hand and the timer never pull the thumb two ways:
+
+```svelte
+<script lang="ts">
+  import { Button, Slider } from 'plancia-ui'
+  const LAST = 56   // a frame every 3 hours over seven days
+  const NOW = 24    // the frame of the present
+  let frame = $state(NOW)
+  let playing = $state(false)
+  $effect(() => {
+    if (!playing) return
+    const timer = setInterval(() => { frame = frame === LAST ? 0 : frame + 1 }, 400)
+    return () => clearInterval(timer)
+  })
+</script>
+
+<!-- display: flex; align-items: flex-start: the buttons line up with the range, the marks hang under it -->
+<div class="transport">
+  <Button variant="icon" size="sm" title={playing ? 'Pause' : 'Play'} aria-label={playing ? 'Pause' : 'Play'}
+          onclick={() => (playing = !playing)}><!-- an svg glyph, aria-hidden --></Button>
+  <Slider label="Frame of the model" max={LAST} bind:value={frame} valueText={timeOf(frame)}
+          marks={[{ value: NOW, label: 'now' }]} oninput={() => (playing = false)} />
+  <Button size="sm" onclick={() => (frame = NOW)}>now</Button>
+</div>
+```
+
+The phone layout and the playback in full, and the others (a console
+section, a list of layers and its states, rows that open for a finger,
+layer rows, a panel over a stage, the settings of a console in two tabs
+with a select and choices), run with their code at
+https://tabrigos.github.io/plancia-ui/recipes.html.
 
 ## Rules the project must follow
 

@@ -15,6 +15,7 @@
   import LayerList from './recipes/LayerList.svelte'
   import LayerRows from './recipes/LayerRows.svelte'
   import PanelOverStage from './recipes/PanelOverStage.svelte'
+  import Playback from './recipes/Playback.svelte'
   import phoneLayoutSource from './recipes/PhoneLayout.svelte?raw'
   import consoleSectionSource from './recipes/ConsoleSection.svelte?raw'
   import consoleSettingsSource from './recipes/ConsoleSettings.svelte?raw'
@@ -22,6 +23,7 @@
   import layerListSource from './recipes/LayerList.svelte?raw'
   import layerRowsSource from './recipes/LayerRows.svelte?raw'
   import panelOverStageSource from './recipes/PanelOverStage.svelte?raw'
+  import playbackSource from './recipes/Playback.svelte?raw'
 
   let theme = $state<Theme>(readRequestedTheme() ?? readStoredTheme(THEME_STORAGE_KEY))
   $effect(() => { applyTheme(theme) })
@@ -85,6 +87,11 @@
       <h2 class="p-sec-title">Console settings · tabs, a select, choices</h2>
       <div class="p-card demo"><ConsoleSettings /></div>
       <RecipeCode label="ConsoleSettings.svelte" source={consoleSettingsSource} />
+    </div>
+    <div>
+      <h2 class="p-sec-title">Playback · a range between play and now</h2>
+      <div class="p-card demo"><Playback /></div>
+      <RecipeCode label="Playback.svelte" source={playbackSource} />
     </div>
   </section>
 </main>

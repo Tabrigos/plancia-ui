@@ -14,7 +14,8 @@ All notable changes to plancia-ui. The format follows
   the number, and a few `marks` ticked under the track with an optional
   short label. The track fills in the accent up to the thumb; on touch the
   thumb is as large as a finger and a drag along the track never scrolls
-  the page (#77).
+  the page (#77). A playback recipe, in the skill and on the recipes page,
+  puts it between a play/pause and a "now" `Button`.
 
 ### Fixed
 - `Tooltip`: shows inside an element in fullscreen. An element in
