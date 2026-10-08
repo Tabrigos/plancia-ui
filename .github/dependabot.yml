@@ -7,6 +7,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # svelte-package 3 and svelte2tsx declare `typescript ^6`, and the
+      # declarations in dist are emitted with that TypeScript: a major cannot
+      # resolve until both widen the range. Remove this entry when they do.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /showcase
     schedule:
