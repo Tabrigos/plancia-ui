@@ -301,7 +301,8 @@ keeps no open/closed state: render it when open.
 
 **`Tooltip`** — mount `<Tooltip />` once, at the app root. `delay?: number`
 (`180` ms between hover and tooltip; focus shows it at once), `maxWidth?:
-number` (`300`), `gap?: number` (`8`), `avoid?: string` (selector of the
+number` (`300`; the box is as wide as its text up to it, centered on the
+element, below or above it, and kept inside the window), `gap?: number` (`8`), `avoid?: string` (selector of the
 elements it should not cover, e.g. `'.p-floating'`; the element's own panel
 does not count). Delegated: any element with `title` gets the themed tooltip,
 the text moves to `data-tip` so the browser shows nothing of its own; while

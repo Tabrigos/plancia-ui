@@ -2,6 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import { flushSync } from 'svelte'
 import { Tooltip } from '../../src/index'
+// The component source as text (Vite `?raw`), to assert on its scoped CSS rules.
+import source from '../../src/components/Tooltip.svelte?raw'
 
 function button(title: string): HTMLButtonElement {
   const el = document.createElement('button')
@@ -18,6 +20,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.useRealTimers()
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
   document.body.innerHTML = ''
 })
 
@@ -134,6 +137,27 @@ describe('Tooltip', () => {
     flushSync()
     expect(screen.queryByRole('tooltip')).toBeNull()
     expect(el.hasAttribute('aria-describedby')).toBe(false)
+  })
+
+  it('centers a box narrower than maxWidth on its element, by the width of its text', async () => {
+    // jsdom lays nothing out: the element's place and the box's size are given,
+    // and the frame runs after the box is drawn, as in a browser
+    const frames: FrameRequestCallback[] = []
+    vi.stubGlobal('requestAnimationFrame', (cb: FrameRequestCallback) => { frames.push(cb); return 0 })
+    vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(84)
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(28)
+    render(Tooltip)
+    const el = button('Zoom in')
+    el.getBoundingClientRect = () => ({ left: 187, top: 100, width: 26, height: 26 }) as DOMRect
+    await fireEvent.focusIn(el)
+    flushSync()
+    frames.forEach((frame) => frame(0))
+    flushSync()
+    const tip = screen.getByRole('tooltip')
+    expect(tip.style.left).toBe(`${187 + 26 / 2 - 84 / 2}px`)
+    expect(tip.style.top).toBe(`${100 + 26 + 8}px`)
+    // Measured as wide as its text wherever it stood, even near the window's edge
+    expect(source).toContain('width: max-content;')
   })
 
   it('finds the title on an ancestor of the hovered node', async () => {
