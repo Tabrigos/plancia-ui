@@ -66,11 +66,13 @@
 <style>
   /* The thumb is a finger on touch (--p-tap-h) and the track grows with it.
      The thumb travels inside the track, its center half a thumb from either
-     end: the fill stops there, and the marks are laid out along that path */
+     end: the fill stops there, and the marks are laid out along that path.
+     The air at either end is the width of the focus ring, so a thumb at an
+     end keeps its ring whole inside a container that clips */
   .p-slider {
     --thumb: max(var(--p-space-4), var(--p-tap-h)); --track: calc(var(--thumb) / 4);
     --fill: calc(var(--thumb) / 2 + var(--at) * (100% - var(--thumb)));
-    display: flex; flex-direction: column; flex: 1; min-width: 0;
+    display: flex; flex-direction: column; flex: 1; min-width: 0; padding-inline: var(--p-space-1);
   }
   .p-slider:has(input:disabled) { opacity: 0.4; }
   /* A drag along the track is the slider's: only a vertical one scrolls the page */

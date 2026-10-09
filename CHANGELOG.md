@@ -10,6 +10,9 @@ All notable changes to plancia-ui. The format follows
 - `Tooltip`: a box narrower than `maxWidth` is centered on its element. It
   was placed as if it were `maxWidth` wide, so a short tooltip (an icon
   button, a chip) stood to the left of its element, at times beyond it.
+- `Slider`: the focus ring of a thumb at either end stays whole inside a
+  container that clips: the frame keeps 4 px of air at both ends, the width
+  of the ring, so the track is 8 px shorter in the same width.
 
 ## [0.11.0] — 2026-10-08
 
