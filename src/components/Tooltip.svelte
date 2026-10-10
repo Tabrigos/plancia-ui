@@ -64,10 +64,11 @@
     return [...document.querySelectorAll(avoid)].filter((panel) => !panel.contains(anchorEl)).map((panel) => panel.getBoundingClientRect())
   }
 
+  // Centered by its own width: a short text makes a box narrower than maxWidth
   function place(target: Element): void {
     const p = placeTooltip(
       target.getBoundingClientRect(),
-      { width: maxWidth, height: box?.offsetHeight ?? 40 },
+      { width: box?.offsetWidth ?? maxWidth, height: box?.offsetHeight ?? 40 },
       { width: window.innerWidth, height: window.innerHeight },
       gap,
       obstacles(target),
@@ -173,8 +174,10 @@
 
 <style>
   .p-tip {
-    /* inset and margin undo the centering a popover gets from the browser */
-    position: fixed; z-index: var(--p-z-tooltip); inset: auto; margin: 0;
+    /* inset and margin undo the centering a popover gets from the browser;
+       the width is the text's, never the room left before the window's edge,
+       so the box measures the same wherever it stood before it moves */
+    position: fixed; z-index: var(--p-z-tooltip); inset: auto; margin: 0; width: max-content;
     padding: 7px 10px;
     background: var(--p-s3a); backdrop-filter: blur(12px) saturate(1.2);
     border: 1px solid var(--p-border-strong); border-radius: var(--p-r2); box-shadow: var(--p-sh1);
