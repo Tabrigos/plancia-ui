@@ -15,9 +15,31 @@ small fix a consumer needs now.
 
 0.11.0 shipped on 2026-10-08 the two issues of the reference consumer:
 the `Tooltip` in fullscreen (#76) and `Slider` (#77), with a playback
-recipe in place of a `Transport` component. The next band comes from what
-the consumers find, as issues here, and from the road to 1.0 below; the
-maintainer picks it.
+recipe in place of a `Transport` component; 0.11.1 shipped on 2026-10-10
+what it found adopting it: a short tooltip centered on its element, and
+the focus ring of a thumb whole at the ends of a slider. The next band
+comes from what the consumers find, as issues here, and from the road to
+1.0 below; the maintainer picks it. One candidate so far:
+
+- **a rail**: tabs in a narrow column beside their panel, an icon over a
+  short label for each, for a console with more modes than a row of tabs
+  holds. The reference consumer plans one, for its sidebar: four tabs
+  already need 320 px in a row, and a fifth would fit at no reasonable
+  width. The shape it describes: items `{ id, label, title?, disabled? }`
+  with an icon as a snippet that receives the `id` (the icons stay the
+  app's); the label under the icon, 11 px, up to two lines, never
+  truncated, and an accessible name that can be longer than it; the chosen
+  item in the accent with its line on the inner edge; a vertical tablist
+  (`aria-orientation="vertical"`: up and down choose and wrap, Home and End
+  go to the ends, one tab stop); the panel beside it taking the width and
+  height left and scrolling, as `Tabs fill` does; room for a few actions at
+  the bottom, outside the tablist; a panel the app can hide while the rail
+  stays, choosing an item opens it again, the open state being the app's.
+  About 64 px wide on a desktop and 56 on touch, items at least
+  `--p-tap-h` tall; on a phone, rail and panel together in a `Drawer`. To
+  decide with the band: a vertical `Tabs` or a component of its own. If it
+  comes, `PanelHead` takes a snippet for its title, for a brand drawn as an
+  SVG.
 
 ## Later — waiting for a second use
 
