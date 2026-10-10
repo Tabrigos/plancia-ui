@@ -196,7 +196,10 @@ number) => void` (when it is let go), `class` on its frame (a width), other
 attributes (`id`, `name`, `title`) on the input. The track fills in the
 accent up to the center of the thumb, the rest is `--p-border-strong`; the
 thumb is a disc of `--p-s3` ringed in the accent, and carries the focus
-ring. The range is `--p-control-h-sm` tall (26 px, 32 on touch), the thumb
+ring; the frame keeps 4 px of air at either end, so the ring of a thumb at
+an end stays whole inside a container that clips (`overflow: hidden`). On
+touch the thumb is as tall as the range, and its ring takes 4 px above and
+below. The range is `--p-control-h-sm` tall (26 px, 32 on touch), the thumb
 16 px and on touch `--p-tap-h` (32 px), since iOS moves it only when the
 finger starts on it; the track is a quarter of the thumb. A horizontal drag
 along it is the slider's (`touch-action: pan-y`): only a vertical one

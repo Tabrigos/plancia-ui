@@ -84,4 +84,9 @@ describe('Slider', () => {
     expect(source).toContain('touch-action: pan-y;')
     expect(source).toMatch(/^\s*label: string$/m)
   })
+
+  it('keeps the focus ring of a thumb at either end inside its frame', () => {
+    // The air at the ends is the width of --p-focus (2 px + 2 px)
+    expect(source).toContain('padding-inline: var(--p-space-1);')
+  })
 })
