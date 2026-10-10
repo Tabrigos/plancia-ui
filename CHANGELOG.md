@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.11.1] — 2026-10-10
+
 ### Fixed
 - `Tooltip`: a box narrower than `maxWidth` is centered on its element. It
   was placed as if it were `maxWidth` wide, so a short tooltip (an icon
