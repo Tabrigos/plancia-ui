@@ -15,6 +15,17 @@ describe('Bars', () => {
     expect(paths[0].getAttribute('d')).toMatch(/^M1,40 V32 /)
   })
 
+  it('draws no height for a row of zeros, with or without a maximum of 0', () => {
+    for (const max of [undefined, 0]) {
+      const { container, unmount } = render(Bars, { props: { bars: [{ value: 0 }, { value: 0 }, { value: 0 }], width: 60, height: 20, max, label: 'Requests per hour' } })
+      const paths = [...container.querySelectorAll('path')].map((p) => p.getAttribute('d') ?? '')
+      expect(paths.length).toBe(3)
+      // each bar rises from the baseline (y 20) to the baseline: a quiet day, not half full
+      for (const d of paths) expect(d).toMatch(/^M[\d.]+,20 V20 /)
+      unmount()
+    }
+  })
+
   it('colors a bar by itself, names it, and scales on a pinned maximum', () => {
     const { container } = render(Bars, { props: { bars: [{ value: 3, label: '03 UTC · Kp 3', color: 'var(--p-scale-1)' }, { value: 9 }], max: 9, label: 'Kp' } })
     const paths = [...container.querySelectorAll('path')]

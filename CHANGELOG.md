@@ -6,6 +6,14 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `Bars`: a row of bars that are all zero draws no bar. It was drawn at
+  half the height of the chart, so a quiet series read as steady activity;
+  the same with `max={0}` (#90).
+- `Sparkline`: a flat series lies on the end of the scale the app pins: a
+  row of zeros with `min={0}` sits on the bottom, no longer in the middle.
+  With neither end pinned it stays in the middle.
+
 ## [0.11.1] — 2026-10-10
 
 ### Fixed

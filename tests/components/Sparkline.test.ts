@@ -97,6 +97,13 @@ describe('Sparkline', () => {
     expect(container.querySelector('polyline')?.getAttribute('points')).toBe(plain)
   })
 
+  it('lays a flat series on the end the app pins, and in the middle when none is', () => {
+    const pinned = render(Sparkline, { props: { values: [0, 0, 0], min: 0, label: 'Quiet' } })
+    expect(pinned.container.querySelector('polyline')?.getAttribute('points')).toBe('3,29 60,29 117,29')
+    const free = render(Sparkline, { props: { values: [0, 0, 0], label: 'Flat' } })
+    expect(free.container.querySelector('polyline')?.getAttribute('points')).toBe('3,16 60,16 117,16')
+  })
+
   it('draws no line for a single value', () => {
     const { container } = render(Sparkline, { props: { values: [7], label: 'One' } })
     expect(container.querySelector('polyline')).toBeNull()

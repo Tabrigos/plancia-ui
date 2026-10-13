@@ -17,7 +17,13 @@ export function domainOf(values: Sample[], min?: number, max?: number, includeZe
   if (includeZero) present.push(0)
   const lo = min ?? (present.length ? Math.min(...present) : 0)
   const hi = max ?? (present.length ? Math.max(...present) : 0)
-  return hi > lo ? { min: lo, max: hi } : { min: lo - 1, max: hi + 1 }
+  if (hi > lo) return { min: lo, max: hi }
+  // A flat series has no extent to scale on: it opens by one on the side the
+  // app did not pin, so a pinned end stays where the app put it (a row of
+  // zero bars has no height); with neither end pinned it sits in the middle
+  if (min !== undefined) return { min: lo, max: lo + 1 }
+  if (max !== undefined) return { min: hi - 1, max: hi }
+  return { min: lo - 1, max: hi + 1 }
 }
 
 /** The x of the sample at `index`, samples spread left to right inside the padding; a single sample sits in the middle. */
