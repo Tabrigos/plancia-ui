@@ -6,6 +6,11 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- `PanelHead`: `title` takes a snippet too, for a title that is drawn (a
+  brand as an SVG), which carries its own text alternative. A title that
+  is text stays a string.
+
 ### Changed
 - Documentation: the `Section` entry of the skill says how to give rows put
   straight in its body the side step a `ListItem` has; in a container

@@ -259,7 +259,10 @@ never split, never truncated, never overlapping the label.
 **`Stat`** — `label: string`, `sub?: string`, `tone?: Tone`, `title?: string`,
 `id?: string`. Content is the value (monospace, 16 px). Label is small caps.
 
-**`PanelHead`** — `title: string`, `subtitle?: string` (monospace),
+**`PanelHead`** — `title: string | Snippet` (text, or a snippet for a
+title that is drawn, a brand as an SVG: the snippet carries its own text
+alternative, `aria-label` on the SVG or a `p-sr-only` text; inside
+`FloatingPanel` the title stays a string), `subtitle?: string` (monospace),
 `subtitleTitle?: string` (tooltip on the subtitle), snippet `chips` (under
 the title), snippet `actions` (right side), `onclose?: () => void` (renders
 the close button, always last), `closeLabel?: string` (accessible name and tooltip

@@ -13,6 +13,12 @@ describe('PanelHead', () => {
     expect(sub.classList.contains('help')).toBe(true)
   })
 
+  it('takes a snippet for a title that is drawn, in the same place', () => {
+    const { container } = render(PanelHead, { props: { title: html('<svg role="img" aria-label="Sidereus"></svg>') } })
+    expect(container.querySelector('.title svg')?.getAttribute('aria-label')).toBe('Sidereus')
+    expect(screen.getByRole('img', { name: 'Sidereus' })).not.toBeNull()
+  })
+
   it('renders the close button only with onclose, named "Close" by default', async () => {
     const { unmount } = render(PanelHead, { props: { title: 'ISS' } })
     expect(screen.queryByRole('button')).toBeNull()

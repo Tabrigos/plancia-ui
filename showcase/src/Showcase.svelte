@@ -282,6 +282,18 @@
           </PanelHead>
           <div class="body p-dim p-t12">body</div>
         </div>
+        <div class="p-panel">
+          <PanelHead subtitle="a title that is drawn">
+            {#snippet title()}
+              <svg role="img" aria-label="Halo" width="64" height="16" viewBox="0 0 64 16" style="display:block">
+                <circle cx="8" cy="8" r="3" fill="currentColor" />
+                <ellipse cx="8" cy="8" rx="7" ry="3.5" fill="none" stroke="var(--p-accent)" stroke-width="1.25" transform="rotate(-25 8 8)" />
+                <text x="20" y="12.5" fill="currentColor" font-size="12" font-weight="700" letter-spacing="1.5">HALO</text>
+              </svg>
+            {/snippet}
+          </PanelHead>
+          <div class="body p-dim p-t12">body</div>
+        </div>
       </div>
     </div>
   </section>
