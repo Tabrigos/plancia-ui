@@ -71,6 +71,7 @@ Never alias the package sources: the contract is `dist`.
 | one choice from a long list (places, sources) | `Select` | native: a phone opens its own picker; named by `label`, like `Toggle` |
 | a value scrubbed along a range (a moment, a frame of an animation, a level) | `Slider` | native range named by `label`; `valueText` says the value in words; `marks` tick the few positions that matter |
 | a control that swaps a large panel under it (the modes of a console) | `Tabs` | the tabs and their panel tied by the package; the arrows choose; a view of the same data is a `Segmented` |
+| more modes than a row of tabs holds, beside their panel | `Rail` | a column of icons over short labels; the panel can hide while the rail stays; on a phone inside a `Drawer` |
 | the controls that answer one question | `Fieldset` | a legend read on entering the group: the checkboxes of a filter |
 | label / value row | `KeyValue` | label never wraps, a long value drops to its own line, whole |
 | big number with a label | `Stat` | |
@@ -239,6 +240,47 @@ if it wants air around the ring.
     {#if id === 'track'}<TrackingConsole />{:else}<WeatherConsole />{/if}
   {/snippet}
 </Tabs>
+```
+
+**`Rail`** — tabs in a narrow column beside their panel, an icon over a
+short label for each: for a console with more modes than a row of `Tabs`
+holds (four or five), up to six or seven. A `role="tablist"` with
+`aria-orientation="vertical"` and the `role="tabpanel"` of the chosen item,
+tied by the package as in `Tabs`. `items: TabItem[]` (as in `Tabs`: `label`
+is the text under the icon, a word or two, 11 px, wrapping to a second line
+rather than cut, so keep it short; `title`, when given, is the accessible
+name and the tooltip, longer than the label and holding it, WCAG 2.5.3:
+`{ label: 'Geography', title: 'Geography of the sky' }`), `value?: string`
+(bindable, the chosen `id`; the first enabled item while it is none of
+them), `open?: boolean` (bindable, `true`: the panel shows; choosing an
+item sets it, and the chosen item clicked again never closes it, a tab is
+not a switch: the app hides the panel with a button of its own among the
+`actions`), `label?: string` (the name of the list), snippet `icon`
+(required: receives the `id`; the icons are the app's, about 20 px, drawn
+in `currentColor`: dim, in the accent when chosen),
+snippet `panel` (required: receives the `id` of the chosen item), snippet
+`header` (above the items: a brand), snippet `actions` (below the items,
+outside the list: a theme switch, the button that hides the panel),
+`onchange?: (id: string) => void`, `class` added next to its own, other
+attributes on the frame. Keyboard: one tab stop; ↑/↓ move and choose at
+once, skipping a disabled item and wrapping, and open a hidden panel;
+Home and End go to the ends. The column is `--p-rail-w` wide (64 px, 56 on
+touch), its items at least `--p-control-h` tall, the chosen one with a
+2 px accent line on the edge toward the panel. The frame is a row the app
+sizes (a height, `flex: 1` in a column; with the panel hidden, give it the
+rail's width): the panel takes the room left and scrolls, starting at the
+top on every change, and only the chosen panel is mounted, as in `Tabs`.
+Items and panel draw their focus ring inside themselves. On a phone, put
+rail and panel together in a `Drawer`.
+```svelte
+<Rail label="Modes" items={modes} bind:value={mode} bind:open={consoleOpen}>
+  {#snippet header()}<Brand />{/snippet}
+  {#snippet icon(id)}<ModeIcon {id} />{/snippet}
+  {#snippet panel(id)}<Console {id} />{/snippet}
+  {#snippet actions()}
+    <Button variant="icon" size="sm" title="Hide the console" onclick={() => (consoleOpen = false)}>‹</Button>
+  {/snippet}
+</Rail>
 ```
 
 **`Fieldset`** — the controls that answer one question: a native
@@ -582,7 +624,8 @@ to the space they are in (`KeyValue` drops the value to a full line,
   height) and `control-h-sm` (small button), `toggle-w` / `toggle-h`,
   `input-size` (input text), `tap-h` (the least height of a line of text
   that is a tap target: 0, natural, in compact and comfortable, 32 px on
-  touch), switched by `data-density`, three values:
+  touch), `rail-w` (the column of a `Rail`: 64 px, 56 on touch), switched
+  by `data-density`, three values:
   compact (32 / 26 / 34×20 / 13 px), comfortable (rows 40, controls as
   compact), touch (44 / 40 / 32 / 44×26 / 16 px); z-index, bottom to top: `z-base` `z-overlay` `z-panel` `z-popover`
   `z-modal` `z-tooltip`; motion: `motion-fast`, `motion-base`, `motion-ease`;

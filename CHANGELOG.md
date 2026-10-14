@@ -7,6 +7,13 @@ All notable changes to plancia-ui. The format follows
 ## [Unreleased]
 
 ### Added
+- `Rail`: tabs in a narrow column beside their panel, an icon over a short
+  label for each, for a console with more modes than a row of tabs holds.
+  One tab stop, up and down choose; the panel can hide while the rail
+  stays, and choosing an item opens it again; room for a brand on top and
+  a few actions at the bottom. Requested by the reference consumer.
+- `--p-rail-w`: the width of the column of a `Rail`, a density token:
+  64 px, 56 on touch.
 - `PanelHead`: `title` takes a snippet too, for a title that is drawn (a
   brand as an SVG), which carries its own text alternative. A title that
   is text stays a string.
