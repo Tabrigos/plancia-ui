@@ -351,7 +351,8 @@ the pen lifts, a lone sample between gaps is a dot), `label: string`
 (accessible name, required), `width?` (`120`), `height?` (`32`), `color?`
 (`'var(--p-viz-1)'`), `area?: boolean` (15 % fill under the line), `endDot?:
 boolean` (`true`, on the last real value), `min?` / `max?` (pin an end of
-the scale, e.g. `min={0}`), `zeroLine?: boolean` (a thin line at 0 with the
+the scale, e.g. `min={0}`; a flat series lies on the pinned end, in the
+middle when neither is pinned), `zeroLine?: boolean` (a thin line at 0 with the
 scale stretched to hold it: Bz, a delta), `markIndex?: number` (a dashed
 vertical marker at that index: "now" before a forecast), `lines?:
 ReferenceLine[]` where `ReferenceLine = { value: number; label?: string }`
@@ -375,8 +376,8 @@ rest). Text and axes stay outside, in the text tokens.
 color?: string }` (`label` is the bar's tooltip and accessible text; `color`
 per bar, e.g. `var(--p-scale-3)` when the bar means a level), `label: string`
 (accessible name, required), `width?` (`120`), `height?` (`32`), `color?`
-(`'var(--p-viz-1)'`), `max?` (top of the scale; the bottom is always 0),
-`gap?` (`2` px surface gap), `readout?: (index: number, bar: Bar) => string`
+(`'var(--p-viz-1)'`), `max?` (top of the scale; the bottom is always 0, and
+a row of zeros draws no bar, with or without `max={0}`), `gap?` (`2` px surface gap), `readout?: (index: number, bar: Bar) => string`
 (the text of the bar under a hovering mouse, a dragging finger or the arrow
 keys on focus, e.g. `21–24 UTC · Kp 3.7`: the picked bar stays whole, the
 others fade, a small monospace box shows the text inside the width, the

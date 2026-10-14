@@ -19,7 +19,16 @@ recipe in place of a `Transport` component; 0.11.1 shipped on 2026-10-10
 what it found adopting it: a short tooltip centered on its element, and
 the focus ring of a thumb whole at the ends of a slider. The next band
 comes from what the consumers find, as issues here, and from the road to
-1.0 below; the maintainer picks it. One candidate so far:
+1.0 below; the maintainer picks it.
+
+Decided for it:
+
+- **#90**, a fix: a row of zero bars in `Bars` drew at half the height of
+  the chart. A flat series now lies on the end of the scale the app pins,
+  in `Sparkline` too. A fix waits for the band unless it cannot: this one
+  has a workaround (`max={Math.max(1, ...values)}`).
+
+One candidate so far:
 
 - **a rail**: tabs in a narrow column beside their panel, an icon over a
   short label for each, for a console with more modes than a row of tabs

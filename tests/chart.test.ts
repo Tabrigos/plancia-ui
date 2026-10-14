@@ -12,6 +12,13 @@ describe('domainOf', () => {
     expect(domainOf([5, 5])).toEqual({ min: 4, max: 6 })
   })
 
+  it('opens a flat series only on the side the app did not pin', () => {
+    // a row of zero bars sits on its zero baseline, with or without a maximum of 0
+    expect(domainOf([0, 0], 0)).toEqual({ min: 0, max: 1 })
+    expect(domainOf([0, 0], 0, 0)).toEqual({ min: 0, max: 1 })
+    expect(domainOf([7, 7], undefined, 7)).toEqual({ min: 6, max: 7 })
+  })
+
   it('ignores gaps and stretches to hold zero when asked', () => {
     expect(domainOf([3, null, 1])).toEqual({ min: 1, max: 3 })
     expect(domainOf([3, null, 1], undefined, undefined, true)).toEqual({ min: 0, max: 3 })

@@ -91,6 +91,7 @@
   ]
   // Small series for the chart preview: Kp bars colored by level, an X-ray sparkline, wind with an area
   const kp = [1, 2, 2, 3, 5, 4, 6, 3]
+  const quietBars = Array.from({ length: 8 }, () => ({ value: 0 }))
   const kpBars = kp.map((v, i) => ({ value: v, label: `${String(i * 3).padStart(2, '0')} UTC · Kp ${v}`, color: `var(--p-scale-${Math.min(5, Math.max(0, v - 4))})` }))
   const xray = [1.2, 1.4, 1.3, 2.8, 5.1, 3.2, 2.1, 1.9, 1.7, 1.6, 2.2, 1.8]
   // The same flux in W/m², on a logarithmic scale the app makes: the lines are the flare classes
@@ -154,6 +155,7 @@
       {/each}
       <div class="p-card chart-demo" aria-label="Chart preview on the dataviz tokens">
         <div class="chart-row"><Bars bars={kpBars} max={9} width={160} height={40} label="Kp, last 24 h" readout={(_, bar) => bar.label ?? ''} /><span class="p-t11 p-dim">Bars · Kp by 3 h, a status token per bar, a readout under the pointer or the finger</span></div>
+        <div class="chart-row"><Bars bars={quietBars} width={160} height={20} label="Requests per hour, a quiet day" /><span class="p-t11 p-dim">Bars · a quiet day: every hour at 0, no bar</span></div>
         <div class="chart-row"><Sparkline values={xray} label="X-ray flux, last 12 h" width={160} height={32} color="var(--p-viz-5)" /><span class="p-t11 p-dim">Sparkline · X-ray, viz-5</span></div>
         <div class="chart-row"><Sparkline values={xrayLog} min={-7} max={-4} lines={flareClasses} label="X-ray flux, last 12 h, logarithmic, against the flare classes B to X" width={160} height={56} color="var(--p-viz-5)" readout={(i, v) => `${12 - i} h ago · ${(10 ** v).toExponential(1)} W/m²`} /><span class="p-t11 p-dim">Sparkline · lines: the flare classes on a logarithmic scale the app makes, the readout gives the true value back</span></div>
         <div class="chart-row"><Sparkline values={wind} min={300} label="Solar wind speed" width={160} height={32} area readout={(i, v) => `${String(i * 2).padStart(2, '0')}:00 UTC · ${v} km/s`} /><span class="p-t11 p-dim">Sparkline · wind, area, scale pinned at 300, a readout under the pointer or the finger</span></div>
