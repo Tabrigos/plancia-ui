@@ -37,6 +37,7 @@ export { default as RadioGroup } from './components/RadioGroup.svelte'
 export { default as Fieldset } from './components/Fieldset.svelte'
 export { default as Select } from './components/Select.svelte'
 export { default as Tabs } from './components/Tabs.svelte'
+export { default as Rail } from './components/Rail.svelte'
 export { default as Slider } from './components/Slider.svelte'
 
 export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'orange' | 'danger' | 'info'

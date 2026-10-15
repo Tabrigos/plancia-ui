@@ -5,6 +5,7 @@
 </script>
 <script lang="ts">
   import type { Snippet } from 'svelte'
+  import { tabAfterKey } from '../tab-keys.js'
 
   /**
    * Tabs that swap the panel under them: a `tablist` and the `tabpanel` of
@@ -56,12 +57,9 @@
   }
 
   function onkeydown(event: KeyboardEvent): void {
-    const enabled = items.filter((item) => !item.disabled)
-    const at = enabled.findIndex((item) => item.id === chosen?.id)
-    const to = ({ ArrowRight: at + 1, ArrowLeft: at - 1, Home: 0, End: enabled.length - 1 } as Record<string, number>)[event.key]
-    if (to === undefined || !enabled.length) return
+    const next = tabAfterKey(items, chosen?.id, event.key)
+    if (!next) return
     event.preventDefault()
-    const next = enabled[(to + enabled.length) % enabled.length]
     choose(next.id)
     list?.querySelectorAll<HTMLElement>('[role="tab"]')[items.indexOf(next)]?.focus()
   }

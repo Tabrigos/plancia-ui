@@ -5,7 +5,7 @@
    * in the package repository, and reads the sources in ../src (alias in
    * vite.config.ts), so it always shows what is on the main branch.
    */
-  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Section, Select, Slider, Tabs, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
+  import { Age, Bars, Button, Checkbox, Chip, ControlRow, Drawer, Fieldset, FloatingPanel, InfoButton, InfoCard, Kbd, KeyValue, Legend, LegendDots, List, ListItem, LiveRegion, MetaRow, Notice, PanelHead, RadioGroup, Rail, Section, Select, Slider, Tabs, Segmented, SettingRow, Skeleton, Sparkline, Stat, Status, Toggle, Tooltip, announce, scaleTone } from 'plancia-ui'
   import tokens from 'plancia-ui/tokens.json'
   import ExpandableRows from './recipes/ExpandableRows.svelte'
   import { version } from '../../package.json'
@@ -26,6 +26,12 @@
   const consoleTabs = [{ id: 'track', label: 'Tracking' }, { id: 'wx', label: 'Space weather' }, { id: 'sky', label: 'Sky tonight' }]
   let consoleMode = $state('wx')
   let sidebarMode = $state('track')
+  const railItems = [
+    { id: 'track', label: 'Tracking' }, { id: 'wx', label: 'Space weather', title: 'Space weather now' },
+    { id: 'sky', label: 'Sky', title: 'Sky tonight' }, { id: 'sun', label: 'Sun', disabled: true }, { id: 'sys', label: 'System' },
+  ]
+  let railMode = $state('wx')
+  let railOpen = $state(true)
   // A point picked on the globe is none of the places: the row shows the placeholder
   let rowPlace = $state('lat-41.9-lon-12.5')
   let on = $state(true)
@@ -611,6 +617,43 @@
   </section>
   <section class="grid2">
     <div>
+      <h2 class="p-sec-title">Rail beside its panel</h2>
+      <div class="p-card rail-demo">
+        <Rail class={railOpen ? 'demo-rail' : 'demo-rail closed'} label="Modes" items={railItems} bind:value={railMode} bind:open={railOpen}>
+          {#snippet header()}
+            <svg role="img" aria-label="Halo" width="22" height="22" viewBox="0 0 16 16">
+              <circle cx="8" cy="8" r="3" fill="currentColor" />
+              <ellipse cx="8" cy="8" rx="7" ry="3.5" fill="none" stroke="var(--p-accent)" stroke-width="1.25" transform="rotate(-25 8 8)" />
+            </svg>
+          {/snippet}
+          {#snippet icon(id)}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+              {#if id === 'track'}<circle cx="10" cy="10" r="7" /><circle cx="15" cy="5" r="1.75" fill="currentColor" />
+              {:else if id === 'wx'}<path d="M11 2 5 11h4l-1 7 6-9h-4z" />
+              {:else if id === 'sky'}<path d="M10 3l2 5h5l-4 3 1.5 5L10 13l-4.5 3L7 11 3 8h5z" />
+              {:else if id === 'sun'}<circle cx="10" cy="10" r="4" /><path d="M10 1v3M10 16v3M1 10h3M16 10h3" />
+              {:else}<rect x="3" y="3" width="6" height="6" /><rect x="11" y="3" width="6" height="6" /><rect x="3" y="11" width="6" height="6" /><rect x="11" y="11" width="6" height="6" />{/if}
+            </svg>
+          {/snippet}
+          {#snippet panel(id)}
+            <div class="rail-rows">
+              {#each Array.from({ length: 12 }, (_, row) => row + 1) as row (row)}
+                <KeyValue label="{railItems.find((item) => item.id === id)?.label} {row}">{(row * 3.1).toFixed(1)}</KeyValue>
+              {/each}
+            </div>
+          {/snippet}
+          {#snippet actions()}
+            <Button variant="icon" size="sm" title={railOpen ? 'Hide the console' : 'Show the console'} aria-label={railOpen ? 'Hide the console' : 'Show the console'} onclick={() => (railOpen = !railOpen)}>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d={railOpen ? 'M10 3 5 8l5 5' : 'M6 3l5 5-5 5'} /></svg>
+            </Button>
+          {/snippet}
+        </Rail>
+      </div>
+      <p class="p-t11 p-dim after-card">One tab stop: <Kbd>↑</Kbd> <Kbd>↓</Kbd> move and choose, <Kbd>Home</Kbd> <Kbd>End</Kbd> go to the ends; Sun is disabled. The button at the bottom hides the panel while the rail stays, and the app gives the frame the rail's width; choosing an item opens it again. Space weather and Sky are named by a longer title, their tooltip.</p>
+    </div>
+  </section>
+  <section class="grid2">
+    <div>
       <h2 class="p-sec-title">Tooltip in fullscreen</h2>
       <div class="p-card demo viewer" bind:this={viewer}>
         <div class="row-wrap">
@@ -670,6 +713,10 @@
   /* A sidebar as the app would make it: a column of a fixed height, the tabs its only child that grows */
   .sidebar-demo { display: flex; flex-direction: column; max-width: 280px; height: 320px; padding: 12px 16px; }
   :global(.sidebar-tabs) { flex: 1; }
+  .rail-demo { display: flex; width: fit-content; max-width: 100%; height: 340px; padding: 0; overflow: hidden; }
+  :global(.demo-rail) { width: 320px; }
+  :global(.demo-rail.closed) { width: var(--p-rail-w); }
+  .rail-rows { padding: 8px 12px; }
   .demo { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
   .row-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .metric { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--p-t12); }

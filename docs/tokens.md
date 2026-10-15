@@ -25,7 +25,7 @@ written by hand anywhere else. Each group of the JSON becomes a prefix:
 | typography | `font-ui`, `font-mono`; `t11` `t12` `t13` `t14` `t16` `t20` `t28` | seven sizes, 11 px minimum |
 | spacing | `space-1` (4 px) `space-2` (8) `space-3` (12) `space-4` (16) `space-6` (24) `space-8` (32) | a 4 px grid |
 | radii | `r1` (4 px) `r2` (8) `r3` (12) `r-pill` | |
-| density | `row`, `row-h`, `control-h`, `control-h-sm`, `toggle-w`, `toggle-h`, `input-size`, `tap-h` | row padding and height, control sizes, input text, the tap height of a line of text: three densities, see below |
+| density | `row`, `row-h`, `control-h`, `control-h-sm`, `toggle-w`, `toggle-h`, `input-size`, `tap-h`, `rail-w` | row padding and height, control sizes, input text, the tap height of a line of text, the width of a `Rail`: three densities, see below |
 | z-index | `z-base` `z-overlay` `z-panel` `z-popover` `z-modal` `z-tooltip` | named layers, bottom to top, never a number in a component; a tooltip is above everything, a modal included |
 | motion | `motion-fast` (120 ms), `motion-base` (200 ms), `motion-ease` | |
 | focus | `focus` | the focus ring shadow used by `base.css` |
@@ -105,7 +105,9 @@ height (`row`, `row-h`), the height of buttons and small icon buttons
 `toggle-h`), the text size of inputs (`input-size`) and the least height of
 a line of text that is a tap target, such as an `ExpandableRow` (`tap-h`:
 nothing in compact and comfortable, where dense lists keep the height of
-their text, the small control height on touch).
+their text, the small control height on touch), and the width of the
+column of a `Rail` (`rail-w`: narrower on touch, where the rail and its
+panel share a drawer on a phone).
 
 | | compact | comfortable | touch |
 |---|---|---|---|
@@ -114,6 +116,7 @@ their text, the small control height on touch).
 | `toggle-w` × `toggle-h` | 34 × 20 px | 34 × 20 px | 44 × 26 px |
 | `input-size` | 13 px | 13 px | 16 px |
 | `tap-h` | 0 (natural) | 0 (natural) | 32 px (`control-h-sm`) |
+| `rail-w` | 64 px | 64 px | 56 px |
 
 Touch is sized for a finger: a 44 px row, a 40 px button, a small button
 of 32 px (the close of a panel, the info circle's tap target), and 16 px
