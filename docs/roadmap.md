@@ -11,51 +11,20 @@ Releases follow the maintainer's policy: a minor collects substantial
 work and ships when its whole band is merged; a patch ships only for a
 small fix a consumer needs now.
 
-## 0.12.0 — a rail, decided on 2026-10-13
+## Next — from what the consumers find
 
 0.11.0 shipped on 2026-10-08 the two issues of the reference consumer:
 the `Tooltip` in fullscreen (#76) and `Slider` (#77), with a playback
 recipe in place of a `Transport` component; 0.11.1 shipped on 2026-10-10
-what it found adopting it: a short tooltip centered on its element, and
-the focus ring of a thumb whole at the ends of a slider. The band of
-0.12.0, picked by the maintainer on 2026-10-13:
-
-- **a rail**, a component of its own: tabs in a narrow column beside their
-  panel, an icon over a short label for each, for a console with more
-  modes than a row of tabs holds. The reference consumer plans one, for
-  its sidebar: four tabs already need 320 px in a row, and a fifth would
-  fit at no reasonable width. The shape it describes: items
-  `{ id, label, title?, disabled? }` with an icon as a snippet that
-  receives the `id` (the icons stay the app's); the label under the icon,
-  11 px, up to two lines, never truncated, and an accessible name that can
-  be longer than it; the chosen item in the accent with its line on the
-  inner edge; a vertical tablist (`aria-orientation="vertical"`: up and
-  down choose and wrap, Home and End go to the ends, one tab stop); the
-  panel beside it taking the width and height left and scrolling, as
-  `Tabs fill` does; room for a few actions at the bottom, outside the
-  tablist; a panel the app can hide while the rail stays, choosing an item
-  opens it again, the open state being the app's. About 64 px wide on a
-  desktop and 56 on touch, items at least `--p-tap-h` tall; on a phone,
-  rail and panel together in a `Drawer`. Not a vertical `Tabs`: `Tabs` is
-  close to the size a component may have (`AGENTS.md` §3) and would take
-  props only the rail needs (an icon per item, the actions, a panel that
-  hides); the keys move to a module both share. Its name is decided with
-  its props.
-- **`PanelHead` takes a snippet for its title**, for a brand drawn as an
-  SVG: the head of the reference consumer's console, beside the rail. A
-  title that is text stays a string.
-- **#90**, a fix: a row of zero bars in `Bars` drew at half the height of
-  the chart. A flat series now lies on the end of the scale the app pins,
-  in `Sparkline` too. A fix waits for the band unless it cannot: this one
-  has a workaround (`max={Math.max(1, ...values)}`).
-- **`Tooltip` in two**: the delegation that claims every `title` of the
-  page moves to a module of its own, as the placement already lives in
-  `tooltip-placement.ts`, and the component goes back under ~120 lines.
-  Nothing changes for whoever uses it.
-- **a line in the skill on loose rows in a `Section`**: rows put straight
-  in its body, without a `List`, sit flush with the edge of the panel,
-  while `ListItem` and `p-inset` keep their own step; the line says how to
-  give them the same. A prop for it waits for a second use.
+what it found adopting it. 0.12.0 shipped on 2026-10-15 the band picked
+on 2026-10-13: `Rail`, tabs in a narrow column beside their panel, with
+its width as a density token (`--p-rail-w`); a `PanelHead` title that can
+be a snippet, for a brand drawn as an SVG; #90, a flat series laid on the
+end of the scale the app pins in `Bars` and `Sparkline`; `Tooltip` split
+in two, its tip no longer read twice when it repeats an element's name;
+and a line in the skill on loose rows in a `Section`. The next band comes from what the consumers find adopting
+it, as issues here, and from the road to 1.0 below; the maintainer picks
+it.
 
 ## Later — waiting for a second use
 
