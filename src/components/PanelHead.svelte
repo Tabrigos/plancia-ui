@@ -5,7 +5,8 @@
   /**
    * The one panel head: title 14/600, optional monospace subtitle, optional
    * chips under the title (`chips`), actions on the right (`actions`), the
-   * close button always last (`onclose`).
+   * close button always last (`onclose`). A title that is drawn, a brand as
+   * an SVG, comes as a snippet and carries its own text alternative.
    */
   let {
     title,
@@ -16,7 +17,8 @@
     onclose,
     closeLabel,
   }: {
-    title: string
+    /** Text, or a snippet for a title that is drawn (with its own text alternative: `aria-label` on the SVG, or a `p-sr-only` text) */
+    title: string | Snippet
     subtitle?: string
     /** Native tooltip on the subtitle (what that datum is) */
     subtitleTitle?: string
@@ -30,7 +32,7 @@
 
 <div class="p-ph">
   <div class="text">
-    <div class="line"><span class="title">{title}</span>{#if subtitle}<span class="sub" class:help={Boolean(subtitleTitle)} title={subtitleTitle}>{subtitle}</span>{/if}</div>
+    <div class="line"><span class="title">{#if typeof title === 'string'}{title}{:else}{@render title()}{/if}</span>{#if subtitle}<span class="sub" class:help={Boolean(subtitleTitle)} title={subtitleTitle}>{subtitle}</span>{/if}</div>
     {#if chips}<div class="chips">{@render chips()}</div>{/if}
   </div>
   <div class="sp"></div>
