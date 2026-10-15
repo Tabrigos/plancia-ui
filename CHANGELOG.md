@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-10-15
+
 ### Added
 - `Rail`: tabs in a narrow column beside their panel, an icon over a short
   label for each, for a console with more modes than a row of tabs holds.
