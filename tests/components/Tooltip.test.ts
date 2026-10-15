@@ -70,6 +70,40 @@ describe('Tooltip', () => {
     expect(el.getAttribute('aria-describedby')).toBe('hint error')
   })
 
+  it('shows a tip that repeats the element\'s name without adding it as a description, read twice otherwise', async () => {
+    render(Tooltip)
+    const labelled = button('Close')
+    labelled.setAttribute('aria-label', 'close')
+    labelled.setAttribute('aria-describedby', 'hint')
+    await fireEvent.focusIn(labelled)
+    flushSync()
+    expect(screen.getByRole('tooltip').textContent).toBe('Close')
+    expect(labelled.getAttribute('aria-describedby')).toBe('hint')
+    await fireEvent.focusOut(labelled)
+    const heading = document.createElement('span')
+    heading.id = 'heading'
+    heading.textContent = 'Solar wind'
+    document.body.appendChild(heading)
+    const byOthers = button('Solar  wind')
+    byOthers.setAttribute('aria-labelledby', 'heading')
+    await fireEvent.focusIn(byOthers)
+    flushSync()
+    expect(byOthers.hasAttribute('aria-describedby')).toBe(false)
+    await fireEvent.focusOut(byOthers)
+    const ownText = button('Export')
+    ownText.textContent = ' Export '
+    await fireEvent.focusIn(ownText)
+    flushSync()
+    expect(ownText.hasAttribute('aria-describedby')).toBe(false)
+    await fireEvent.focusOut(ownText)
+    // A tip that says more than the name is still its description
+    const more = button('Close the panel')
+    more.setAttribute('aria-label', 'Close')
+    await fireEvent.focusIn(more)
+    flushSync()
+    expect(more.getAttribute('aria-describedby')).toBe(screen.getByRole('tooltip').id)
+  })
+
   it('hides on pointerdown and on pointerout, and ignores elements without a title', async () => {
     render(Tooltip, { props: { delay: 0 } })
     const el = button('Details')

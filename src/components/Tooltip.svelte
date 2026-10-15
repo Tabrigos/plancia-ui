@@ -4,18 +4,19 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { placeTooltip } from '../tooltip-placement.js'
+  import { delegate, describe } from '../tooltip-delegation.js'
 
   /**
    * One themed tooltip for the whole page, mounted once, in place of the
    * native ones (slow, grey, off theme). Delegated: on hover or focus of an
-   * element with `title` the text moves to `data-tip` (so the browser shows
-   * nothing of its own) and renders in a glass box below — or above — the
-   * element, inside the window, on the side that covers less of the
-   * elements in `avoid` (the arithmetic is in `tooltip-placement.ts`). While
-   * visible its id is added to the anchor's `aria-describedby`. The box is a
-   * popover in the top layer, so it shows over an element in fullscreen.
-   * Silent on touch: a finger does not hover, and the focus a tap gives on
-   * some phones is not a request to read; `InfoButton` explains things there.
+   * element with `title` (how, and when it hides, is in
+   * `tooltip-delegation.ts`) the text renders in a glass box below — or
+   * above — the element, inside the window, on the side that covers less of
+   * the elements in `avoid` (the arithmetic is in `tooltip-placement.ts`).
+   * While visible its id is added to the anchor's `aria-describedby`,
+   * unless the tip only repeats the anchor's name. The
+   * box is a popover in the top layer, so it shows over an element in
+   * fullscreen. Silent on touch; `InfoButton` explains things there.
    * Keep writing `title`: this is the only change.
    */
   let {
@@ -41,23 +42,7 @@
   let above = $state(false)
   let box = $state<HTMLDivElement | null>(null)
 
-  let timer: ReturnType<typeof setTimeout> | null = null
   let anchor: Element | null = null
-  /** When a finger last touched the page: the focus that follows a tap is not a hover */
-  let lastTouch = -Infinity
-  const TOUCH_FOCUS_WINDOW = 1000
-
-  function claim(target: EventTarget | null): Element | null {
-    if (!(target instanceof Element)) return null
-    const hit = target.closest('[title], [data-tip]')
-    if (!hit) return null
-    const title = hit.getAttribute('title')
-    if (title !== null) {
-      hit.setAttribute('data-tip', title)
-      hit.removeAttribute('title')
-    }
-    return hit.getAttribute('data-tip') ? hit : null
-  }
 
   function obstacles(anchorEl: Element): DOMRect[] {
     if (!avoid) return []
@@ -78,16 +63,6 @@
     above = p.above
   }
 
-  // Next to the anchor's own descriptions, never in their place, and taken
-  // away alone: a field's hint and error are still read with the tooltip,
-  // and a description the app changes meanwhile is not rolled back
-  function describe(target: Element, withTip: boolean): void {
-    const ids = (target.getAttribute('aria-describedby') ?? '').split(/\s+/).filter((id) => id && id !== tipId)
-    if (withTip) ids.push(tipId)
-    if (ids.length) target.setAttribute('aria-describedby', ids.join(' '))
-    else target.removeAttribute('aria-describedby')
-  }
-
   // An element in fullscreen is drawn alone with its subtree, and the box,
   // at the root, would stay behind it: the top layer is above, and free of
   // the overflow and z-index of any ancestor too. Without the Popover API the
@@ -103,69 +78,17 @@
     anchor = target
     text = tip
     visible = true
-    describe(target, true)
+    describe(target, tipId, true)
     requestAnimationFrame(() => anchor && place(anchor))
   }
 
   function hide(): void {
-    if (timer) { clearTimeout(timer); timer = null }
-    if (anchor) describe(anchor, false)
+    if (anchor) describe(anchor, tipId, false)
     visible = false
     anchor = null
   }
 
-  function onOver(event: PointerEvent): void {
-    if (event.pointerType === 'touch') { lastTouch = performance.now(); return }
-    const hit = claim(event.target)
-    if (!hit || hit === anchor) return
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(() => show(hit), delay)
-  }
-
-  function onOut(event: PointerEvent): void {
-    const to = event.relatedTarget
-    if (anchor && to instanceof Node && anchor.contains(to)) return
-    hide()
-  }
-
-  function onDown(event: PointerEvent): void {
-    if (event.pointerType === 'touch') lastTouch = performance.now()
-    hide()
-  }
-
-  function onFocus(event: FocusEvent): void {
-    if (performance.now() - lastTouch < TOUCH_FOCUS_WINDOW) return
-    const hit = claim(event.target)
-    if (hit) show(hit)
-  }
-
-  function onKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') hide()
-  }
-
-  onMount(() => {
-    const opts = { capture: true }
-    document.addEventListener('pointerover', onOver, opts)
-    document.addEventListener('pointerout', onOut, opts)
-    document.addEventListener('pointerdown', onDown, opts)
-    document.addEventListener('focusin', onFocus, opts)
-    document.addEventListener('focusout', hide, opts)
-    document.addEventListener('scroll', hide, opts)
-    document.addEventListener('keydown', onKeydown)
-    // A box shown before an element went fullscreen would stay under it
-    document.addEventListener('fullscreenchange', hide)
-    return () => {
-      document.removeEventListener('pointerover', onOver, opts)
-      document.removeEventListener('pointerout', onOut, opts)
-      document.removeEventListener('pointerdown', onDown, opts)
-      document.removeEventListener('focusin', onFocus, opts)
-      document.removeEventListener('focusout', hide, opts)
-      document.removeEventListener('scroll', hide, opts)
-      document.removeEventListener('keydown', onKeydown)
-      document.removeEventListener('fullscreenchange', hide)
-      hide()
-    }
-  })
+  onMount(() => delegate({ delay: () => delay, anchor: () => anchor, show, hide }))
 </script>
 
 {#if visible}

@@ -13,6 +13,10 @@ All notable changes to plancia-ui. The format follows
 - `Sparkline`: a flat series lies on the end of the scale the app pins: a
   row of zeros with `min={0}` sits on the bottom, no longer in the middle.
   With neither end pinned it stays in the middle.
+- `Tooltip`: a tip that repeats the element's accessible name is no longer
+  read a second time as its description. An icon button with the same
+  `aria-label` and `title` was announced twice: `InfoButton`, the close
+  buttons of `PanelHead` and `InfoCard`, an item of `Rail` with a `title`.
 
 ## [0.11.1] — 2026-10-10
 
