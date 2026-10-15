@@ -6,6 +6,11 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Changed
+- Documentation: the `Section` entry of the skill says how to give rows put
+  straight in its body the side step a `ListItem` has; in a container
+  without padding they sat flush with its edge.
+
 ### Fixed
 - `Bars`: a row of bars that are all zero draws no bar. It was drawn at
   half the height of the chart, so a quiet series read as steady activity;

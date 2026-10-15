@@ -474,6 +474,13 @@ boolean) => void`, snippet `actions` (controls on the right of the head,
 outside the toggle button), `id?: string` (of the content region, generated
 when absent). Content is the body. The head is a `<button aria-expanded>`;
 closed content stays mounted and `hidden`. Sibling sections get a divider.
+A `Section` has no side padding of its own: head and body take the width
+of their container, which gives the step (`FloatingPanel` keeps 16 px). In
+a container without padding, rows put straight in the body (`KeyValue`,
+`ControlRow`, `Segmented`, a `p-detail` line) sit flush with its edge,
+while a `ListItem` keeps its text 11 px in (its border and padding): give
+those rows the step yourself, `padding-inline: var(--p-space-3)` on a
+wrapper inside the body, or on the container for the heads too.
 
 **`Status`** — `kind?: 'loading' | 'ok' | 'stale' | 'error' | 'idle'` (`idle`),
 `text?: string` (short, next to the indicator), `title?: string` (tooltip; the
