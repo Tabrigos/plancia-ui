@@ -13,7 +13,8 @@
    * `tooltip-delegation.ts`) the text renders in a glass box below — or
    * above — the element, inside the window, on the side that covers less of
    * the elements in `avoid` (the arithmetic is in `tooltip-placement.ts`).
-   * While visible its id is added to the anchor's `aria-describedby`. The
+   * While visible its id is added to the anchor's `aria-describedby`,
+   * unless the tip only repeats the anchor's name. The
    * box is a popover in the top layer, so it shows over an element in
    * fullscreen. Silent on touch; `InfoButton` explains things there.
    * Keep writing `title`: this is the only change.

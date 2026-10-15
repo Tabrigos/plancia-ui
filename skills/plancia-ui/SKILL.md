@@ -311,7 +311,9 @@ does not count). Delegated: any element with `title` gets the themed tooltip,
 the text moves to `data-tip` so the browser shows nothing of its own; while
 visible its id is added after the anchor's own `aria-describedby` (a
 field's hint and error are still read) and taken away alone when it hides,
-so a description the app changes meanwhile stays. The box is a manual
+so a description the app changes meanwhile stays. A tip that only repeats
+the element's name (its `aria-labelledby`, `aria-label` or text) is not
+added: an icon button with `aria-label` and `title` alike is read once. The box is a manual
 popover in the top layer: it shows over an element the app puts in
 fullscreen (a viewer, a map) and is never clipped by the `overflow` or
 covered by the `z-index` of an ancestor; a browser without the Popover API

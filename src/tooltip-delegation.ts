@@ -34,12 +34,21 @@ export function claim(target: EventTarget | null): Element | null {
   return hit.getAttribute('data-tip') ? hit : null
 }
 
+/** The tip says what the anchor's name already says: `aria-labelledby`, `aria-label` or its own text */
+function repeatsName(target: Element): boolean {
+  const flat = (text: string | null | undefined) => (text ?? '').replace(/\s+/g, ' ').trim().toLowerCase()
+  const labels = (target.getAttribute('aria-labelledby') ?? '').split(/\s+/).map((id) => (id && document.getElementById(id)?.textContent) || '')
+  const name = flat(labels.join(' ')) || flat(target.getAttribute('aria-label')) || flat(target.textContent)
+  return name === flat(target.getAttribute('data-tip'))
+}
+
 // Next to the anchor's own descriptions, never in their place, and taken
 // away alone: a field's hint and error are still read with the tooltip,
-// and a description the app changes meanwhile is not rolled back
+// and a description the app changes meanwhile is not rolled back. A tip
+// that only repeats the name is left out: it would be read twice
 export function describe(target: Element, tipId: string, withTip: boolean): void {
   const ids = (target.getAttribute('aria-describedby') ?? '').split(/\s+/).filter((id) => id && id !== tipId)
-  if (withTip) ids.push(tipId)
+  if (withTip && !repeatsName(target)) ids.push(tipId)
   if (ids.length) target.setAttribute('aria-describedby', ids.join(' '))
   else target.removeAttribute('aria-describedby')
 }
