@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.12.1] — 2026-10-17
+
 ### Fixed
 - `Tooltip`: a `title` that changes while its tooltip shows replaces the
   text at once. A button naming its next action ("Close panel", "Open
