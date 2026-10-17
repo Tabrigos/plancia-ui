@@ -358,7 +358,10 @@ visible its id is added after the anchor's own `aria-describedby` (a
 field's hint and error are still read) and taken away alone when it hides,
 so a description the app changes meanwhile stays. A tip that only repeats
 the element's name (its `aria-labelledby`, `aria-label` or text) is not
-added: an icon button with `aria-label` and `title` alike is read once. The box is a manual
+added: an icon button with `aria-label` and `title` alike is read once. A
+`title` the app writes again while the tooltip shows (a button that names
+its next action, flipped by the click) replaces the text at once; an empty
+one hides it. The box is a manual
 popover in the top layer: it shows over an element the app puts in
 fullscreen (a viewer, a map) and is never clipped by the `overflow` or
 covered by the `z-index` of an ancestor; a browser without the Popover API
