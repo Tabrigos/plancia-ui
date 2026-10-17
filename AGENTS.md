@@ -42,6 +42,9 @@ American spelling.
 
 ## 2. Getting started
 
+Node 24, the version CI runs. It is what the tools need, not the package:
+whoever installs plancia-ui only needs Svelte 5.
+
 ```bash
 npm ci                      # root: svelte-package, svelte, typescript
 npm run tokens              # tokens.json → src/tokens.css
