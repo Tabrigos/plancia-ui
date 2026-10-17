@@ -13,18 +13,20 @@ small fix a consumer needs now.
 
 ## Next — from what the consumers find
 
-0.11.0 shipped on 2026-10-08 the two issues of the reference consumer:
-the `Tooltip` in fullscreen (#76) and `Slider` (#77), with a playback
-recipe in place of a `Transport` component; 0.11.1 shipped on 2026-10-10
-what it found adopting it. 0.12.0 shipped on 2026-10-15 the band picked
-on 2026-10-13: `Rail`, tabs in a narrow column beside their panel, with
-its width as a density token (`--p-rail-w`); a `PanelHead` title that can
-be a snippet, for a brand drawn as an SVG; #90, a flat series laid on the
-end of the scale the app pins in `Bars` and `Sparkline`; `Tooltip` split
-in two, its tip no longer read twice when it repeats an element's name;
-and a line in the skill on loose rows in a `Section`. The next band comes from what the consumers find adopting
-it, as issues here, and from the road to 1.0 below; the maintainer picks
-it.
+0.11.0 shipped on 2026-10-08 the two issues of the reference consumer: the
+`Tooltip` in fullscreen (#76) and `Slider` (#77), with a playback recipe
+in place of a `Transport` component; 0.11.1 shipped on 2026-10-10 what it
+found adopting it. 0.12.0 shipped on 2026-10-17 the band picked on
+2026-10-13: `Rail`, tabs in a narrow column beside their panel, with its
+width as a density token (`--p-rail-w`); a `PanelHead` title that can be a
+snippet, for a brand drawn as an SVG; #90, a flat series laid on the end
+of the scale the app pins in `Bars` and `Sparkline`; `Tooltip` split in
+two, its tip no longer read twice when it repeats an element's name; and a
+line in the skill on loose rows in a `Section`. 0.12.1 shipped on
+2026-10-17 what it found adopting it: a tooltip that follows a title
+changing while it shows (#104). The next band comes from what the
+consumers find, as issues here, and from the road to 1.0 below; the
+maintainer picks it.
 
 ## Later — waiting for a second use
 
