@@ -6,6 +6,12 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `Tooltip`: a `title` that changes while its tooltip shows replaces the
+  text at once. A button naming its next action ("Close panel", "Open
+  panel") kept offering, after the click, the action just done until the
+  pointer left it and came back (#104).
+
 ## [0.12.0] — 2026-10-15
 
 ### Added

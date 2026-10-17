@@ -57,9 +57,24 @@ export function describe(target: Element, tipId: string, withTip: boolean): void
 export function delegate(on: Delegation): () => void {
   let timer: ReturnType<typeof setTimeout> | null = null
   let lastTouch = -Infinity
+  // A title the app writes again while the tip shows, as a button naming its
+  // next action does on click, is claimed and shown at once; emptied, it hides
+  const watcher = new MutationObserver(() => {
+    const anchor = on.anchor()
+    if (!anchor?.hasAttribute('title')) return
+    if (claim(anchor)) show(anchor)
+    else hide()
+  })
+
+  function show(target: Element): void {
+    on.show(target)
+    watcher.disconnect()
+    watcher.observe(target, { attributes: true, attributeFilter: ['title'] })
+  }
 
   function hide(): void {
     if (timer) { clearTimeout(timer); timer = null }
+    watcher.disconnect()
     on.hide()
   }
 
@@ -68,7 +83,7 @@ export function delegate(on: Delegation): () => void {
     const hit = claim(event.target)
     if (!hit || hit === on.anchor()) return
     if (timer) clearTimeout(timer)
-    timer = setTimeout(() => on.show(hit), on.delay())
+    timer = setTimeout(() => show(hit), on.delay())
   }
 
   function onOut(event: PointerEvent): void {
@@ -86,32 +101,23 @@ export function delegate(on: Delegation): () => void {
   function onFocus(event: FocusEvent): void {
     if (performance.now() - lastTouch < TOUCH_FOCUS_WINDOW) return
     const hit = claim(event.target)
-    if (hit) on.show(hit)
+    if (hit) show(hit)
   }
 
   function onKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape') hide()
   }
 
-  const opts = { capture: true }
+  const stop = new AbortController()
+  const opts = { capture: true, signal: stop.signal }
   document.addEventListener('pointerover', onOver, opts)
   document.addEventListener('pointerout', onOut, opts)
   document.addEventListener('pointerdown', onDown, opts)
   document.addEventListener('focusin', onFocus, opts)
   document.addEventListener('focusout', hide, opts)
   document.addEventListener('scroll', hide, opts)
-  document.addEventListener('keydown', onKeydown)
+  document.addEventListener('keydown', onKeydown, { signal: stop.signal })
   // A box shown before an element went fullscreen would stay under it
-  document.addEventListener('fullscreenchange', hide)
-  return () => {
-    document.removeEventListener('pointerover', onOver, opts)
-    document.removeEventListener('pointerout', onOut, opts)
-    document.removeEventListener('pointerdown', onDown, opts)
-    document.removeEventListener('focusin', onFocus, opts)
-    document.removeEventListener('focusout', hide, opts)
-    document.removeEventListener('scroll', hide, opts)
-    document.removeEventListener('keydown', onKeydown)
-    document.removeEventListener('fullscreenchange', hide)
-    hide()
-  }
+  document.addEventListener('fullscreenchange', hide, { signal: stop.signal })
+  return () => { stop.abort(); hide() }
 }

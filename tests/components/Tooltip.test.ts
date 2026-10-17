@@ -104,6 +104,34 @@ describe('Tooltip', () => {
     expect(more.getAttribute('aria-describedby')).toBe(screen.getByRole('tooltip').id)
   })
 
+  it('follows a title the app writes again while it shows, and hides when it is emptied (#104)', async () => {
+    render(Tooltip)
+    const el = button('Close panel')
+    el.setAttribute('aria-label', 'Side panel')
+    await fireEvent.focusIn(el)
+    flushSync()
+    const tip = screen.getByRole('tooltip')
+    // The click flips the state and the framework sets the title again
+    el.setAttribute('title', 'Open panel')
+    await Promise.resolve()
+    flushSync()
+    expect(tip.textContent).toBe('Open panel')
+    expect(el.dataset.tip).toBe('Open panel')
+    expect(el.hasAttribute('title')).toBe(false)
+    expect(el.getAttribute('aria-describedby')).toBe(tip.id)
+    el.setAttribute('title', '')
+    await Promise.resolve()
+    flushSync()
+    expect(screen.queryByRole('tooltip')).toBeNull()
+    expect(el.hasAttribute('aria-describedby')).toBe(false)
+    // Hidden, it watches nothing: the next title waits for the next hover or focus
+    el.setAttribute('title', 'Close panel')
+    await Promise.resolve()
+    flushSync()
+    expect(screen.queryByRole('tooltip')).toBeNull()
+    expect(el.getAttribute('title')).toBe('Close panel')
+  })
+
   it('hides on pointerdown and on pointerout, and ignores elements without a title', async () => {
     render(Tooltip, { props: { delay: 0 } })
     const el = button('Details')
