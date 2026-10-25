@@ -144,7 +144,10 @@ describes; the tests make it so:
   running in Node, the skill in `npm pack`. Fix it in the template, never
   here alone;
 - `tests/skill-reference.test.ts` checks what the template cannot see in a
-  Svelte package: every prop of every component in its section, every
+  Svelte package: every prop of every component in its section (read from
+  the type of `$props()`, a type the component declares included; a
+  component with no prop of its own is listed in `NO_OWN_PROPS` with the
+  reason, or the test fails), every
   `--p-*` token it names defined in `tokens.css`, and every `svelte`
   block identical to a file of `showcase/src/recipes/`, which svelte-check
   compiles. A new recipe goes into `references/recipes.md`

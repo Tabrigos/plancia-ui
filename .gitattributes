@@ -3,8 +3,10 @@
 # of its 105 files (SKILL.md, the .svelte components, base.css, LICENSE), and a
 # consumer comparing the skill byte for byte on Linux went red. LF in every
 # text file, on every checkout; the generator of src/tokens.css writes LF too.
-# After changing these lines:
+# CRLF only for the Windows scripts that need it. After changing these lines:
 #   git add --renormalize .
 * text=auto eol=lf
 *.md text eol=lf
 *.json text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf

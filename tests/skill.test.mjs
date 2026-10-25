@@ -169,7 +169,7 @@ test('every reference is cited and every citation exists', () => {
 
 test('skill files have LF line endings, and git keeps them so', () => {
   const crlf = skillFiles().filter(rel => fs.readFileSync(path.join(SKILL_DIR, rel)).includes(13));
-  assert.deepEqual(crlf, [], "CRLF: add '*.md text eol=lf' to .gitattributes and renormalise");
+  assert.deepEqual(crlf, [], "CRLF: add the lines of gitattributes-frammento (* text=auto eol=lf) to .gitattributes and renormalise");
   const attributes = gitattributes();
   assert.ok(attributes.length, 'no .gitattributes from the package up to the repository root');
   assert.ok(attributes.some(a => /^(\*\.md|\*|\S*skills\/\S*)\s.*eol=lf/m.test(a)), '.gitattributes must force LF on the skill');
