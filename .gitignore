@@ -8,7 +8,11 @@ phone-check/
 .DS_Store
 Thumbs.db
 
-# private files of whoever works with Claude Code: CLAUDE.md imports AGENTS.md,
-# .claude/ holds the project copy of the skill (npm run skill:install)
+# private files of whoever works with Claude Code: CLAUDE.md imports AGENTS.md.
+# .claude/ stays private except the project skill, a committed symlink to
+# skills/plancia-ui, so an agent working here reads the skill of this commit
 CLAUDE.md
-.claude/
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/plancia-ui
