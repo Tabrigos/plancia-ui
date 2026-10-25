@@ -51,8 +51,22 @@ maintainer picks it.
   goes in an `<iframe>`.
 - Icon set (close, info, sun/moon, locate, play/pause, expand).
 - A high-contrast third theme (`forced-colors`) as a block in `tokens.json`.
-- A documented CSS-only path for non-Svelte consumers; a web-components
-  build if someone asks.
+- Use outside Svelte, in steps, each one only when a real non-Svelte
+  project asks for it (explored on 2026-10-17, with no such project yet).
+  The tokens already work anywhere: `tokens.css` alone gives any page the
+  colors, the themes and the densities. (1) A documented CSS-only path:
+  which files to import, what `base.css` resets for the whole page, the
+  `data-theme` and `data-density` attributes. (2) A bridge sheet to that
+  project's framework, mapping its variables onto `--p-*`: Tailwind v4's
+  `@theme` takes them as they are; Bootstrap 5.3 also wants RGB triplets
+  for its `-rgb` variables and an agreement with Reboot, which resets what
+  `base.css` resets. (3) Only when that project needs a component's
+  behavior: CSS classes shared with the Svelte components, before a
+  web-components build, because a shadow root cuts the `aria-labelledby`
+  and `aria-describedby` references the components rely on. Ports to
+  React or Vue stay out: two copies of every component to keep in step.
+  What makes step 3 costly is the CSS scoped inside each `.svelte` file,
+  a point to weigh if the components' architecture is ever reopened.
 - An installable PWA is the consumer's job (manifest, service worker);
   the package's part is the touch density and the sheet, in 0.7.0.
 - Token export in Style Dictionary / Figma Tokens format.
