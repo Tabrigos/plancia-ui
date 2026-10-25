@@ -1,3 +1,10 @@
-# The generator writes LF: on a checkout with CRLF line endings every
-# `npm run tokens` would mark the file as changed with an empty diff.
-src/tokens.css text eol=lf
+# Everything ships from the working tree: npm packs the files as they are on
+# disk, so a checkout with core.autocrlf=true published 0.12.1 with CRLF in 45
+# of its 105 files (SKILL.md, the .svelte components, base.css, LICENSE), and a
+# consumer comparing the skill byte for byte on Linux went red. LF in every
+# text file, on every checkout; the generator of src/tokens.css writes LF too.
+# After changing these lines:
+#   git add --renormalize .
+* text=auto eol=lf
+*.md text eol=lf
+*.json text eol=lf
