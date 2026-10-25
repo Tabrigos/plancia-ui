@@ -12,7 +12,8 @@ if it is visual.
 
 ## What the package promises
 
-The line of the reference, `skills/plancia-ui/SKILL.md`, or of
+The line of the reference, `skills/plancia-ui/SKILL.md` or its
+`references/`, or of
 `docs/design-rules.md` that says otherwise.
 
 ## Versions

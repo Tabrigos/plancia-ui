@@ -6,6 +6,49 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Added
+- The skill carries `metadata.version` in its frontmatter, the version of
+  the package it ships with, so a project that keeps a copy in
+  `.claude/skills/plancia-ui/` knows which version the copy describes.
+- `liveMessage` and `DEFAULT_THEME` have their entries in the reference;
+  they were exported without one.
+
+### Changed
+- The skill is split. `SKILL.md`, which an agent reads whole every time it
+  uses the skill, keeps which component for which need, the setup, the
+  usual shape, the rules, what goes wrong and whose fault it is, what not
+  to do and what is not covered: 256 lines and about 3,700 tokens, from
+  800 lines and 12,300. Every export with every prop moves to
+  `references/api.md`, classes, tokens and densities to
+  `references/css.md`, seven whole recipes to `references/recipes.md`,
+  each opened only when needed.
+- The skill is checked against the code by the package's tests: each of
+  the 68 exports has its section in `references/api.md` and no section
+  names anything else, the 207 props of the 36 components are named in
+  their sections, the names `SKILL.md` cites exist, every `--p-*` token
+  the skill names is defined, its setup example runs in Node, and its 8
+  Svelte examples are the exact recipe files the showcase compiles (3
+  fragments are marked as not checked). Tried with a fresh agent
+  (claude-sonnet-5-5, Claude Code 2.1.310) on a task that did not name the
+  package, a panel of map layers: it called the skill, never opened the
+  installed sources, and its panel passed svelte-check.
+- `references/css.md` writes every token in full (`--p-t14`, not `t14`),
+  as the project's CSS uses it and as an agent searches for it.
+- README: a project copies the skill from `node_modules` into
+  `.claude/skills/plancia-ui/` and keeps it in git. `npx skills add` is no
+  longer the advised way: it takes the skill from the `main` branch on
+  GitHub, which may describe props the installed version does not have.
+
+### Fixed
+- Every text file of the package ships with LF line endings. 0.12.1
+  carried CRLF in 45 of its 105 files (`SKILL.md`, the `.svelte`
+  components, `base.css`, `LICENSE`), packed from a Windows checkout,
+  which turned red a consumer that compared its copy of the skill byte for
+  byte on Linux.
+- The densities in the reference are a table of every density token, as
+  `tokens.css` sets them. The summary they replace read as 26 px buttons
+  in the compact density, where they are 32 (26 is the small button).
+
 ## [0.12.1] — 2026-10-17
 
 ### Fixed

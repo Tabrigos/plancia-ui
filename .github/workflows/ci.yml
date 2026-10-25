@@ -36,6 +36,9 @@ jobs:
       - name: Subpath exports load in plain Node, without the Svelte compiler
         run: node scripts/check-exports.mjs
 
+      - name: The skill matches the exports, its example runs, the tarball carries it in LF
+        run: npm run test:skill
+
       - name: What would go to npm
         run: npm pack --dry-run
 

@@ -7,12 +7,14 @@ still missing.
 
 ## How a version is published
 
-1. Version and changelog in the same commit, `Version X.Y.Z`, tag `vX.Y.Z`.
+1. Version, changelog and the `metadata.version` of the skill in the same
+   commit, `Version X.Y.Z`, tag `vX.Y.Z`.
    A published version is never touched again: a mistake is a new patch.
-2. `skills/plancia-ui/SKILL.md` and `CHANGELOG.md` tell the same story,
-   and the README still describes what the package can do. The reference
-   ships in the tarball: a prop added to the code and missing there is a
-   bug.
+2. The skill (`skills/plancia-ui/SKILL.md` and its `references/`) and
+   `CHANGELOG.md` tell the same story, and the README still describes
+   what the package can do. The reference ships in the tarball: a prop
+   added to the code and missing there is a bug, and `npm test` fails on
+   it.
 3. `npm run build` and `npm pack --dry-run`. The tarball contains `dist/`
    (the `.svelte` files as they are, the compiled `.js`, the `.d.ts`,
    `tokens.css`, `base.css`, `tokens.json`), `skills/`, `README.md`,

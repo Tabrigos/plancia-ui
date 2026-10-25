@@ -18,11 +18,13 @@ every component in every state, in both themes and three densities; and
 the [recipes](https://tabrigos.github.io/plancia-ui/recipes.html), whole
 compositions running with their code, a phone layout among them.
 
-**Build with it**: the reference, every component, prop, class and token
-with the rules of the system, is
-[`skills/plancia-ui/SKILL.md`](skills/plancia-ui/SKILL.md). It ships inside
-the package and is written so that a coding agent can build a console
-without reading the code; it reads just as well for a person.
+**Build with it**: the reference starts at
+[`skills/plancia-ui/SKILL.md`](skills/plancia-ui/SKILL.md), which component
+for which need and the rules of the system, and goes on in
+[`references/`](skills/plancia-ui/references/): every component and prop,
+every class and token, whole recipes. It ships inside the package and is
+written so that a coding agent can build a console without reading the
+code; it reads just as well for a person.
 
 ## What you get
 
@@ -46,7 +48,8 @@ without reading the code; it reads just as well for a person.
   knows nothing about your domain: the text and the data stay in your app.
 - **Ready for coding agents.** The reference above follows the
   [Agent Skills](https://agentskills.io) format, so an agent learns the
-  system from one file and keeps its context for your code.
+  system from one short file, opens the rest only when it needs it, and
+  keeps its context for your code.
 
 [![Three phone screens: a sheet over the stage, the drawer in the light theme, a list of layers and its states](https://raw.githubusercontent.com/Tabrigos/plancia-ui/main/docs/images/phone.png)](https://tabrigos.github.io/plancia-ui/recipes.html)
 
@@ -110,24 +113,33 @@ rules on focus, or the rings become two. The theme helpers, the densities,
 labels in another language and every prop are in the
 [reference](skills/plancia-ui/SKILL.md).
 
-## For AI agents
+## For coding agents
 
-Agents do not read files inside `node_modules` on their own, so point
-yours at the reference once:
+The package ships a skill for AI coding assistants in
+`skills/plancia-ui/`, versioned with the package: the `metadata.version`
+of its `SKILL.md` is the version you installed. Agents do not read
+`node_modules` on their own, so a project copies the skill into
+`.claude/skills/plancia-ui/`, keeps the copy in git and checks it against
+the installed version by content hash after every upgrade, so the agent
+reads the guide of the version it actually uses:
 
-- Claude Code and other skill-aware agents: `npx skills add Tabrigos/plancia-ui`
-  installs it as a skill;
-- any agent with a rules file (`AGENTS.md`, `.cursorrules`, …): add a line
-  such as "before touching the UI, read
-  `node_modules/plancia-ui/skills/plancia-ui/SKILL.md`".
+```bash
+mkdir -p .claude/skills && cp -r node_modules/plancia-ui/skills/plancia-ui .claude/skills/
+```
 
-It is updated with every release, next to the changelog, and the copy in
-`node_modules` always matches the installed version.
+Then read the diff of the copy as you would read code: it is instructions
+for your agent. A tool that installs the skill from GitHub
+(`npx skills add`) takes the `main` branch, not your version, so it may
+describe props you do not have yet. An agent without skills gets a line in
+its rules file (`AGENTS.md`, `.cursorrules`): "before touching the UI,
+read `node_modules/plancia-ui/skills/plancia-ui/SKILL.md`".
 
 ## Documentation
 
 - [`skills/plancia-ui/SKILL.md`](skills/plancia-ui/SKILL.md) — the
-  reference: every component, prop, class and token, the rules, examples.
+  reference: which component for which need, the rules, the usual shape;
+  [`references/`](skills/plancia-ui/references/) holds every component and
+  prop, every class and token, and the recipes.
 - [Showcase](https://tabrigos.github.io/plancia-ui/) and
   [recipes](https://tabrigos.github.io/plancia-ui/recipes.html) — built
   from `main`; locally `cd showcase && npm install && npm run dev`.
