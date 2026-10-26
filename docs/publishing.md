@@ -15,11 +15,13 @@ still missing.
    what the package can do. The reference ships in the tarball: a prop
    added to the code and missing there is a bug, and `npm test` fails on
    it.
-3. `npm run build` and `npm pack --dry-run`. The tarball contains `dist/`
+3. `npm run build` and `npm run check:pack`. The tarball contains `dist/`
    (the `.svelte` files as they are, the compiled `.js`, the `.d.ts`,
    `tokens.css`, `base.css`, `tokens.json`), `skills/`, `README.md`,
-   `AGENTS.md`, `CHANGELOG.md`, `LICENSE`. Nothing from a consumer, no
-   sources, no showcase.
+   `CHANGELOG.md`, `LICENSE`. Nothing from a consumer, no sources, no
+   showcase, no `AGENTS.md` (since 0.13.0: it is for whoever changes the
+   package, and lives on GitHub). The check fails on a file off that list
+   and over 150 kB.
 4. **Staged publishing.** Since August 2026 npm publishes versions through a
    staging area: `npm stage publish` with a granular token of type "Read and
    write (stage only)", then the version is approved on npmjs.com with the

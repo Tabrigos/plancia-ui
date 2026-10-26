@@ -25,6 +25,7 @@ tests/                    vitest in jsdom: one file per component, tokens, scale
                           skill.test.mjs (node:test, after the build): the skill against exports, example, tarball
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
+scripts/check-pack.mjs    what npm pack would publish: only the files on its list, under a ceiling in kB
 evals/attivazione.json    the requests of the skill's trigger eval, half that need the package, half near misses
 showcase/                 Vite showcase: every component in every state, and recipes.html (compositions, live
                           with their code: one file each in showcase/src/recipes/); reads ../src, not dist
@@ -60,7 +61,7 @@ cd showcase && npm run dev  # http://localhost:5174, HMR on the package sources
 cd showcase && npm run check && npm run build   # svelte-check (covers ../src too) and build
 npm run check:phone         # after the showcase build: 390 px, both themes, in Chrome (CHROME_PATH if not found)
 npm run test:skill          # after the build: the skill against the exports, its js example, the tarball
-npm pack --dry-run          # what would go to npm (about 110 files, under 100 kB)
+npm run check:pack          # after the build: only what a consumer uses goes to npm, under 150 kB (94 kB today)
 ```
 
 The showcase is the test bench: **every change is looked at there, in both
@@ -237,7 +238,9 @@ Rules:
 - CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
   regenerated identical to the committed ones, `npm test`, `npm run build`, the
   subpath exports imported from plain Node, `npm run test:skill`, svelte-check and build of the
-  showcase, the showcase at phone width, `npm pack --dry-run`. A red PR is
+  showcase, the showcase at phone width, `npm run check:pack` (nothing in
+  the tarball off its list, which leaves this file out, and a ceiling of
+  150 kB, raised only on purpose). A red PR is
   not merged. The phone-width check runs the built showcase, the recipes
   (on load, with the settings recipe on its second tab, and under a universal
   reset, `* { margin: 0; padding: 0 }`)
@@ -259,10 +262,11 @@ Rules:
 2. check that the skill (`skills/plancia-ui/`) and the changelog tell the same
    story, and that the README still describes what the package can do: the
    reference ships in the package and must not lag behind the code;
-3. `npm run build` and `npm pack --dry-run`: the tarball contains only
-   `dist/`, `skills/`, `README.md`, `AGENTS.md`, `CHANGELOG.md`, `LICENSE`
+3. `npm run build` and `npm run check:pack`: the tarball contains only
+   `dist/`, `skills/`, `README.md`, `CHANGELOG.md`, `LICENSE`
    (`files` in `package.json`), every text file in LF; nothing from a
-   consumer, no sources;
+   consumer, no sources, not this file, which is for whoever changes the
+   package and is read on GitHub;
 4. **staged** publishing (npm since August 2026): `npm stage publish` with a
    "stage only" token, then approval of the version on the website with the
    second factor. A stage-only token cannot create a new package

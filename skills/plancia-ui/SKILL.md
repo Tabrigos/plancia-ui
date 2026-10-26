@@ -220,7 +220,8 @@ playback of an animation and a whole phone layout are in
 - **Read or patch the source in `node_modules/plancia-ui`**: the reference
   is here; ask for a change upstream.
 - **Rebuild a component the package has**, or a missing one in the
-  project: open an issue or a PR following the package's `AGENTS.md`.
+  project: open an issue or a PR following `AGENTS.md` in the library's
+  repository.
 - **Expect the package to hold product copy, data sources or the page
   layout**: they are the app's, passed as props and content, and a request
   to add them to the package is declined.

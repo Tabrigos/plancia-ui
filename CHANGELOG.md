@@ -21,6 +21,11 @@ All notable changes to plancia-ui. The format follows
   without calling it. None of the 10 near misses called it, before or
   after.
 
+### Removed
+- `AGENTS.md` from the package: it says how to change plancia-ui, not how
+  to use it, and is read on GitHub. The tarball goes from 99.7 to 94.3 kB,
+  and CI now fails on a file off the list or over 150 kB.
+
 ### Fixed
 - The skill's entry for `Age` says that without `title` the absolute time
   lives only in the tooltip, which a finger never shows, and to write it in
