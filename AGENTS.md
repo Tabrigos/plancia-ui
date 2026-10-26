@@ -26,7 +26,8 @@ tests/                    vitest in jsdom: one file per component, tokens, scale
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
 scripts/check-pack.mjs    what npm pack would publish: only the files on its list, under a ceiling in kB
-evals/attivazione.json    the requests of the skill's trigger eval, half that need the package, half near misses
+evals/attivazione.json    the requests of the skill's trigger eval, half that need the package, half near misses;
+                          bench/ is the small console it runs in; scripts/trigger-eval.mjs runs it
 showcase/                 Vite showcase: every component in every state, and recipes.html (compositions, live
                           with their code: one file each in showcase/src/recipes/); reads ../src, not dist
 skills/plancia-ui/        the reference for using the package, for developers and agents; in the npm package:
@@ -62,6 +63,7 @@ cd showcase && npm run check && npm run build   # svelte-check (covers ../src to
 npm run check:phone         # after the showcase build: 390 px, both themes, in Chrome (CHROME_PATH if not found)
 npm run test:skill          # after the build: the skill against the exports, its js example, the tarball
 npm run check:pack          # after the build: only what a consumer uses goes to npm, under 150 kB (94 kB today)
+npm run eval:trigger        # after the build, by hand: does the skill's description make an agent call it (model calls, ~3.5 $)
 ```
 
 The showcase is the test bench: **every change is looked at there, in both
@@ -162,12 +164,15 @@ describes; the tests make it so:
   with a fresh agent and a task that does not name the package: it should
   call the skill and never open the installed sources;
 - when the description changes, and at every minor, run the trigger eval
-  again: each request of `evals/attivazione.json` three times, each in a
-  fresh session of a project that installs the packed package and copies
-  the skill as a consumer does, without write tools. A request marked
-  `attiva` passes when the skill is called in at least two runs out of
-  three, a near miss when in at most one. The result goes in the
-  changelog;
+  again (`npm run eval:trigger` after the build; it needs the Claude Code
+  CLI and costs model calls, about 3.5 $): each request of
+  `evals/attivazione.json` three times, each in a fresh session of a copy
+  of `evals/bench` that installs the packed package and copies the skill
+  as a consumer does, without write tools. A request marked `attiva`
+  passes when the skill is called in at least two runs out of three, a
+  near miss when in at most one. The result goes in the changelog; a
+  request that fails once is run again with `--only N --runs 10` before
+  the description changes, since three runs are a small sample;
 - `.claude/skills/plancia-ui` is a symlink, never a copy. On Windows git
   checks it out as a link only with Developer Mode and
   `git config core.symlinks true` (then `git checkout -- .claude/skills`);

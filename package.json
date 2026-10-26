@@ -58,6 +58,7 @@
     "prepublishOnly": "npm run build",
     "test:skill": "node --test tests/skill.test.mjs",
     "check:pack": "node scripts/check-pack.mjs",
+    "eval:trigger": "node scripts/trigger-eval.mjs",
     "check:phone": "node scripts/check-phone.mjs showcase/dist phone-check"
   },
   "publishConfig": {
