@@ -11,8 +11,10 @@ Contents: [A console section](#a-console-section) ·
 Compositions of the package, each the exact file the showcase compiles
 (svelte-check in the package's CI) and shows live with its code at
 https://tabrigos.github.io/plancia-ui/recipes.html; a test in the package
-fails when a block here and its file differ. The comment at the top of each
-says what it shows and why it is built so. The panel over a stage is in
+fails when a block here and its file differ. The path under each heading is
+in the library's repository (https://github.com/Tabrigos/plancia-ui), not in
+the installed package: the block is the whole file. The comment at the top
+of each says what it shows and why it is built so. The panel over a stage is in
 `SKILL.md`, as the usual shape.
 
 ## A console section

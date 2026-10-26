@@ -6,6 +6,16 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- The skill's entry for `Age` says that without `title` the absolute time
+  lives only in the tooltip, which a finger never shows, and to write it in
+  the text where it matters. Found by the reference consumer with a fresh
+  agent, which had to work it out alone.
+- The skill no longer points a project at files its copy does not have:
+  the recipe files and the tests are said to be in the library's
+  repository, and the changelog at the root of the installed package
+  (`node_modules/plancia-ui/CHANGELOG.md`), not next to the skill.
+
 ## [0.12.2] — 2026-10-26
 
 ### Added

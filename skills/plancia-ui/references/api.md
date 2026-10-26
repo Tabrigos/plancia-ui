@@ -8,7 +8,7 @@ Contents: [Controls](#controls) · [Rows and values](#rows-and-values) ·
 
 One section per export of `plancia-ui`, with every prop, its default and
 its rules; `tests/skill.test.mjs` and `tests/skill-reference.test.ts` in
-the package check that no export and no prop is missing. "Content" means
+the library's repository check that no export and no prop is missing. "Content" means
 the children of the component. Snippets are Svelte 5
 `{#snippet name()}…{/snippet}` blocks placed inside the component. Every
 name here is imported from `plancia-ui`; the helpers also from their
@@ -329,7 +329,9 @@ NOAA level.
 of `setLabels()`, then the page's `lang`, then the browser's), `title?:
 string` (tooltip; the absolute time when absent), `now?: number` (a clock
 the app controls; otherwise a 30 s timer). Renders a `Chip` with a `<time
-datetime>`. The text is `formatAge()`.
+datetime>`. The text is `formatAge()`. Without `title` the absolute time
+lives only in the tooltip, which a finger never shows: where it matters,
+write it in the text too, a `p-detail` line or an item of the `MetaRow`.
 
 ### `Status`
 
