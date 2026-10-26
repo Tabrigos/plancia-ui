@@ -116,9 +116,9 @@ export function switchTheme(theme) {
 ## The usual shape
 
 A panel over a stage: head with chips and the (i), values, a warning that
-says what the data is worth, metadata. This is
-`showcase/src/recipes/PanelOverStage.svelte`, the file the showcase
-compiles:
+says what the data is worth, metadata. This is the whole of
+`showcase/src/recipes/PanelOverStage.svelte` in the library's repository
+(not in the installed package), the file the showcase compiles:
 
 ```svelte
 <script lang="ts">
@@ -248,7 +248,8 @@ every state, and is the reference for how things should look.
 ## Keeping this skill current
 
 This skill ships inside `plancia-ui` and is versioned with it
-(`metadata.version` above); `CHANGELOG.md` next to it says what changed. A
+(`metadata.version` above); `node_modules/plancia-ui/CHANGELOG.md`, at the
+root of the installed package, says what changed. A
 project copies it from `node_modules/plancia-ui/skills/plancia-ui/` into
 `.claude/skills/plancia-ui/`, keeps the copy in git and, after every
 upgrade, compares it by content hash with the installed package and reads
