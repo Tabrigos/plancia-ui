@@ -141,8 +141,10 @@ describes; the tests make it so:
   the changelog, SKILL.md under 500 lines, every reference cited, LF only,
   one `### ` section of `references/api.md` per export of the index and
   none more, every name cited in SKILL.md exported, the `js` example
-  running in Node, the skill in `npm pack`. Fix it in the template, never
-  here alone;
+  running in Node, every file path SKILL.md cites opening from a project's
+  copy (a file of the skill, `node_modules/plancia-ui/…` in the tarball, or
+  said to be in the library's repository on the same line), the skill in
+  `npm pack`. Fix it in the template, never here alone;
 - `tests/skill-reference.test.ts` checks what the template cannot see in a
   Svelte package: every prop of every component in its section (read from
   the type of `$props()`, a type the component declares included; a
