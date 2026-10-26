@@ -7,7 +7,8 @@ applies to people and agents alike.
 
 In short: a branch, a pull request with green CI, a line under
 `[Unreleased]` in `CHANGELOG.md` for every change visible to users of the
-package, the showcase checked in both themes, the agent guide in
-`skills/plancia-ui/SKILL.md` kept in step with the code. For a new
+package, the showcase checked in both themes, the reference in
+`skills/plancia-ui/` (`SKILL.md` and its `references/`) kept in step
+with the code, which its tests check. For a new
 component or token, open an issue first: the package only grows with shapes
 that are needed in more than one place and know nothing about the domain.

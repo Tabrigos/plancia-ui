@@ -12,8 +12,9 @@
 
 The documents in `archivio/` describe what was true then and are never
 updated. The reference for building with the package, every component,
-prop, class and token, is
-[`skills/plancia-ui/SKILL.md`](../skills/plancia-ui/SKILL.md), for
+prop, class and token, starts at
+[`skills/plancia-ui/SKILL.md`](../skills/plancia-ui/SKILL.md) and goes on in
+its `references/`, for
 developers and coding agents alike, and it ships in the npm package; the
 root `README.md` presents the package; the guide for contributors is
 `AGENTS.md`.

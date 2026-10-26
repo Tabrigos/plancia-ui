@@ -48,9 +48,11 @@ scrollbars. Everything is written with tokens; no fixed color anywhere.
 
 ## 3. Components
 
-Twenty-nine Svelte 5 components, one per file, each with its own scoped
+Thirty-six Svelte 5 components, one per file, each with its own scoped
 CSS written with tokens only. The root `README.md` says what they are for;
-the complete reference, every prop, is `skills/plancia-ui/SKILL.md`.
+the complete reference, every prop, is
+`skills/plancia-ui/references/api.md`, and every token is in
+`skills/plancia-ui/references/css.md`.
 
 ## Loading order
 

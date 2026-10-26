@@ -85,11 +85,11 @@ describe('texts the package speaks', () => {
   })
 
   it('every label a component reads is in the inventory of the skill, with that component', () => {
-    const skill = readFileSync(join(srcDir, '..', 'skills', 'plancia-ui', 'SKILL.md'), 'utf8')
+    const skill = readFileSync(join(srcDir, '..', 'skills', 'plancia-ui', 'references', 'api.md'), 'utf8')
     for (const [name, source] of Object.entries(sources)) {
       for (const [, key] of source.matchAll(/\$labels\.(\w+)/g)) {
         const row = skill.split('\n').find((line) => line.startsWith(`| \`${key}\` |`))
-        expect(row, `no row for \`${key}\` in the labels table of SKILL.md`).toBeDefined()
+        expect(row, `no row for \`${key}\` in the labels table of references/api.md`).toBeDefined()
         expect(row, `the row of \`${key}\` does not name ${name}`).toContain(`\`${name.replace('.svelte', '')}\``)
       }
     }

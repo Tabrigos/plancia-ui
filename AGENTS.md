@@ -2,8 +2,9 @@
 
 A guide for whoever works on plancia-ui, human or agent. `README.md`
 presents the package: what it does, for whom, how it looks.
-`skills/plancia-ui/SKILL.md` is the reference for building with it, every
-component, prop, class and token, for developers and coding agents alike.
+`skills/plancia-ui/SKILL.md` and its `references/` are the reference for
+building with it, every component, prop, class and token, for developers
+and coding agents alike.
 This file says how to change it, version it and publish it. If a document
 and the code disagree, the code wins and the document gets fixed.
 
@@ -20,12 +21,15 @@ src/tokens.json           SINGLE SOURCE of the tokens: dark theme + `light` bloc
 src/tokens.css            GENERATED from tokens.json (npm run tokens); committed
 src/base.css              reset, typography, surfaces, p-* utilities, focus, reduced motion
 src/components/*.svelte   one component per file, scoped CSS, tokens only
-tests/                    vitest in jsdom: one file per component, tokens, scaleTone
+tests/                    vitest in jsdom: one file per component, tokens, scaleTone, the skill against the code;
+                          skill.test.mjs (node:test, after the build): the skill against exports, example, tarball
 scripts/build-tokens.mjs  the generator; it stops if a token is missing in one theme
 scripts/check-phone.mjs   the showcase at 390 px in a headless Chrome: touch density, tap targets, axe, overflow
 showcase/                 Vite showcase: every component in every state, and recipes.html (compositions, live
                           with their code: one file each in showcase/src/recipes/); reads ../src, not dist
-skills/plancia-ui/        the reference for using the package (SKILL.md), for developers and agents; in the npm package
+skills/plancia-ui/        the reference for using the package, for developers and agents; in the npm package:
+                          SKILL.md (short: which piece, rules, the usual shape) + references/ (api, css, recipes)
+.claude/skills/plancia-ui a committed symlink to skills/plancia-ui: an agent working here reads the skill of this commit
 docs/                     tokens, design rules, publishing, roadmap + archivio/ (history, never updated)
 dist/                     output of `npm run build`, git-ignored: it is what goes to npm
 ```
@@ -54,7 +58,8 @@ cd showcase && npm install  # once
 cd showcase && npm run dev  # http://localhost:5174, HMR on the package sources
 cd showcase && npm run check && npm run build   # svelte-check (covers ../src too) and build
 npm run check:phone         # after the showcase build: 390 px, both themes, in Chrome (CHROME_PATH if not found)
-npm pack --dry-run          # what would go to npm (about 40 files, under 100 kB)
+npm run test:skill          # after the build: the skill against the exports, its js example, the tarball
+npm pack --dry-run          # what would go to npm (about 110 files, under 100 kB)
 ```
 
 The showcase is the test bench: **every change is looked at there, in both
@@ -112,9 +117,11 @@ time, without tools. In practice:
 1. the file in `src/components/`, exported from `src/index.ts` (with its types);
 2. a section in the showcase that shows it in every state;
 3. its test file in `tests/components/`, on what the reference promises;
-4. its entry in `skills/plancia-ui/SKILL.md`, the reference developers and
-   agents read instead of the code: the which-component row and the full
-   entry, same props, same rules, kept as complete as the code;
+4. its entry in the skill, the reference developers and agents read
+   instead of the code: the row of the "Pick the right piece" table in
+   `skills/plancia-ui/SKILL.md` and the full `### ` section in
+   `references/api.md`, same props, same rules, kept as complete as the
+   code (the tests fail on an export or a prop the reference does not name);
 5. a new component only: its place in the README's "What is in the box",
    with what it is for and no props. The README is the showcase of the
    package, and changes when a capability does, not with every prop;
@@ -122,6 +129,39 @@ time, without tools. In practice:
 7. if it adds a token: in `tokens.json` in BOTH themes, then `npm run tokens`
    and commit the regenerated CSS;
 8. `cd showcase && npm run check` clean, showcase looked at in dark and light.
+
+### The skill
+
+The skill follows the code, in the same commit as the change it
+describes; the tests make it so:
+
+- `tests/skill.test.mjs` is the template shared with other libraries, copied
+  as it is (only the constants at the top are this package's): portable
+  frontmatter, `metadata.version` equal to `package.json` and present in
+  the changelog, SKILL.md under 500 lines, every reference cited, LF only,
+  one `### ` section of `references/api.md` per export of the index and
+  none more, every name cited in SKILL.md exported, the `js` example
+  running in Node, the skill in `npm pack`. Fix it in the template, never
+  here alone;
+- `tests/skill-reference.test.ts` checks what the template cannot see in a
+  Svelte package: every prop of every component in its section (read from
+  the type of `$props()`, a type the component declares included; a
+  component with no prop of its own is listed in `NO_OWN_PROPS` with the
+  reason, or the test fails), every
+  `--p-*` token it names defined in `tokens.css`, and every `svelte`
+  block identical to a file of `showcase/src/recipes/`, which svelte-check
+  compiles. A new recipe goes into `references/recipes.md`
+  as it is; a fragment that is not a recipe is fenced `svelte nocheck`,
+  with the reason in the line before;
+- whoever raises the version raises `metadata.version` in SKILL.md too;
+- when the description, the table or the "Do not" change, try the skill
+  with a fresh agent and a task that does not name the package: it should
+  call the skill and never open the installed sources;
+- `.claude/skills/plancia-ui` is a symlink, never a copy. On Windows git
+  checks it out as a link only with Developer Mode and
+  `git config core.symlinks true` (then `git checkout -- .claude/skills`);
+  otherwise it arrives as a small text file and an agent working here
+  opens `skills/plancia-ui/SKILL.md` by hand.
 
 ## 4. Versioning (SemVer, with the rules of a design system)
 
@@ -146,7 +186,8 @@ Extra rules:
   them only with a **Breaking** entry in the changelog and a "how to migrate"
   line. From 1.0.0 on the table applies without exceptions;
 - **a published version is never touched**: a mistake is a new patch;
-- the version is raised in `package.json` and in `CHANGELOG.md` **in the same
+- the version is raised in `package.json`, in `CHANGELOG.md` and in the
+  `metadata.version` of `skills/plancia-ui/SKILL.md` **in the same
   commit**, titled `Version X.Y.Z`, with the tag `vX.Y.Z` on that commit.
 
 ## 5. Changelog
@@ -185,7 +226,7 @@ Rules:
   part that never gets cleaned up;
 - CI (`.github/workflows/ci.yml`) on every push and PR: `npm ci`, tokens
   regenerated identical to the committed ones, `npm test`, `npm run build`, the
-  subpath exports imported from plain Node, svelte-check and build of the
+  subpath exports imported from plain Node, `npm run test:skill`, svelte-check and build of the
   showcase, the showcase at phone width, `npm pack --dry-run`. A red PR is
   not merged. The phone-width check runs the built showcase, the recipes
   (on load, with the settings recipe on its second tab, and under a universal
@@ -204,13 +245,14 @@ Rules:
 ## 7. Publishing to npm
 
 1. `[Unreleased]` → `[X.Y.Z] — date` in the changelog, version in
-   `package.json`, commit `Version X.Y.Z`, tag `vX.Y.Z`;
-2. check that `skills/plancia-ui/SKILL.md` and the changelog tell the same
+   `package.json` and in the `metadata.version` of the skill, commit `Version X.Y.Z`, tag `vX.Y.Z`;
+2. check that the skill (`skills/plancia-ui/`) and the changelog tell the same
    story, and that the README still describes what the package can do: the
    reference ships in the package and must not lag behind the code;
 3. `npm run build` and `npm pack --dry-run`: the tarball contains only
    `dist/`, `skills/`, `README.md`, `AGENTS.md`, `CHANGELOG.md`, `LICENSE`
-   (`files` in `package.json`); nothing from a consumer, no sources;
+   (`files` in `package.json`), every text file in LF; nothing from a
+   consumer, no sources;
 4. **staged** publishing (npm since August 2026): `npm stage publish` with a
    "stage only" token, then approval of the version on the website with the
    second factor. A stage-only token cannot create a new package

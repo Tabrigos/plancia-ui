@@ -57,7 +57,7 @@
     "build": "npm run tokens && svelte-package -i src -o dist",
     "test": "vitest run",
     "prepublishOnly": "npm run build",
-    "skill:install": "node scripts/install-skill.mjs",
+    "test:skill": "node --test tests/skill.test.mjs",
     "check:phone": "node scripts/check-phone.mjs showcase/dist phone-check"
   },
   "publishConfig": {
