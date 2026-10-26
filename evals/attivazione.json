@@ -1,0 +1,22 @@
+[
+  { "richiesta": "Add a card that shows the current solar wind speed and how old the reading is", "attiva": true },
+  { "richiesta": "I need a settings screen with two tabs, one for the display and one for the alerts", "attiva": true },
+  { "richiesta": "Make the console usable on a phone: the side panel should become a drawer and the rows bigger for a finger", "attiva": true },
+  { "richiesta": "Add a dark/light theme switch to the header and remember what the user picked", "attiva": true },
+  { "richiesta": "Next to the Kp value, show a small chart of the last 24 hours", "attiva": true },
+  { "richiesta": "When the Kp data is more than an hour old the panel should warn the user that it is stale", "attiva": true },
+  { "richiesta": "Add a list of map layers, each with an on/off switch and an opacity slider", "attiva": true },
+  { "richiesta": "Show a loading placeholder in the geomagnetic section while the data is being fetched", "attiva": true },
+  { "richiesta": "The UI components say Close and Loading in English, make them speak Italian", "attiva": true },
+  { "richiesta": "Use a plancia-ui Chip to show the storm level next to the Kp value", "attiva": true },
+  { "richiesta": "Explain the difference between $state and $derived in Svelte 5", "attiva": false },
+  { "richiesta": "Write a unit test for parseKp in src/lib/kp.ts", "attiva": false },
+  { "richiesta": "Set up the Vite dev server so that /api is proxied to localhost:8000", "attiva": false },
+  { "richiesta": "What does WCAG 2.2 say about the minimum size of a tap target?", "attiva": false },
+  { "richiesta": "Write a Python script that downloads the NOAA solar wind data every 15 minutes", "attiva": false },
+  { "richiesta": "What is the difference between CSS custom properties and Sass variables?", "attiva": false },
+  { "richiesta": "Add a GitHub Actions workflow that runs svelte-check on every push", "attiva": false },
+  { "richiesta": "Write a README for this project explaining how to run it locally", "attiva": false },
+  { "richiesta": "In another project of mine, built with React, I need a dashboard with a line chart: which chart library should I use?", "attiva": false },
+  { "richiesta": "latestKp returns undefined when the API answers with an empty array: is that a bug?", "attiva": false }
+]

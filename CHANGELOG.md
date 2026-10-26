@@ -6,6 +6,26 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+### Changed
+- The skill's description names a loading or stale state and the texts
+  the components say in another language among the cases it covers, and
+  asks to read it before searching `node_modules/plancia-ui`. Measured
+  with a trigger eval: 20 requests in `evals/attivazione.json`, half that
+  need the package without naming it and half near misses, each run three
+  times in a fresh session (claude-sonnet-5-5, Claude Code 2.1.310). With
+  the 0.12.2 description, 8 of the 10 requests that need the package
+  called the skill. In the two that did not, a loading placeholder and the
+  components' texts in Italian, the agent searched the installed package.
+  With this one, 9 of 10 passed: the small chart called it once in three,
+  and 9 times in 10 runs more. Its two misses read the skill's files
+  without calling it. None of the 10 near misses called it, before or
+  after.
+
+### Removed
+- `AGENTS.md` from the package: it says how to change plancia-ui, not how
+  to use it, and is read on GitHub. The tarball goes from 99.7 to 94.3 kB,
+  and CI now fails on a file off the list or over 150 kB.
+
 ### Fixed
 - The skill's entry for `Age` says that without `title` the absolute time
   lives only in the tooltip, which a finger never shows, and to write it in

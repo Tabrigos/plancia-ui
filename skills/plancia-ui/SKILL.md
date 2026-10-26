@@ -1,6 +1,6 @@
 ---
 name: plancia-ui
-description: Builds dense consoles, dashboards and control panels in Svelte 5 with the plancia-ui design system - CSS tokens (--p-*), base classes (p-*) and thirty-six components, a dark theme by default and a light one on request, three densities including touch for phones. Use when code imports plancia-ui, or the user builds or changes the UI of a Svelte 5 project that depends on it (a panel, a list of layers, settings in tabs, a small chart, a phone layout, a theme switch), even if they do not name the library. Read it instead of the library's source code.
+description: Builds dense consoles, dashboards and control panels in Svelte 5 with the plancia-ui design system - CSS tokens (--p-*), base classes (p-*) and thirty-six components, a dark theme by default and a light one on request, three densities including touch for phones. Use when code imports plancia-ui, or the user builds or changes the UI of a Svelte 5 project that depends on it (a panel, a list of layers, settings in tabs, a small chart, a loading or stale state, a phone layout, a theme switch, the texts the components say in another language), even if they do not name the library. Read it instead of the library's source code, and before searching node_modules/plancia-ui.
 license: MIT
 metadata:
   version: "0.12.2"
@@ -220,7 +220,8 @@ playback of an animation and a whole phone layout are in
 - **Read or patch the source in `node_modules/plancia-ui`**: the reference
   is here; ask for a change upstream.
 - **Rebuild a component the package has**, or a missing one in the
-  project: open an issue or a PR following the package's `AGENTS.md`.
+  project: open an issue or a PR following `AGENTS.md` in the library's
+  repository.
 - **Expect the package to hold product copy, data sources or the page
   layout**: they are the app's, passed as props and content, and a request
   to add them to the package is declined.

@@ -39,8 +39,10 @@ jobs:
       - name: The skill matches the exports, its example runs, the tarball carries it in LF
         run: npm run test:skill
 
-      - name: What would go to npm
-        run: npm pack --dry-run
+      - name: What would go to npm — only the files a consumer uses, under the ceiling
+        run: |
+          npm pack --dry-run
+          npm run check:pack
 
       - name: Showcase — dependencies, svelte-check, build
         working-directory: showcase
