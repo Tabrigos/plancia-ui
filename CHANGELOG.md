@@ -6,6 +6,8 @@ All notable changes to plancia-ui. The format follows
 
 ## [Unreleased]
 
+## [0.12.2] — 2026-10-26
+
 ### Added
 - The skill carries `metadata.version` in its frontmatter, the version of
   the package it ships with, so a project that keeps a copy in

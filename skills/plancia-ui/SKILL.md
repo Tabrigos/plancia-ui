@@ -3,7 +3,7 @@ name: plancia-ui
 description: Builds dense consoles, dashboards and control panels in Svelte 5 with the plancia-ui design system - CSS tokens (--p-*), base classes (p-*) and thirty-six components, a dark theme by default and a light one on request, three densities including touch for phones. Use when code imports plancia-ui, or the user builds or changes the UI of a Svelte 5 project that depends on it (a panel, a list of layers, settings in tabs, a small chart, a phone layout, a theme switch), even if they do not name the library. Read it instead of the library's source code.
 license: MIT
 metadata:
-  version: "0.12.1"
+  version: "0.12.2"
 ---
 
 # plancia-ui
