@@ -24,7 +24,11 @@ of the scale the app pins in `Bars` and `Sparkline`; `Tooltip` split in
 two, its tip no longer read twice when it repeats an element's name; and a
 line in the skill on loose rows in a `Section`. 0.12.1 shipped on
 2026-10-17 what it found adopting it: a tooltip that follows a title
-changing while it shows (#104). The next band comes from what the
+changing while it shows (#104). 0.12.2 shipped on 2026-10-26 the skill as
+a short `SKILL.md` with references the tests check against the code,
+carrying the package version, and every file of the package in LF, so a
+project can keep a copy of the skill and compare it with the installed
+one. The next band comes from what the
 consumers find, as issues here, and from the road to 1.0 below; the
 maintainer picks it.
 
