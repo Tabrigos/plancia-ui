@@ -40,6 +40,10 @@ const BODY = SKILL.split('\n---\n').slice(1).join('\n---\n');
 const PROSE = BODY.replace(FENCE, '');
 const PORTABLE = new Set(['name', 'description', 'license', 'compatibility', 'metadata', 'allowed-tools']);
 const IDENT = /^[A-Za-z_$][\w$]*$/;
+// A file path in backticks: a slash and an extension; no spaces (commands), globs,
+// placeholders or `:` (URLs).
+const FILE_PATH = /^[^\s*?<>{}:]*\/[^\s*?<>{}:/]*\.[A-Za-z0-9]{1,8}$/;
+const IN_REPOSITORY = /in the library's repository|nel repository della libreria/i;
 
 function skillFiles(dir = SKILL_DIR, base = SKILL_DIR) {
   const out = [];
@@ -123,6 +127,13 @@ function npm(args) {
     : spawnSync('npm', args, { cwd: ROOT, env, encoding: 'utf8', shell: true });
 }
 
+// The paths of the files that `npm pack` puts in the tarball.
+function packedFiles() {
+  const r = npm(['pack', '--dry-run', '--json', '--ignore-scripts']);
+  assert.equal(r.status, 0, r.stderr);
+  return new Set(JSON.parse(r.stdout.slice(r.stdout.indexOf('[')))[0].files.map(f => f.path));
+}
+
 // --- frontmatter, size, layout ---------------------------------------------------
 
 test('frontmatter is portable Agent Skills', () => {
@@ -165,6 +176,30 @@ test('every reference is cited and every citation exists', () => {
   for (const name of fs.readdirSync(path.join(SKILL_DIR, 'references'))) {
     assert.ok(cited.has(`references/${name}`), `references/${name} not cited`);
   }
+});
+
+// A project copies only the skill directory: a path of the repository does not
+// open there. Paths of the consumer (.claude/, .agents/) are not the library's.
+test('paths cited in SKILL.md open from the copy in a project', () => {
+  const installed = `node_modules/${PKG.name}/`;
+  let packed = null;
+  let checked = 0;
+  const broken = [];
+  for (const line of PROSE.split('\n')) {
+    for (const [, span] of line.matchAll(/`([^`\n]+)`/g)) {
+      const rel = span.replace(/^\.\//, '');
+      if (!FILE_PATH.test(span) || /^\.(claude|agents)\//.test(rel)) continue;
+      checked++;
+      if (fs.existsSync(path.join(SKILL_DIR, rel)) || IN_REPOSITORY.test(line)) continue;
+      if (rel.startsWith(installed)) {
+        packed ??= packedFiles();
+        if (packed.has(rel.slice(installed.length))) continue;
+      }
+      broken.push(span);
+    }
+  }
+  assert.ok(checked, 'no file path in backticks: SKILL.md should cite `references/api.md`');
+  assert.deepEqual(broken, [], `paths that the copy in a project cannot open: cite a file of the skill, ${installed}<file> of the tarball, or say "in the library's repository" on the same line`);
 });
 
 test('skill files have LF line endings, and git keeps them so', () => {
@@ -241,9 +276,7 @@ test('the js examples of SKILL.md run', async () => {
 
 test('"files" ships the skill and npm pack contains every file of it', () => {
   assert.ok((PKG.files || []).some(f => /^skills(\/|$)/.test(f)), '"files" in package.json must include "skills"');
-  const r = npm(['pack', '--dry-run', '--json', '--ignore-scripts']);
-  assert.equal(r.status, 0, r.stderr);
-  const packed = new Set(JSON.parse(r.stdout.slice(r.stdout.indexOf('[')))[0].files.map(f => f.path));
+  const packed = packedFiles();
   const expected = skillFiles().map(rel => `skills/${SKILL_NAME}/${rel}`);
   assert.deepEqual(expected.filter(f => !packed.has(f)), [], 'missing from the tarball');
 });
